@@ -6,8 +6,8 @@ namespace Cafeteria.Repository
 {
     public class ProductoRepository : Repository<Producto>
     {
-        public IEnumerable<Producto> GetCatalogo() => throw new Exception("not implemented");
-        public IEnumerable<Producto> GetDestacados() => throw new Exception("not implemented");
+        public IEnumerable<Producto> GetByCategory(string categoria) => this.Find(p => p.Categoria.Equals(categoria));
+        
         public ProductoRepository(ApplicationDbContext context) : base(context) { }
     }
 }

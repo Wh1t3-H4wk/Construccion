@@ -15,19 +15,6 @@ namespace Cafeteria.Models
         {
             _context = context;
             Productos = new ProductoRepository(context);
-            
-            //random objects for producto
-            var x = new Producto();
-            x.Nombre = "p1";
-            x.Descripcion = "d1";
-            
-            var x2 = new  Producto();
-            x2.Nombre = "p2";
-            x.Descripcion = "des";
-            Productos.Add(x);
-            Productos.Add(x2);
-            _context.SaveChanges();
-            //en random
         }
         /// <summary>
         /// Save changes to the DB

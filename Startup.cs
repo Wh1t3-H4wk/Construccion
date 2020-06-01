@@ -27,7 +27,7 @@ namespace Cafeteria
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext con)
         {
             if (env.IsDevelopment())
             {
@@ -40,6 +40,20 @@ namespace Cafeteria
 
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            //random objects for producto
+            var x = new Producto();
+            x.Nombre = "p1";
+            x.Descripcion = "d1";
+            x.Categoria = "Catalogo";
+            
+            var x2 = new  Producto();
+            x2.Nombre = "p2";
+            x2.Descripcion = "des";
+            x2.Categoria = "Destacado";
+            con.Add(x);
+            con.Add(x2);
+            con.SaveChanges();
             
         }
     }
