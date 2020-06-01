@@ -43,18 +43,119 @@ namespace Cafeteria
             
             //random objects for producto
             var x = new Producto();
-            x.Nombre = "p1";
-            x.Descripcion = "d1";
+            x.Nombre = "Bebida 1";
+            x.Descripcion = "Descripcion generica";
             x.Categoria = "Catalogo";
-            
-            var x2 = new  Producto();
-            x2.Nombre = "p2";
-            x2.Descripcion = "des";
-            x2.Categoria = "Destacado";
+
+            var x2 = new Producto();
+            x.Nombre = "Bebida 2";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x3 = new Producto();
+            x.Nombre = "Bebida 3";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x4 = new Producto();
+            x.Nombre = "Bebida 4";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x5 = new Producto();
+            x.Nombre = "Bebida 5";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x6 = new Producto();
+            x.Nombre = "Bebida 6";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x7 = new Producto();
+            x.Nombre = "Bebida 7";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x8 = new Producto();
+            x.Nombre = "Bebida 8";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x9 = new Producto();
+            x.Nombre = "Bebida 9";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x10 = new Producto();
+            x.Nombre = "Comida 1";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x11 = new Producto();
+            x.Nombre = "Comida 2";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x12 = new Producto();
+            x.Nombre = "Comida 3";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x13 = new Producto();
+            x.Nombre = "Comida 4";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x14 = new Producto();
+            x.Nombre = "Comida 5";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x15 = new Producto();
+            x.Nombre = "Comida 6";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x16 = new Producto();
+            x.Nombre = "Comida 7";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x17 = new Producto();
+            x.Nombre = "Comida 8";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+            var x18 = new Producto();
+            x.Nombre = "Comida 9";
+            x.Descripcion = "Descripcion generica";
+            x.Categoria = "Catalogo";
+
+
+
+
+
             con.Add(x);
             con.Add(x2);
+            con.Add(x3);
+            con.Add(x4);
+            con.Add(x5);
+            con.Add(x6);
+            con.Add(x7);
+            con.Add(x8);
+            con.Add(x9);
+            con.Add(x10);
+            con.Add(x11);
+            con.Add(x12);
+            con.Add(x13);
+            con.Add(x14);
+            con.Add(x15);
+            con.Add(x16);
+            con.Add(x17);
+            con.Add(x18);
             con.SaveChanges();
-            
+           
         }
     }
 }
