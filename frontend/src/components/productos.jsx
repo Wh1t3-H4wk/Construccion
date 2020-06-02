@@ -13,10 +13,11 @@ class Productos extends Component {
     };
   }
   componentDidMount() {
-    fetch("https://localhost:5001/producto")
+    fetch("http://localhost:5001/producto")
       .then((res) => res.json())
       .then(
         (result) => {
+          console.log("resultado:");
           console.log(result);
           this.setState({
             isLoaded: true,
@@ -33,7 +34,7 @@ class Productos extends Component {
           });
         }
       );
-    fetch("https://localhost:5001/producto/destacado")
+    fetch("http://localhost:5001/producto/destacado")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -67,5 +68,4 @@ class Productos extends Component {
     );
   }
 }
-
 export default Productos;
