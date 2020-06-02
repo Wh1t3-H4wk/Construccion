@@ -17,11 +17,15 @@ class Productos extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
+          let prods = [];
+          result.forEach((element) => {
+            prods.push(element);
+          });
           console.log("resultado:");
           console.log(result);
           this.setState({
             isLoaded: true,
-            productos: result.items,
+            productos: prods,
           });
         },
         // Nota: es importante manejar errores aquí y no en
@@ -38,9 +42,13 @@ class Productos extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
+          let prods = [];
+          result.forEach((element) => {
+            prods.push(element);
+          });
           this.setState({
             isLoaded: true,
-            destacados: result.items,
+            destacados: prods,
           });
         },
         // Nota: es importante manejar errores aquí y no en
