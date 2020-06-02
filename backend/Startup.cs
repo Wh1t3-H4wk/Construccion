@@ -33,8 +33,9 @@ namespace Cafeteria
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
+			
+			//app.UseHsts();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

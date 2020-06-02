@@ -14,6 +14,7 @@
 /backend/obj
 /backend/.vs
 /backend/Cafeteria.csproj.user
+/backend/.idea
 
 # misc
 .DS_Store
