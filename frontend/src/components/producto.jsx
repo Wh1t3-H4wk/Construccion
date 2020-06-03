@@ -6,7 +6,7 @@ class Producto extends Component {
       <div className="card">
         <img
           className="card-img-top w-100 d-block"
-          src={this.props.producto.img}
+          src={this.props.producto.imgUrl}
         />
         <div className="card-body">
           <h4 className="card-title">{this.props.producto.nombre}</h4>
