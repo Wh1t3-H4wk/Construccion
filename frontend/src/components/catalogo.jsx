@@ -1,43 +1,67 @@
 import React, { Component } from "react";
+import Producto from "./producto";
 
 class Catalogo extends Component {
   state = {
     pagina: 0,
-    numProductos: 10,
+    numProductos: 12,
   };
 
-  rebanarProductos = () => {};
+  rebanarProductos = () => {
+    const pagina = this.state.pagina;
+    const numProductos = this.state.numProductos;
+    let sliced = this.props.productos.slice(
+      pagina * numProductos,
+      pagina * numProductos + numProductos
+    );
+
+    let content = [];
+
+    for (let index = 0; index < sliced.length; index += 3) {
+      let subslice = sliced.slice(index, index + 3);
+      console.log(subslice);
+      content.push(
+        <div className="card-group" key={index}>
+          {subslice.map((producto) => (
+            <Producto key={producto.id} producto={producto} />
+          ))}
+        </div>
+      );
+    }
+
+    return <React.Fragment>{content}</React.Fragment>;
+  };
 
   handleCantProd = (e) => {
-    this.state.numProductos = e.target.value;
+    this.setState({ numProductos: e.target.value });
   };
 
   bottomNavBar = () => {
     return (
-      <nav class="float-right">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" aria-label="Previous">
+      <nav className="float-right">
+        <ul className="pagination">
+          <li className="page-item">
+            <a className="page-link" aria-label="Previous">
               <span aria-hidden="true">«</span>
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link">1</a>
+          <li className="page-item">
+            <a className="page-link">1</a>
           </li>
-          <li class="page-item">
-            <a class="page-link">2</a>
+          <li className="page-item">
+            <a className="page-link">2</a>
           </li>
-          <li class="page-item">
-            <a class="page-link">3</a>
+          <li className="page-item">
+            <a className="page-link">3</a>
           </li>
-          <li class="page-item">
-            <a class="page-link">4</a>
+          <li className="page-item">
+            <a className="page-link">4</a>
           </li>
-          <li class="page-item">
-            <a class="page-link">5</a>
+          <li className="page-item">
+            <a className="page-link">5</a>
           </li>
-          <li class="page-item">
-            <a class="page-link" aria-label="Next">
+          <li className="page-item">
+            <a className="page-link" aria-label="Next">
               <span aria-hidden="true">»</span>
             </a>
           </li>
@@ -86,9 +110,9 @@ class Catalogo extends Component {
                       value={this.state.numProductos}
                       onChange={this.handleCantProd}
                     >
-                      <option value="10">10</option>
-                      <option value="25">25</option>
-                      <option value="50">50</option>
+                      <option value="12">12</option>
+                      <option value="24">24</option>
+                      <option value="48">48</option>
                     </select>
                   </div>
                 </div>
@@ -112,21 +136,7 @@ class Catalogo extends Component {
                   </div>
                 </div>
               </div>
-              <div className="card-group">
-                {/* Acá va un producto */}
-                {/* Acá va un producto */}
-                {/* Acá va un producto */}
-              </div>
-              <div className="card-group">
-                {/* Acá va un producto */}
-                {/* Acá va un producto */}
-                {/* Acá va un producto */}
-              </div>
-              <div className="card-group">
-                {/* Acá va un producto */}
-                {/* Acá va un producto */}
-                {/* Acá va un producto */}
-              </div>
+              {this.rebanarProductos()}
               {this.bottomNavBar()}
             </div>
           </div>
