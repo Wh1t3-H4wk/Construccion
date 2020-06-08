@@ -11,7 +11,7 @@ namespace Cafeteria.Repository
             var x = new Producto();
             x.Nombre = "Bebida 1";
             x.Descripcion = "Descripcion generica";
-            x.Categoria = "Catalogo";
+            x.Categoria = "categoria";
             x.ImgUrl = "assets/img/products-02.jpg";
             x.Destacado = true;
 
@@ -55,7 +55,7 @@ namespace Cafeteria.Repository
             var x8 = new Producto();
             x8.Nombre = "Bebida 8";
             x8.Descripcion = "Descripcion generica";
-            x8.Categoria = "Catalogo";
+            x8.Categoria = "Categoria";
             x8.ImgUrl = "assets/img/products-02.jpg";
 
             var x9 = new Producto();

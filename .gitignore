@@ -2,6 +2,7 @@
 
 # dependencies
 /frontend/node_modules
+/frontend/package*.json
 /.pnp
 .pnp.js
 
@@ -9,8 +10,6 @@
 /coverage
 
 # production
-/frontend/package-lock.json
-/frontend/package.json
 /build
 /backend/bin
 /backend/obj

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Cafeteria.Models;
 using Microsoft.AspNetCore.Mvc;
 using StringComparison = System.StringComparison;
@@ -21,10 +20,10 @@ namespace Cafeteria.Controllers
 
         [HttpGet("category/{category}")]
         public IEnumerable<Producto> GetByCateogry(string category)
-            => _context.Productos.Find(p => p.Categoria.Equals(StringComparison.InvariantCultureIgnoreCase));
+            => _context.Productos.Find(p => p.Categoria.ToLower() == category);
 
         [HttpGet("destacado")]
-        public IEnumerable<Producto> GetDestacados() => _context.Productos.Find(p => p.Destacado == true);
+        public IEnumerable<Producto> GetDestacados() => _context.Productos.Find(p => p.Destacado);
 
     }
 }
