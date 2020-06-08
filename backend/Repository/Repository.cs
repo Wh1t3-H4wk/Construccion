@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Cafeteria.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cafeteria.Repository
 {
@@ -14,8 +15,19 @@ namespace Cafeteria.Repository
     {
         protected readonly ApplicationDbContext Context;
         public Repository(ApplicationDbContext context) => Context = context;
+        
         public TEntity Get(int id) => Context.Set<TEntity>().Find(id);
         public IEnumerable<TEntity> GetAll() => Context.Set<TEntity>().ToList();
+        public IEnumerable<TEntity> GetAllWithInclude(params Expression<Func<TEntity, object>>[] includes)
+        {
+            DbSet<TEntity> dbSet = Context.Set<TEntity>();
+            IEnumerable<TEntity> query = null;
+            foreach (var include in includes)
+                query = dbSet.Include(include);
+            return query ?? dbSet;
+        }
+        public IEnumerable<TEntity> GetAllWithJoin(Expression<Func<TEntity, bool>> predicate) 
+            => Context.Set<TEntity>().Include(predicate).ToList();
         public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate) 
             =>Context.Set<TEntity>().Where(predicate);
         public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)

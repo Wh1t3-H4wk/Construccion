@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Cafeteria.Models;
 using Microsoft.AspNetCore.Mvc;
+using StringComparison = System.StringComparison;
 
 namespace Cafeteria.Controllers
 {    
@@ -14,9 +15,13 @@ namespace Cafeteria.Controllers
 
         [HttpGet]
         public IEnumerable<Producto> GetAll() => _context.Productos.GetAll();
-        
+
+        [HttpGet("{id}")]
+        public Producto GetById(int id) => _context.Productos.Get(id);
+
         [HttpGet("category/{category}")]
-        public IEnumerable<Producto> GetByCateogry(string category) => _context.Productos.GetByCategory(category);
+        public IEnumerable<Producto> GetByCateogry(string category)
+            => _context.Productos.Find(p => p.Categoria.Equals(StringComparison.InvariantCultureIgnoreCase));
 
         [HttpGet("destacado")]
         public IEnumerable<Producto> GetDestacados() => _context.Productos.Find(p => p.Destacado == true);

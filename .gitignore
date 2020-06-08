@@ -9,12 +9,15 @@
 /coverage
 
 # production
+/frontend/package-lock.json
+/frontend/package.json
 /build
 /backend/bin
 /backend/obj
 /backend/.vs
 /backend/Cafeteria.csproj.user
 /backend/.idea
+/backend/dataBaseCafeteria.db
 
 # misc
 .DS_Store
