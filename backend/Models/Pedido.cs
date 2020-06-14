@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Cafeteria.Models
 {
@@ -9,6 +11,8 @@ namespace Cafeteria.Models
         public uint Valor { get; set; }
         public string Direccion { get; set; }
         public string Estado { get; set; }
+        [ForeignKey("Codigo")]
+        public string CodigoName { get; set; }
         public Codigo Codigo { get; set; }
         public List<ProductoPedido> Productos { get; set; } = new List<ProductoPedido>();
     }

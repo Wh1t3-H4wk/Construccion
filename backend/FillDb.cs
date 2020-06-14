@@ -138,6 +138,30 @@ namespace Cafeteria.Repository
             context.Add(x17);
             context.Add(x18);
             context.SaveChanges();
+        }
+
+        public static void GeneratePedidosAndCodigos(ApplicationDbContext context)
+        {
+            var xcodigo = new Codigo();
+            xcodigo.Descuento = 10;
+            xcodigo.Name = "codigo1";
+            
+            var xpedido = new Pedido();
+            xpedido.Direccion = "direncion";
+            xpedido.Estado = "desarrollo";
+            xpedido.Valor = 9999;
+            xpedido.Codigo = xcodigo;
+            
+            var xpedido2 = new Pedido();
+            xpedido2.Direccion = "direcccion2";
+            xpedido2.Estado = "estado";
+            xpedido2.Valor = 1231;
+
+            context.Codigos.Add(xcodigo);
+            context.Pedidos.Add(xpedido);
+            context.Pedidos.Add(xpedido2);
+            context.SaveChanges();
+
 
         }
     }
