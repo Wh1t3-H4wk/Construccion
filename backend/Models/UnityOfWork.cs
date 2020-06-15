@@ -10,16 +10,19 @@ namespace Cafeteria.Models
     public class UnityOfWork: IDisposable
     {
         private readonly ApplicationDbContext _context;
-        public ProductoRepository Productos { get; set; }
+        public Repository<Producto> Productos { get; set; }
+        public Repository<Pedido> Pedidos { get; set; }
+        public Repository<Codigo> Codigos { get; set; }
         public UnityOfWork(ApplicationDbContext context)
         {
             _context = context;
-            Productos = new ProductoRepository(context);
+            Productos = new Repository<Producto>(context);
+            Pedidos = new Repository<Pedido>(context);
+            Codigos = new Repository<Codigo>(context);
         }
         /// <summary>
         /// Save changes to the DB
         /// </summary>
-        /// <returns></returns>
         public int Complete() => _context.SaveChanges();
         
         public void Dispose() => _context.Dispose();

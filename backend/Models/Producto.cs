@@ -1,5 +1,4 @@
-using System.ComponentModel.DataAnnotations;
-
+using System.Collections.Generic;
 namespace Cafeteria.Models
 {
     /// <summary>
@@ -7,8 +6,7 @@ namespace Cafeteria.Models
     /// </summary>
     public class Producto
     {
-        [Key] 
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string ImgUrl { get; set; }
         public string Descripcion { get; set; }
@@ -17,5 +15,6 @@ namespace Cafeteria.Models
         public bool Disponible { get; set; }
         public bool Destacado { get; set; }
         public bool Eliminado { get; set; }
+        public List<ProductoPedido> Pedidos { get; set; }
     }
 }
