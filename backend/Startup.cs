@@ -23,9 +23,10 @@ namespace Cafeteria
             //SQLite DbConfifuration
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlite("Data Source=dataBaseCafeteria.db"));
             // Add CORS policy
+
             services.AddCors(options =>
             {
-                options.AddPolicy("CorsPolicy", builder => { builder.AllowAnyOrigin(); });
+                options.AddPolicy("AllowAllOriginsPolicy", builder => { builder.AllowAnyOrigin(); });
             });
             //--
 
@@ -47,11 +48,10 @@ namespace Cafeteria
                 FillDb.GeneratePedidosAndCodigos(context);
                 //--
             }
-            
+            app.UseCors("AllowAllOriginsPolicy");
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            app.UseCors("CorsPolicy");
             //Makes Sure the DB is create, if not it creates it
             context.Database.EnsureCreated();
 
