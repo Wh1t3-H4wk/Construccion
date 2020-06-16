@@ -8,17 +8,33 @@ class Producto extends Component {
       showEdit:false,
       showEliminar:false,
       estado:false
-      
       }
   }
-  handleModalEliminar(){
+
+
+
+  
+  handleModalAbrirEliminar(){
     this.setState({showEliminar:!this.state.showEliminar})
   }
-  handleModalEdit(){
+  handleModalEliminar(){
+    console.log("elimine");
+    {/*agregar codigo que elimine las cosas en la base de datos
+    */}
+    this.setState({showEliminar:!this.state.showEliminar})
+  }
+  handleModalAbrirEdit(){
     this.setState({showEdit:!this.state.showEdit})
   }
+  handleModalEdit(e){
+    console.log("edite");
 
 
+    {/*agregar codigo que edite las cosas en la base de datos
+    */}
+
+    this.setState({showEdit:!this.state.showEdit})
+  }
   render() {
     return (
       <div className="card">
@@ -43,30 +59,27 @@ class Producto extends Component {
             <button className="btn btn-primary" type="button">
               +
             </button>
-            
-            
-            
-{/*-----------------modal editar-----------------------*/}
-            <Button onClick={()=>{this.handleModalEdit()}} >edit</Button>
+            {/*-----------------modal editar-----------------------*/}
+            <Button onClick={()=>{this.handleModalAbrirEdit()}} >edit</Button>
             <Modal show={this.state.showEdit} >
               <Modal.Header >
                   Editar producto
               </Modal.Header>
               <Modal.Body>
               <Form>
-                <Form.Group controlId="formNombre">
+                <Form.Group controlId="formGroupEditar">
                   <Form.Label>nombre</Form.Label>
-                  <Form.Control type="text"  value={this.props.producto.nombre} />
+                  <Form.Control id="nombre" type="text"  value={this.props.producto.nombre}/>
                 </Form.Group>
-                <Form.Group controlId="formPrecio">
+                <Form.Group controlId="formGroupEditar">
                   <Form.Label>precio</Form.Label>
-                  <Form.Control type="text" value={this.props.producto.precio} />
+                  <Form.Control id="precio" type="text" value={this.props.producto.precio} />
                 </Form.Group>
-                <Form.Group controlId="Descripcion">
+                <Form.Group controlId="formGroupEditar">
                   <Form.Label>Descripcion</Form.Label>
-                  <Form.Control as="textarea" rows="3" value={this.props.producto.descripcion} />
+                  <Form.Control id="descripcion" as="textarea" rows="3" value={this.props.producto.descripcion}/>
                 </Form.Group>
-                <Form.Group>
+                <Form.Group controlId="formGroupEditar">
                   <Form.File id="Imagen" label="Imagen"  />
                 </Form.Group>
               </Form>
@@ -75,14 +88,14 @@ class Producto extends Component {
               <Button onClick={()=>{this.handleModalEdit()}}>
                   aplicar cambios
                 </Button>
-                <Button onClick={()=>{this.handleModalEdit()}}>
+                <Button onClick={()=>{this.handleModalAbrirEdit()}}>
                   cancelar
                 </Button>
               </Modal.Footer>
             </Modal>
 
             {/*--------------modal eliminar----------------------------*/}
-            <Button  variant="danger" onClick={()=>{this.handleModalEliminar()}} >eliminar</Button>
+            <Button  variant="danger" onClick={()=>{this.handleModalAbrirEliminar()}} >eliminar</Button>
               <Modal show={this.state.showEliminar}>
               <Modal.Header  >Eliminar prodcuto</Modal.Header>
               <Modal.Body>
@@ -92,27 +105,21 @@ class Producto extends Component {
               <Button variant="danger"onClick={()=>{this.handleModalEliminar()}}>
                   eliminar
                 </Button>
-                <Button onClick={()=>{this.handleModalEliminar()}}>
+                <Button onClick={()=>{this.handleModalAbrirEliminar()}}>
                 cancelar
                 </Button>
               </Modal.Footer>
             </Modal>
-            
-            
           </div>
-          <Form>
-          <Form.Check 
+          <Form.Check
             type="checkbox"
-            className="mb-2 mr-sm-2"
-            id="visibleCheck"
-            value={this.props.producto.Disponible}
-            label="Visible"
+            className="my-1 mr-sm-2"
+            
+            label="visible"
+            
           />
-          </Form>
         </div>
-        
       </div>
-     
     );
   }
 }
