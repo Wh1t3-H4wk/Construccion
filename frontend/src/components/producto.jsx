@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import ProductoAcciones from "./productoAcciones";
 
 class Producto extends Component {
@@ -8,13 +9,54 @@ class Producto extends Component {
       showEdit: false,
       showEliminar: false,
       estado: false,
+      nombre: "",
+      precio: "",
+      descripcion: "",
+      imagen: "",
     };
 
-    this.handleModalEliminar = this.handleModalEliminar.bind(this);
-    this.handleModalEdit = this.handleModalEdit.bind(this);
+    this.handleModalEdit = this.handleModalEdit.bind();
+    this.handleModalEliminar = this.handleModalEliminar.bind();
   }
 
+  onChangeNombre = (e) => {
+    this.setState({
+      nombre: e.target.value,
+    });
+    console.log(this.state.nombre);
+  };
+  onChangePrecio = (e) => {
+    this.setState({
+      precio: e.target.value,
+    });
+  };
+  onChangeDescripcion = (e) => {
+    this.setState({
+      descripcion: e.target.value,
+    });
+  };
+  onChangeImagen = (e) => {
+    this.setState({
+      imagen: e.target.value,
+    });
+  };
+  onSubmit = async (e) => {
+    e.preventDefault();
+    await axios.post("http://localhost:5001/producto/", {
+      nombre: this.state.nombre,
+      precio: this.state.precio,
+      descripcion: this.state.descripcion,
+      imagen: this.state.imagen,
+    });
+    console.log("HOLA");
+  };
+
   handleModalEliminar() {
+    console.log("elimine");
+    {
+      /*agregar codigo que elimine las cosas en la base de datos
+       */
+    }
     this.setState({ showEliminar: !this.state.showEliminar });
   }
 

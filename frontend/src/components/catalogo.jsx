@@ -1,12 +1,19 @@
 import React, { Component } from "react";
 import Producto from "./producto";
+import {Button, Modal,Form} from 'react-bootstrap'
+import CrearProducto from './crearProducto';
 
 class Catalogo extends Component {
   state = {
     pagina: 0,
     numProductos: 12,
+    showCrear:false
   };
 
+  handleModalAbrirCrear(){
+    this.setState({showCrear:!this.state.showCrear})
+  }
+  
   rebanarProductos = () => {
     const pagina = this.state.pagina;
     const numProductos = this.state.numProductos;
@@ -19,7 +26,7 @@ class Catalogo extends Component {
 
     for (let index = 0; index < sliced.length; index += 3) {
       let subslice = sliced.slice(index, index + 3);
-      console.log(subslice);
+      //console.log(subslice);
       content.push(
         <div className="card-group" key={index}>
           {subslice.map((producto) => (
@@ -137,6 +144,7 @@ class Catalogo extends Component {
                         height: "37px",
                       }}
                     />
+                    <CrearProducto/>
                   </div>
                 </div>
               </div>

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Button, Modal, Form } from "react-bootstrap";
+import EditarProducto from "./editarProducto";
+import EliminarProducto from "./eliminarProducto";
 
 class ProductoAcciones extends Component {
   renderInputCliente() {
@@ -39,93 +41,10 @@ class ProductoAcciones extends Component {
             }
           ></i>
         </button>
-
         {/*-----------------modal editar-----------------------*/}
-        <Button
-          className="btn btn-success"
-          type="button"
-          onClick={() => {
-            this.props.onModalEditar();
-          }}
-        >
-          <i className="fa fa-edit"></i>
-        </Button>
-        <Modal show={this.props.showEdit}>
-          <Modal.Header>Editar producto</Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group controlId="formNombre">
-                <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" value={this.props.producto.nombre} />
-              </Form.Group>
-              <Form.Group controlId="formPrecio">
-                <Form.Label>Precio</Form.Label>
-                <Form.Control type="text" value={this.props.producto.precio} />
-              </Form.Group>
-              <Form.Group controlId="Descripcion">
-                <Form.Label>Descripción</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows="3"
-                  value={this.props.producto.descripcion}
-                />
-              </Form.Group>
-              <Form.Group>
-                <Form.File id="Imagen" label="Imagen" />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              onClick={() => {
-                this.props.onModalEditar();
-              }}
-            >
-              Aplicar cambios
-            </Button>
-            <Button
-              onClick={() => {
-                this.props.onModalEditar();
-              }}
-            >
-              Cancelar
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
+        <EditarProducto />
         {/*--------------modal eliminar----------------------------*/}
-        <Button
-          className="btn btn-danger"
-          type="button"
-          onClick={() => {
-            this.props.onModalEliminar();
-          }}
-        >
-          <i className="fa fa-trash"></i>
-        </Button>
-        <Modal show={this.props.showEliminar}>
-          <Modal.Header>Eliminar prodcuto</Modal.Header>
-          <Modal.Body>
-            ¿Esta seguro que desea eliminar este producto?
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="danger"
-              onClick={() => {
-                this.props.onModalEliminar();
-              }}
-            >
-              Eliminar
-            </Button>
-            <Button
-              onClick={() => {
-                this.props.onModalEliminar();
-              }}
-            >
-              Cancelar
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <EliminarProducto />
       </React.Fragment>
     );
   }

@@ -1,4 +1,5 @@
 using Cafeteria.Models;
+using Cafeteria.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,175 +11,49 @@ namespace Cafeteria
 {
     public class Startup
     {
-        private const string AllowAllOriginsPolicy = "AllowAllOriginsPolicy";
         public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+            => Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //Configuration of the Database, for the moment is just a local DB in memory
-            services.AddDbContext<ApplicationDbContext>(opt => opt.UseInMemoryDatabase("dblocal"));
-            //--
+
+            //SQLite DbConfifuration
+            services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlite("Data Source=dataBaseCafeteria.db"));
             // Add CORS policy
+
             services.AddCors(options =>
-                { options.AddPolicy(AllowAllOriginsPolicy, builder => { builder.AllowAnyOrigin(); }); });
+            {
+                options.AddPolicy("AllowAllOriginsPolicy", builder => { builder.AllowAnyOrigin(); });
+            });
             //--
+
+
             services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext con)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment()) 
             {
                 app.UseDeveloperExceptionPage();
+                
+                //Dummy DbFill just for testing in development environment
+                context.Database.EnsureDeleted();
+                context.Database.EnsureCreated(); 
+                FillDb.GenerateProducotos(context);
+                FillDb.GeneratePedidosAndCodigos(context);
+                //--
             }
-
-            app.UseCors(AllowAllOriginsPolicy);
-            //app.UseHsts();
-            //app.UseHttpsRedirection();
-
+            app.UseCors("AllowAllOriginsPolicy");
             app.UseRouting();
-
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-
-            //random objects for producto
-            var x = new Producto();
-            x.Nombre = "Bebida 1";
-            x.Descripcion = "Descripcion generica";
-            x.Categoria = "Catalogo";
-            x.ImgUrl = "assets/img/products-02.jpg";
-            x.Destacado = true;
-
-            var x2 = new Producto();
-            x2.Nombre = "Bebida 2";
-            x2.Descripcion = "Descripcion generica";
-            x2.Categoria = "Catalogo";
-            x2.ImgUrl = "assets/img/products-02.jpg";
-
-            var x3 = new Producto();
-            x3.Nombre = "Bebida 3";
-            x3.Descripcion = "Descripcion generica";
-            x3.Categoria = "Catalogo";
-            x3.ImgUrl = "assets/img/products-02.jpg";
-
-            var x4 = new Producto();
-            x4.Nombre = "Bebida 4";
-            x4.Descripcion = "Descripcion generica";
-            x4.Categoria = "Catalogo";
-            x4.ImgUrl = "assets/img/products-02.jpg";
-            x4.Destacado = true;
-
-            var x5 = new Producto();
-            x5.Nombre = "Bebida 5";
-            x5.Descripcion = "Descripcion generica";
-            x5.Categoria = "Catalogo";
-            x5.ImgUrl = "assets/img/products-02.jpg";
-
-            var x6 = new Producto();
-            x6.Nombre = "Bebida 6";
-            x6.Descripcion = "Descripcion generica";
-            x6.Categoria = "Catalogo";
-            x6.ImgUrl = "assets/img/products-02.jpg";
-
-            var x7 = new Producto();
-            x7.Nombre = "Bebida 7";
-            x7.Descripcion = "Descripcion generica";
-            x7.Categoria = "Catalogo";
-            x7.ImgUrl = "assets/img/products-02.jpg";
-
-            var x8 = new Producto();
-            x8.Nombre = "Bebida 8";
-            x8.Descripcion = "Descripcion generica";
-            x8.Categoria = "Catalogo";
-            x8.ImgUrl = "assets/img/products-02.jpg";
-
-            var x9 = new Producto();
-            x9.Nombre = "Bebida 9";
-            x9.Descripcion = "Descripcion generica";
-            x9.Categoria = "Catalogo";
-            x9.ImgUrl = "assets/img/products-02.jpg";
-
-            var x10 = new Producto();
-            x10.Nombre = "Comida 1";
-            x10.Descripcion = "Descripcion generica";
-            x10.Categoria = "Catalogo";
-            x10.ImgUrl = "assets/img/products-02.jpg";
-
-            var x11 = new Producto();
-            x11.Nombre = "Comida 2";
-            x11.Descripcion = "Descripcion generica";
-            x11.Categoria = "Catalogo";
-            x11.ImgUrl = "assets/img/products-02.jpg";
-
-            var x12 = new Producto();
-            x12.Nombre = "Comida 3";
-            x12.Descripcion = "Descripcion generica";
-            x12.Categoria = "Catalogo";
-            x12.ImgUrl = "assets/img/products-02.jpg";
-
-            var x13 = new Producto();
-            x13.Nombre = "Comida 4";
-            x13.Descripcion = "Descripcion generica";
-            x13.Categoria = "Catalogo";
-            x13.ImgUrl = "assets/img/products-02.jpg";
-
-            var x14 = new Producto();
-            x14.Nombre = "Comida 5";
-            x14.Descripcion = "Descripcion generica";
-            x14.Categoria = "Catalogo";
-            x14.ImgUrl = "assets/img/products-02.jpg";
-            x14.Destacado = true;
-
-            var x15 = new Producto();
-            x15.Nombre = "Comida 6";
-            x15.Descripcion = "Descripcion generica";
-            x15.Categoria = "Catalogo";
-            x15.ImgUrl = "assets/img/products-02.jpg";
-
-            var x16 = new Producto();
-            x16.Nombre = "Comida 7";
-            x16.Descripcion = "Descripcion generica";
-            x16.Categoria = "Catalogo";
-            x16.ImgUrl = "assets/img/products-02.jpg";
-
-            var x17 = new Producto();
-            x17.Nombre = "Comida 8";
-            x17.Descripcion = "Descripcion generica";
-            x17.Categoria = "Catalogo";
-            x17.ImgUrl = "assets/img/products-02.jpg";
-
-            var x18 = new Producto();
-            x18.Nombre = "Comida 9";
-            x18.Descripcion = "Descripcion generica";
-            x18.Categoria = "Catalogo";
-            x18.ImgUrl = "assets/img/products-02.jpg";
-
-            con.Add(x);
-            con.Add(x2);
-            con.Add(x3);
-            con.Add(x4);
-            con.Add(x5);
-            con.Add(x6);
-            con.Add(x7);
-            con.Add(x8);
-            con.Add(x9);
-            con.Add(x10);
-            con.Add(x11);
-            con.Add(x12);
-            con.Add(x13);
-            con.Add(x14);
-            con.Add(x15);
-            con.Add(x16);
-            con.Add(x17);
-            con.Add(x18);
-            con.SaveChanges();
+            //Makes Sure the DB is create, if not it creates it
+            context.Database.EnsureCreated();
 
         }
     }

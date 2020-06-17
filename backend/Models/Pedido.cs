@@ -1,16 +1,19 @@
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Cafeteria.Models
 {
     public class Pedido
     {
-        [Key]
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Preparacion { get; set; }
         public uint Valor { get; set; }
         public string Direccion { get; set; }
         public string Estado { get; set; }
-        public List<Producto> Productos { get; set; } = new List<Producto>();
+        [ForeignKey("Codigo")]
+        public string CodigoName { get; set; }
+        public Codigo Codigo { get; set; }
+        public List<ProductoPedido> Productos { get; set; } = new List<ProductoPedido>();
     }
 }

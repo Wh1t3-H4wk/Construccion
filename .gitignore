@@ -2,6 +2,7 @@
 
 # dependencies
 /frontend/node_modules
+/frontend/package*.json
 /.pnp
 .pnp.js
 
@@ -15,6 +16,7 @@
 /backend/.vs
 /backend/Cafeteria.csproj.user
 /backend/.idea
+/backend/dataBaseCafeteria.db
 
 # misc
 .DS_Store
