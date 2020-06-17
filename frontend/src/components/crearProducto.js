@@ -29,7 +29,7 @@ class CrearProducto extends React.Component {
       "imgURL": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_BTS.png",
       "descripcion": form.formDescripcion.value,
       "precio": parseInt(form.formPrecio.value),
-      "categoria": "bebestible",
+      "categoria": form.formCategoria.value,
       "disponible": true,
       "destacado": false,
       "eliminado": false
@@ -57,6 +57,13 @@ class CrearProducto extends React.Component {
               <Form.Group controlId="formDescripcion">
                 <Form.Label>Descripción</Form.Label>
                 <Form.Control as="textarea" rows="3" placeholder="Descripción" required/>
+              </Form.Group>
+              <Form.Group controlId="formCategoria">
+                <Form.Label>Categoría</Form.Label>
+                <Form.Control as="select">
+                  <option>Bebestible</option>
+                  <option>Comida</option>
+                </Form.Control>
               </Form.Group>
               <Form.Group controlId="formImagen">
                 <Form.File id="imagen" label="Imagen"></Form.File>
