@@ -1,9 +1,6 @@
 using System.Collections.Generic;
 namespace Cafeteria.Models
 {
-    /// <summary>
-    /// DummyModal for testing
-    /// </summary>
     public class Producto
     {
         public int Id { get; set; }

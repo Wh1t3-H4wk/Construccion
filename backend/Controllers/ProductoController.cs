@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Cafeteria.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StringComparison = System.StringComparison;
 
 namespace Cafeteria.Controllers
 {    
@@ -11,7 +11,7 @@ namespace Cafeteria.Controllers
     {
         private readonly UnityOfWork _context;
         public ProductoController(ApplicationDbContext db) =>_context = new UnityOfWork(db);
-
+        
         [HttpGet]
         public IEnumerable<Producto> GetAll() => _context.Productos.GetAll();
 
@@ -23,15 +23,18 @@ namespace Cafeteria.Controllers
         }
 
         [HttpGet("{id}")]
-        public Producto GetById(int id) => _context.Productos.Get(id);
+        public Producto GetById(int id) => _context.Productos[id];
 
-        [HttpPut]
-        public void Update(Producto producto)
+        [HttpPut("{id}")]
+        public void Update(int id, Producto producto)
         {
-            _context.Productos.Update(producto);
-            _context.Complete();
+            producto.Id = id;
+            Update(producto);
         }
 
+        [HttpPut]
+        public void Update(Producto producto) => _context.Productos[producto.Id] = producto;
+        
         [HttpGet("category/{category}")]
         public IEnumerable<Producto> GetByCateogry(string category)
             => _context.Productos.Find(p => p.Categoria.ToLower() == category);
@@ -47,7 +50,7 @@ namespace Cafeteria.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Remove(int id) => Remove(_context.Productos.Get(id));
+        public void Remove(int id) => Remove(_context.Productos[id]);
 
     }
 }
