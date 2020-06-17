@@ -41,7 +41,11 @@ class Destacados extends Component {
             <div className="bg-faded p-5 rounded">
               <div className="card-group">
                 {this.props.destacados.map((producto) => (
-                  <Producto key={producto.id} producto={producto}></Producto>
+                  <Producto
+                    key={producto.id}
+                    producto={producto}
+                    enDestacado={true}
+                  ></Producto>
                 ))}
               </div>
             </div>

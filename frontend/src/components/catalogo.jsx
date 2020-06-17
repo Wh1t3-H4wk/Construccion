@@ -23,7 +23,11 @@ class Catalogo extends Component {
       content.push(
         <div className="card-group" key={index}>
           {subslice.map((producto) => (
-            <Producto key={producto.id} producto={producto} />
+            <Producto
+              key={producto.id}
+              producto={producto}
+              enDestacado={false}
+            />
           ))}
         </div>
       );
