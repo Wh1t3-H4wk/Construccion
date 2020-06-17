@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import {Button, Modal,Form} from 'react-bootstrap'
 import axios from 'axios'
+import EditarProducto from './editarProducto';
+import EliminarProducto from './eliminarProducto';
 
 class Producto extends Component {
   constructor(){
@@ -98,7 +100,7 @@ class Producto extends Component {
             <button className="btn btn-primary" type="button">
               +
             </button>
-            {/*-----------------modal editar-----------------------*/}
+            {/*-----------------modal editar-----------------------
             <Button onClick={()=>{this.handleModalAbrirEdit()}} >edit</Button>
             <Modal show={this.state.showEdit} >
               <Modal.Header >
@@ -133,8 +135,11 @@ class Producto extends Component {
                 </Button>
               </Modal.Footer>
             </Modal>
+            */}
+            
+            {/*--------------modal eliminar--------------------------
 
-            {/*--------------modal eliminar----------------------------*/}
+            
             <Button  variant="danger" onClick={()=>{this.handleModalAbrirEliminar()}} >eliminar</Button>
               <Modal show={this.state.showEliminar}>
               <Modal.Header  >Eliminar prodcuto</Modal.Header>
@@ -150,6 +155,9 @@ class Producto extends Component {
                 </Button>
               </Modal.Footer>
             </Modal>
+            --*/}
+            <EditarProducto/>
+            <EliminarProducto/>
           </div>
           <Form.Check
             type="checkbox"
