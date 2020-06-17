@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Producto from "./producto";
 import {Button, Modal,Form} from 'react-bootstrap'
+import CrearProducto from './crearProducto';
 
 class Catalogo extends Component {
   state = {
@@ -12,12 +13,7 @@ class Catalogo extends Component {
   handleModalAbrirCrear(){
     this.setState({showCrear:!this.state.showCrear})
   }
-  handleModalCrear(){
-    console.log("cree");
-    {/*agregar codigo que cree las cosas en la base de datos
-    */}
-    this.setState({showCrear:!this.state.showCrear})
-  }
+  
   rebanarProductos = () => {
     const pagina = this.state.pagina;
     const numProductos = this.state.numProductos;
@@ -30,7 +26,7 @@ class Catalogo extends Component {
 
     for (let index = 0; index < sliced.length; index += 3) {
       let subslice = sliced.slice(index, index + 3);
-      console.log(subslice);
+      //console.log(subslice);
       content.push(
         <div className="card-group" key={index}>
           {subslice.map((producto) => (
@@ -144,45 +140,7 @@ class Catalogo extends Component {
                         height: "37px",
                       }}
                     />
-
-
-                    {/*-----------------modal editar-----------------------*/}
-                    <Button onClick={()=>{this.handleModalAbrirCrear()}} >Crear Procuto</Button>
-                    <Modal show={this.state.showCrear} >
-                      <Modal.Header >
-                          Crear producto
-                      </Modal.Header>
-                      <Modal.Body>
-                      <Form>
-                        <Form.Group controlId="formNombre">
-                          <Form.Label>nombre</Form.Label>
-                          <Form.Control type="text"  />
-                        </Form.Group>
-                        <Form.Group controlId="formPrecio">
-                          <Form.Label>precio</Form.Label>
-                          <Form.Control type="text"  />
-                        </Form.Group>
-                        <Form.Group controlId="Descripcion">
-                          <Form.Label>Descripcion</Form.Label>
-                          <Form.Control as="textarea" rows="3"  />
-                        </Form.Group>
-                        <Form.Group>
-                          <Form.File id="Imagen" label="Imagen"  />
-                        </Form.Group>
-                      </Form>
-                      </Modal.Body> 
-                      <Modal.Footer>
-                      <Button onClick={()=>{this.handleModalCrear()}}>
-                          Crear prodcuto
-                        </Button>
-                        <Button onClick={()=>{this.handleModalAbrirCrear()}}>
-                          cancelar
-                        </Button>
-                      </Modal.Footer>
-                    </Modal>
-
-
-
+                    <CrearProducto/>
                   </div>
                 </div>
               </div>
