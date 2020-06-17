@@ -11,6 +11,7 @@ class CrearProducto extends React.Component {
     }
 
     this.toggle = this.toggle.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   toggle() {
@@ -22,13 +23,17 @@ class CrearProducto extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
     let form = e.target;
-    await axios.post('http://localhost:5001/Productos', {
-      Nombre: form.formNombre.value,
-      Precio: form.formPrecio.value,
-      Descripcion: form.formDescripcion.value
-      //ImgUrl: form.formImagen.files[0]
+    await axios.post('http://localhost:5001/Producto', {
+      "nombre": form.formNombre.value,
+      //"imgUrl": form.imagen.files[0],
+      "imgURL": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_BTS.png",
+      "descripcion": form.formDescripcion.value,
+      "precio": parseInt(form.formPrecio.value),
+      "categoria": "bebestible",
+      "disponible": true,
+      "destacado": false,
+      "eliminado": false
     });
-    //console.log(form.imagen.files);
     this.toggle();
   }
 
