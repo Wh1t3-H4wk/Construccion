@@ -150,8 +150,7 @@ namespace Cafeteria.Repository
             xpedido.Direccion = "direncion";
             xpedido.Estado = "desarrollo";
             xpedido.Valor = 9999;
-            xpedido.Codigo = xcodigo;
-            
+
             var xpedido2 = new Pedido();
             xpedido2.Direccion = "direcccion2";
             xpedido2.Estado = "estado";

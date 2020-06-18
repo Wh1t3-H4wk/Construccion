@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using Cafeteria.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Cafeteria.Controllers
 {

@@ -1,15 +1,11 @@
-using System;
 using Cafeteria.Models;
 using Cafeteria.Repository;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
-
 
 namespace Cafeteria
 {
@@ -46,7 +42,6 @@ namespace Cafeteria
                 FillDb.GenerateProducotos(context);
                 FillDb.GeneratePedidosAndCodigos(context);
                 //--
-                app.UseSwaggerDocumentation(); //swagger
             }
             app.UseCors(x => x
                 .AllowAnyOrigin()
@@ -57,6 +52,7 @@ namespace Cafeteria
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseSwaggerDocumentation(); //swagger
             //Makes Sure the DB is create, if not it creates it
             context.Database.EnsureCreated();
 

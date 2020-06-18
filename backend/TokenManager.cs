@@ -10,7 +10,7 @@ namespace Cafeteria
 {
     public static class TokenManager
     {
-        public static readonly string Secret =
+        private static readonly string Secret =
             "ERMN05OPLoDvbTTa/QkqLNMI7cPLguaRyHzyg7n5qNBVjQmtBhz4SzYh4NBVCXi3KJHlSXKP+oi2+bXr6CUYTR==";
 
         public static IServiceCollection AddJwtBearerAuthentication(this IServiceCollection services)
@@ -18,7 +18,7 @@ namespace Cafeteria
             byte[] key = Convert.FromBase64String(Secret);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters()
+                options.TokenValidationParameters = new TokenValidationParameters
                 {
                     RequireExpirationTime = true,
                     ValidateIssuer = false,
