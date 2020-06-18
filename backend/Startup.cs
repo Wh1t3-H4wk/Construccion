@@ -27,7 +27,18 @@ namespace Cafeteria
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOriginsPolicy", builder => { builder.AllowAnyOrigin(); });
+                //options.AddPolicy("AllowAllOriginsPolicy", builder => { builder.AllowAnyOrigin(); });
+                options.AddPolicy("app-cors-policy",
+                    builder =>
+                    {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                        //.AllowCredentials()
+                        ;
+                    }
+                );
             });
             //--
             services.AddSwaggerGen(swagger =>
@@ -53,7 +64,8 @@ namespace Cafeteria
                 FillDb.GeneratePedidosAndCodigos(context);
                 //--
             }
-            app.UseCors("AllowAllOriginsPolicy");
+            //app.UseCors("AllowAllOriginsPolicy");
+            app.UseCors("app-cors-policy");
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
