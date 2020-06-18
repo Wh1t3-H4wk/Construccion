@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Cafeteria
 {
@@ -29,6 +30,10 @@ namespace Cafeteria
                 options.AddPolicy("AllowAllOriginsPolicy", builder => { builder.AllowAnyOrigin(); });
             });
             //--
+            services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "Donde Jose Billar" });
+            });
 
 
             services.AddControllers();
@@ -37,18 +42,23 @@ namespace Cafeteria
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
         {
-            if (env.IsDevelopment()) 
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
+
                 //Dummy DbFill just for testing in development environment
                 context.Database.EnsureDeleted();
-                context.Database.EnsureCreated(); 
+                context.Database.EnsureCreated();
                 FillDb.GenerateProducotos(context);
                 FillDb.GeneratePedidosAndCodigos(context);
                 //--
             }
             app.UseCors("AllowAllOriginsPolicy");
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Documentation");
+            });
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
