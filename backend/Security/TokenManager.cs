@@ -1,21 +1,18 @@
-using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Cafeteria.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 
-namespace Cafeteria
+namespace Cafeteria.Security
 {
     public static class TokenManager
     {
-        private static readonly string Secret =
-            "ERMN05OPLoDvbTTa/QkqLNMI7cPLguaRyHzyg7n5qNBVjQmtBhz4SzYh4NBVCXi3KJHlSXKP+oi2+bXr6CUYTR==";
-
-        public static IServiceCollection AddJwtBearerAuthentication(this IServiceCollection services)
+        public static IServiceCollection AddJwtBearerAuthentication(this IServiceCollection services, string secret)
         {
-            byte[] key = Convert.FromBase64String(Secret);
+            byte[] key = Convert.FromBase64String(secret);
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -31,7 +28,7 @@ namespace Cafeteria
             return services;
         }
         
-        public static string GenerateToken(BaseUser user)
+        public static Token GenerateToken(BaseUser user, string Secret)
         {
             byte[] key = Convert.FromBase64String(Secret);
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);
@@ -48,7 +45,7 @@ namespace Cafeteria
             };
             JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
             JwtSecurityToken token = handler.CreateJwtSecurityToken(descriptor);
-            return handler.WriteToken(token);
+            return new Token(handler.WriteToken(token), user.Rol);
         }
     }
 }

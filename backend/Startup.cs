@@ -1,5 +1,7 @@
+using Cafeteria.DB;
+using Cafeteria.Extra;
 using Cafeteria.Models;
-using Cafeteria.Repository;
+using Cafeteria.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +26,7 @@ namespace Cafeteria
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlite("Data Source=dataBaseCafeteria.db"));
             // Add CORS policy
             services.AddCors();
-            services.AddJwtBearerAuthentication(); //JwtConfiguration
+            services.AddJwtBearerAuthentication(Configuration["Jwt:Key"]); //JwtConfiguration
             services.AddSwaggerDocumentation(); //Swagger
             services.AddControllers();
         }

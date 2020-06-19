@@ -1,6 +1,7 @@
+using Cafeteria.DB;
 using Cafeteria.Models;
 
-namespace Cafeteria.Repository
+namespace Cafeteria.Extra
 {
     public static class FillDb
     {

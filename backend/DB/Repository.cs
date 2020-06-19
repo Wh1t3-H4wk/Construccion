@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Cafeteria.Models;
 
-namespace Cafeteria.Repository
+namespace Cafeteria.DB
 {
     public class Repository<TEntity, TKey> where TEntity : class where TKey : IComparable
     {
@@ -27,5 +26,6 @@ namespace Cafeteria.Repository
         public void AddRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().AddRange(entities);
         public void Remove(TEntity entity) => Context.Set<TEntity>().Remove(entity);
         public void RemoveRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().RemoveRange(entities);
+        public bool Exists(TKey key) => Context.Set<TEntity>().Find(key) != null;
     }
 }

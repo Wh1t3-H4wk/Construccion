@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
-namespace Cafeteria
+namespace Cafeteria.Extra
 {
     public static class Swagger
     {
