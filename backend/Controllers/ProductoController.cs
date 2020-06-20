@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using System.Security.Cryptography;
+using Cafeteria.DB;
 using Cafeteria.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using StringComparison = System.StringComparison;
 
 namespace Cafeteria.Controllers
 {    
@@ -9,45 +11,65 @@ namespace Cafeteria.Controllers
     [Route("[controller]")]
     public class ProductoController : ControllerBase
     {
-        private readonly UnityOfWork _context;
-        public ProductoController(ApplicationDbContext db) =>_context = new UnityOfWork(db);
-
+        private readonly UnitOfWork _context;
+        public ProductoController(ApplicationDbContext db) =>_context = new UnitOfWork(db);
+        
         [HttpGet]
-        public IEnumerable<Producto> GetAll() => _context.Productos.GetAll();
+        public IActionResult GetAll() => Ok(_context.Productos.GetAll());
 
         [HttpPost]
-        public void Add(Producto producto)
+        public IActionResult Add(Producto producto)
         {
             _context.Productos.Add(producto);
             _context.Complete();
+            return Ok();
         }
 
         [HttpGet("{id}")]
-        public Producto GetById(int id) => _context.Productos.Get(id);
-
-        [HttpPut]
-        public void Update(Producto producto)
+        public IActionResult GetById(int id)
         {
-            _context.Productos.Update(producto);
-            _context.Complete();
+            if (!_context.Productos.Exists(id)) return NotFound();
+            return Ok(_context.Productos[id]);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, Producto producto)
+        {
+            if (!_context.Productos.Exists(id)) return NotFound();
+            producto.Id = id;
+            _context.Productos[producto.Id] = producto;
+            return Ok();
         }
 
         [HttpGet("category/{category}")]
-        public IEnumerable<Producto> GetByCateogry(string category)
-            => _context.Productos.Find(p => p.Categoria.ToLower() == category);
+        public IActionResult GetByCateogry(string category)
+            => Ok(_context.Productos.Find(p => p.Categoria.ToLower() == category && !p.Eliminado));
 
         [HttpGet("destacado")]
-        public IEnumerable<Producto> GetDestacados() => _context.Productos.Find(p => p.Destacado);
+        public IActionResult GetDestacados() => Ok(_context.Productos.Find(p => p.Destacado && !p.Eliminado));
 
-        [HttpDelete]
-        public void Remove(Producto producto)
+        private IActionResult Destacado(int id, bool destacado)
         {
-            _context.Productos.Remove(producto);
-            _context.Complete();
+            if (!_context.Productos.Exists(id)) return NotFound();
+            _context.Productos[id].Destacado = destacado;
+            return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public void Remove(int id) => Remove(_context.Productos.Get(id));
+        [HttpDelete("destacado/{id}")]
+        public IActionResult RemoveDestacado(int id) => Destacado(id,false);
 
+        [HttpPut("destacado/{id}")]
+        public IActionResult AddDestacado(int id) => Destacado(id, true);
+
+        [HttpDelete("{id}")]
+        public IActionResult Eliminar(int id)
+        {
+            if (!_context.Productos.Exists(id)) return NotFound();
+            _context.Productos[id].Eliminado = true;
+            _context.Productos[id].Disponible = false;
+            _context.Productos[id].Disponible = false;
+            return Ok();
+        }
+        
     }
 }
