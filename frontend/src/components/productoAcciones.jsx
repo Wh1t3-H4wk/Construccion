@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Button, Modal, Form } from "react-bootstrap";
 import EditarProducto from "./editarProducto";
 import EliminarProducto from "./eliminarProducto";
+import { Form } from "react-bootstrap";
+import Axios from "axios";
 
 class ProductoAcciones extends Component {
   renderInputCliente() {
@@ -34,7 +35,13 @@ class ProductoAcciones extends Component {
   renderAccionesCatalogo() {
     return (
       <React.Fragment>
-        <button className="btn btn-primary" type="button">
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() =>
+            this.props.onSubmitCambiarDestacado(this.props.producto)
+          }
+        >
           <i
             className={
               this.props.producto.destacado ? "fa fa-star" : "fa fa-star-o"
@@ -68,7 +75,13 @@ class ProductoAcciones extends Component {
   renderAccionesDestacado() {
     return (
       <React.Fragment>
-        <button className="btn btn-danger" type="button">
+        <button
+          className="btn btn-danger"
+          type="button"
+          onClick={() =>
+            this.props.onSubmitCambiarDestacado(this.props.producto)
+          }
+        >
           <i className="fa fa-minus"></i>
         </button>
       </React.Fragment>

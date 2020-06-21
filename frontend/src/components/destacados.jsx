@@ -45,6 +45,9 @@ class Destacados extends Component {
                     key={producto.id}
                     producto={producto}
                     enDestacado={true}
+                    onSubmitCambiarDestacado={
+                      this.props.onSubmitCambiarDestacado
+                    }
                   ></Producto>
                 ))}
               </div>

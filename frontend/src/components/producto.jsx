@@ -82,6 +82,7 @@ class Producto extends Component {
             showEliminar={this.state.showEliminar}
             enDestacado={this.props.enDestacado}
             esAdmin={true}
+            onSubmitCambiarDestacado={this.props.onSubmitCambiarDestacado}
           />
         </div>
       </div>

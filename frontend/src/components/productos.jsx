@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Destacados from "./destacados";
 import Catalogo from "./catalogo";
+import Axios from "axios";
 
 class Productos extends Component {
   constructor(props) {
@@ -12,7 +13,8 @@ class Productos extends Component {
       destacados: [],
     };
   }
-  componentDidMount() {
+
+  fetchListaProductos() {
     fetch("http://localhost:5001/producto")
       .then((res) => res.json())
       .then(
@@ -38,6 +40,9 @@ class Productos extends Component {
           });
         }
       );
+  }
+
+  fetchListaDestacados() {
     fetch("http://localhost:5001/producto/destacado")
       .then((res) => res.json())
       .then(
@@ -62,11 +67,42 @@ class Productos extends Component {
         }
       );
   }
+
+  componentDidMount() {
+    this.fetchListaProductos();
+    this.fetchListaProductos();
+  }
+
+  handleCambiarEstadoDestacado = (producto) => {
+    let id = producto.id;
+    let value = !producto.destacado;
+    (value
+      ? Axios.put(`http://localhost:5000/Producto/destacado/${id}`)
+      : Axios.delete(`http://localhost:5000/Producto/destacado/${id}`)
+    )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(() => {
+        this.fetchListaProductos();
+        this.fetchListaDestacados();
+      });
+  };
+
   render() {
     return (
       <React.Fragment>
-        <Destacados destacados={this.state.destacados} />
-        <Catalogo productos={this.state.productos} />
+        <Destacados
+          destacados={this.state.destacados}
+          onSubmitCambiarDestacado={this.handleCambiarEstadoDestacado}
+        />
+        <Catalogo
+          productos={this.state.productos}
+          onSubmitCambiarDestacado={this.handleCambiarEstadoDestacado}
+        />
         <section className="page-section">
           <div className="container">
             <div className="product-item"></div>

@@ -1,19 +1,19 @@
 import React, { Component } from "react";
 import Producto from "./producto";
-import {Button, Modal,Form} from 'react-bootstrap'
-import CrearProducto from './crearProducto';
+import { Button, Modal, Form } from "react-bootstrap";
+import CrearProducto from "./crearProducto";
 
 class Catalogo extends Component {
   state = {
     pagina: 0,
     numProductos: 12,
-    showCrear:false
+    showCrear: false,
   };
 
-  handleModalAbrirCrear(){
-    this.setState({showCrear:!this.state.showCrear})
+  handleModalAbrirCrear() {
+    this.setState({ showCrear: !this.state.showCrear });
   }
-  
+
   rebanarProductos = () => {
     const pagina = this.state.pagina;
     const numProductos = this.state.numProductos;
@@ -34,6 +34,7 @@ class Catalogo extends Component {
               key={producto.id}
               producto={producto}
               enDestacado={false}
+              onSubmitCambiarDestacado={this.props.onSubmitCambiarDestacado}
             />
           ))}
         </div>
@@ -144,7 +145,7 @@ class Catalogo extends Component {
                         height: "37px",
                       }}
                     />
-                    <CrearProducto/>
+                    <CrearProducto />
                   </div>
                 </div>
               </div>

@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cafeteria.Controllers
-{    
+{
     [ApiController]
     [Route("[controller]")]
     public class ProductoController : ControllerBase
     {
         private readonly UnitOfWork _context;
-        public ProductoController(ApplicationDbContext db) =>_context = new UnitOfWork(db);
-        
+        public ProductoController(ApplicationDbContext db) => _context = new UnitOfWork(db);
+
         [HttpGet]
         public IActionResult GetAll() => Ok(_context.Productos.GetAll());
 
@@ -52,11 +52,12 @@ namespace Cafeteria.Controllers
         {
             if (!_context.Productos.Exists(id)) return NotFound();
             _context.Productos[id].Destacado = destacado;
+            _context.Complete();
             return Ok();
         }
 
         [HttpDelete("destacado/{id}")]
-        public IActionResult RemoveDestacado(int id) => Destacado(id,false);
+        public IActionResult RemoveDestacado(int id) => Destacado(id, false);
 
         [HttpPut("destacado/{id}")]
         public IActionResult AddDestacado(int id) => Destacado(id, true);
@@ -70,6 +71,6 @@ namespace Cafeteria.Controllers
             _context.Productos[id].Disponible = false;
             return Ok();
         }
-        
+
     }
 }
