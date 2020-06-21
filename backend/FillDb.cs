@@ -9,16 +9,20 @@ namespace Cafeteria.Repository
             var x = new Producto();
             x.Nombre = "BTS";
             x.Descripcion = "BTS lo más grande";
+            x.Precio = 777;
             x.Categoria = "Lo mejor de lo mejor";
             x.ImgUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_BTS.png";
             x.Destacado = true;
+            x.Disponible = true;
 
             var x2 = new Producto();
             x2.Nombre = "ARMY";
             x2.Descripcion = "BTS ARMY";
+            x2.Precio = 777;
             x2.Categoria = "ARMY";
             x2.ImgUrl = "https://upload.wikimedia.org/wikipedia/commons/9/93/ARMY_logo.png";
             x2.Destacado = true;
+            x2.Disponible = true;
 
             var x3 = new Producto();
             x3.Nombre = "Bebida 3";
@@ -31,6 +35,8 @@ namespace Cafeteria.Repository
             x4.Descripcion = "Descripcion generica";
             x4.Categoria = "Catalogo";
             x4.ImgUrl = "assets/img/products-02.jpg";
+            x4.Destacado = true;
+            x4.Disponible = true;
 
             context.Add(x);
             context.Add(x2);
