@@ -1,8 +1,6 @@
-using System.Collections.Generic;
-using System.Security.Cryptography;
+using AutoMapper;
 using Cafeteria.DB;
 using Cafeteria.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cafeteria.Controllers
@@ -12,8 +10,13 @@ namespace Cafeteria.Controllers
     public class ProductoController : ControllerBase
     {
         private readonly UnitOfWork _context;
-        public ProductoController(ApplicationDbContext db) =>_context = new UnitOfWork(db);
-        
+        private readonly IMapper _mapper;
+        public ProductoController(ApplicationDbContext db)
+        {
+            _mapper = MapperExtetion.InitMapper();
+            _context = new UnitOfWork(db);
+        }
+
         [HttpGet]
         public IActionResult GetAll() => Ok(_context.Productos.GetAll());
 
@@ -31,13 +34,13 @@ namespace Cafeteria.Controllers
             if (!_context.Productos.Exists(id)) return NotFound();
             return Ok(_context.Productos[id]);
         }
-
+        
         [HttpPut("{id}")]
-        public IActionResult Update(int id, Producto producto)
+        public IActionResult Update(int id, Producto delta)
         {
             if (!_context.Productos.Exists(id)) return NotFound();
-            producto.Id = id;
-            _context.Productos[producto.Id] = producto;
+            _mapper.Map(delta, _context.Productos[id]);
+            _context.Complete();
             return Ok();
         }
 
@@ -52,6 +55,7 @@ namespace Cafeteria.Controllers
         {
             if (!_context.Productos.Exists(id)) return NotFound();
             _context.Productos[id].Destacado = destacado;
+			_context.Complete();
             return Ok();
         }
 
@@ -67,7 +71,8 @@ namespace Cafeteria.Controllers
             if (!_context.Productos.Exists(id)) return NotFound();
             _context.Productos[id].Eliminado = true;
             _context.Productos[id].Disponible = false;
-            _context.Productos[id].Disponible = false;
+            _context.Productos[id].Destacado = false;
+			_context.Complete();
             return Ok();
         }
         

@@ -51,6 +51,7 @@ namespace Cafeteria.Extra
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Documentation");
+				c.RoutePrefix = "";
             });
             return app;
         }

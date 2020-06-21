@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 namespace Cafeteria.Models
 {
     public class Producto
@@ -12,6 +11,5 @@ namespace Cafeteria.Models
         public bool Disponible { get; set; }
         public bool Destacado { get; set; }
         public bool Eliminado { get; set; }
-        public List<ProductoPedido> Pedidos { get; set; }
     }
 }

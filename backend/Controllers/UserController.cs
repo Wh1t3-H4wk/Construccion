@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Cafeteria.DB;
@@ -35,7 +33,7 @@ namespace Cafeteria.Controllers
             IActionResult response = NotFound("User or password invalid");
             if (!_context.BaseUsers.Exists(mail)) return response;
             BaseUser user = _context.BaseUsers[mail];
-            return password.ValidatePassword(user.Contraseña)? Ok("Bearer " + TokenManager.GenerateToken(user,_configuration["Jwt:Key"])) : response;
+            return password.ValidatePassword(user.Contraseña)? Ok(TokenManager.GenerateToken(user,_configuration["Jwt:Key"])) : response;
         }
 
         [HttpPost("cliente")]

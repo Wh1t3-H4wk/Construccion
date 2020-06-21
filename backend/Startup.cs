@@ -1,6 +1,5 @@
 using Cafeteria.DB;
 using Cafeteria.Extra;
-using Cafeteria.Models;
 using Cafeteria.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

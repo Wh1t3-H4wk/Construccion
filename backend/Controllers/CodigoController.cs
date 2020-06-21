@@ -35,6 +35,7 @@ namespace Cafeteria.Controllers
         {
             if (_context.Codigos.Exists(codigo.Name)) return BadRequest();
             _context.Codigos.Add(codigo);
+			_context.Complete();
             return Ok();
         }
         

@@ -6,7 +6,7 @@ namespace Cafeteria.Models
         public string Rol { get;}
         public Token(string tokenId, string rol)
         {
-            TokenId = tokenId;
+            TokenId = "Bearer " + tokenId;
             Rol = rol;
         }
     }

@@ -28,7 +28,7 @@ namespace Cafeteria.Security
             return services;
         }
         
-        public static Token GenerateToken(BaseUser user, string Secret)
+        public static Token GenerateToken(this BaseUser user, string Secret)
         {
             byte[] key = Convert.FromBase64String(Secret);
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 namespace Cafeteria.Models
 {
     public class Pedido
@@ -8,6 +7,5 @@ namespace Cafeteria.Models
         public uint Valor { get; set; }
         public string Direccion { get; set; }
         public string Estado { get; set; }
-        public List<ProductoPedido> Productos { get; set; } = new List<ProductoPedido>();
     }
 }
