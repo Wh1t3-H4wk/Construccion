@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 
 namespace Cafeteria
 {
@@ -26,9 +27,23 @@ namespace Cafeteria
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAllOriginsPolicy", builder => { builder.AllowAnyOrigin(); });
+                //options.AddPolicy("AllowAllOriginsPolicy", builder => { builder.AllowAnyOrigin(); });
+                options.AddPolicy("app-cors-policy",
+                    builder => {
+                        builder
+                            .AllowAnyOrigin()
+                            .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            //.AllowCredentials()
+                        ;
+                    }
+                );
             });
             //--
+            services.AddSwaggerGen(swagger =>
+            {
+                swagger.SwaggerDoc("v1", new OpenApiInfo { Title = "Donde Jose Billar" });
+            });
 
 
             services.AddControllers();
@@ -48,7 +63,13 @@ namespace Cafeteria
                 FillDb.GeneratePedidosAndCodigos(context);
                 //--
             }
-            app.UseCors("AllowAllOriginsPolicy");
+            //app.UseCors("AllowAllOriginsPolicy");
+            app.UseCors("app-cors-policy");
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Documentation");
+            });
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
