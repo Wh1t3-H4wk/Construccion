@@ -1,5 +1,5 @@
 import React from 'react';
-import ListaDestacados from './ListaDestacados';
+import ListaDestacados from './ListaDestacados.js';
 import Container from 'react-bootstrap/Container';
 
 function Destacados(props) {
