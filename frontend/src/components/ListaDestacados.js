@@ -8,7 +8,7 @@ function ListaDestacados(props) {
     // Create list of elements
     const elements = props.productos.map(item => {
       if (!item.destacado)
-        return;
+        return undefined;
       return (
         <Carousel.Item key={item.id}>
           <img className="d-block w-100" src={item.imgUrl} alt={item.nombre} style={{maxHeight: "450px", objectFit: "contain"}}></img>
