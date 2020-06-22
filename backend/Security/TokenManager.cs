@@ -13,7 +13,11 @@ namespace Cafeteria.Security
         public static IServiceCollection AddJwtBearerAuthentication(this IServiceCollection services, string secret)
         {
             byte[] key = Convert.FromBase64String(secret);
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
             {
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -28,7 +32,7 @@ namespace Cafeteria.Security
             return services;
         }
         
-        public static Token GenerateToken(BaseUser user, string Secret)
+        public static Token GenerateToken(this BaseUser user, string Secret)
         {
             byte[] key = Convert.FromBase64String(Secret);
             SymmetricSecurityKey securityKey = new SymmetricSecurityKey(key);

@@ -21,8 +21,9 @@ namespace Cafeteria.DB
             =>Context.Set<TEntity>().Where(predicate);
         public TEntity SingleOrDefault(Expression<Func<TEntity, bool>> predicate)
             =>Context.Set<TEntity>().SingleOrDefault(predicate);
+        
         public void Add(TEntity entity) => Context.Set<TEntity>().Add(entity);
-        private void Update(TEntity entity) => Context.Set<TEntity>().Update(entity);
+        public void Update(TEntity entity) => Context.Set<TEntity>().Update(entity);
         public void AddRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().AddRange(entities);
         public void Remove(TEntity entity) => Context.Set<TEntity>().Remove(entity);
         public void RemoveRange(IEnumerable<TEntity> entities) => Context.Set<TEntity>().RemoveRange(entities);
