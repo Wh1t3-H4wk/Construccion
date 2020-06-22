@@ -4,25 +4,22 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import EditarProducto from './EditarProducto.js';
 import EliminarProducto from './EliminarProducto.js';
 
-class Producto extends React.Component {
-
-  render() {
-    return (
-      <Card style={!this.props.disponible ? {opacity: '.4', minWidth: '18rem', maxWidth: '18rem'} : { minWidth: '18rem', maxWidth: '18rem' }}>
-        <Card.Img variant="top" src={this.props.imgUrl}/>
-        <Card.Body>
-          <Card.Title>{this.props.nombre}</Card.Title>
-          <Card.Subtitle>${this.props.precio}</Card.Subtitle>
-        </Card.Body>
-        <Card.Footer>
-          <ButtonGroup className="float-right">
-            <EditarProducto id={this.props.id} nombre={this.props.nombre} precio={this.props.precio} descripcion={this.props.descripcion} categoria={this.props.categoria} disponible={this.props.disponible} destacado={this.props.destacado} actualizarProductos={this.props.actualizarProductos}/>
-            <EliminarProducto id={this.props.id} nombre={this.props.nombre} actualizarProductos={this.props.actualizarProductos}/>
-          </ButtonGroup>
-        </Card.Footer>
-      </Card>
-    );
-  }
+function Producto(props) {
+  return (
+    <Card className="m-4" style={!props.disponible ? {opacity: '.4', width: '18rem'} : { width: '18rem' }}>
+      <Card.Img variant="top" src={props.imgUrl} style={{maxHeight: "250px", objectFit: "contain"}}/>
+      <Card.Body>
+        <Card.Title>{props.nombre}</Card.Title>
+        <Card.Subtitle>${props.precio}</Card.Subtitle>
+      </Card.Body>
+      <Card.Footer>
+        <ButtonGroup className="float-right">
+          <EditarProducto id={props.id} nombre={props.nombre} precio={props.precio} descripcion={props.descripcion} categoria={props.categoria} disponible={props.disponible} destacado={props.destacado} actualizarProductos={props.actualizarProductos}/>
+          <EliminarProducto id={props.id} nombre={props.nombre} actualizarProductos={props.actualizarProductos}/>
+        </ButtonGroup>
+      </Card.Footer>
+    </Card>
+  );
 }
 
 export default Producto;
