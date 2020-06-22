@@ -70,7 +70,7 @@ class EditarProducto extends React.Component {
                 <Form.Label>Categoría</Form.Label>
                 <Form.Control as="select" defaultValue={this.props.categoria}>
                   <option>Bebestible</option>
-                  <option>Comida</option>
+                  <option>Comestible</option>
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="imagen">

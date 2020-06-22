@@ -26,7 +26,7 @@ class Productos extends React.Component {
 
   render() {
     return (
-      <Container className="page-section">
+      <Container id="productos" className="page-section">
         <div className="product-item">
           <div className="d-flex product-item-title">
             <div className="d-flex ml-auto bg-faded p-5 rounded" style={{ backgroundColor: "rgba(230,167,86,0.82)" }}>
@@ -38,20 +38,20 @@ class Productos extends React.Component {
           </div>
         </div>
         <Container className="bg-faded p-5 rounded">
-          <Form.Row className="p-3">
+          <Form.Row>
             <Form.Group as={Col}>
-              <Form.Control as="select" id="categoria" onChange={this.categoria}>
+              <Form.Control className="m-3" as="select" id="categoria" onChange={this.categoria}>
                 <option>Todo</option>
                 <option>Bebestibles</option>
-                <option>Comidas</option>
+                <option>Comestibles</option>
               </Form.Control>
             </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Control type="text" id="buscar" placeholder="Buscar" onChange={this.buscar}/>
-            </Form.Group>
-            <Form.Group as={Col}>
+            <Col>
+            <Form inline className="justify-content-end">
+              <Form.Control className="m-3" type="text" id="buscar" placeholder="Buscar" onChange={this.buscar}/>
               <CrearProducto actualizarProductos={this.actualizarProductos}/>
-            </Form.Group>
+            </Form>
+            </Col>
           </Form.Row>
           <ListaProductos productos={this.props.productos} isLoaded={this.props.isLoaded} filtrar={this.state.filtrar} buscar={this.state.buscar} actualizarProductos={this.props.actualizarProductos}/>
         </Container>
