@@ -1,47 +1,45 @@
 import React from 'react';
-import {Container, Button, Modal, Form} from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
 class EliminarProducto extends React.Component {
-    constructor(props) {
-      super();
-      
-      this.state = {
-        modal: false
-      }
-  
-      this.toggle = this.toggle.bind(this);
-    }
-  
-    toggle() {
-      this.setState(prevState => ({
-        modal: !prevState.modal
-      }));
-    }
-  
-    handleModalEliminar(){
-        console.log("elimine");
-        {/*agregar codigo que elimine las cosas en la base de datos
-        */}
-        this.setState({modal:!this.state.modal})
-      }
-render() {
+  constructor(props) {
+    super(props);
+    this.state = {modal: false};
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState(prevState => ({modal: !prevState.modal}));
+  }
+
+  async delete() {
+    await axios.delete(`http://localhost:5001/Producto/${this.props.id}`);
+    this.toggle();
+    this.props.actualizarProductos();
+  }
+
+  render() {
     return (
-        <Container>
-            <Button  variant="danger" onClick={this.toggle} >eliminar</Button>
-              <Modal show={this.state.modal} onHide={this.toggle}>
-              <Modal.Header  >Eliminar prodcuto</Modal.Header>
-              <Modal.Body>
-                Esta seguro que desea eliminar este producto
-              </Modal.Body> 
-              <Modal.Footer>
-              <Button variant="danger"onClick={()=>{this.handleModalEliminar()}}>
-                  eliminar
-                </Button>
-                <Button onClick={this.toggle}>Cancelar</Button>
-              </Modal.Footer>
-            </Modal>
-        </Container>
+      <>
+        <Button  variant="danger" onClick={this.toggle}>
+          <FontAwesomeIcon icon={faTrash}/>
+        </Button>
+
+        <Modal show={this.state.modal} onHide={this.toggle}>
+          <Modal.Header>Eliminar producto</Modal.Header>
+          <Modal.Body>¿Está seguro de que desea eliminar {this.props.nombre}?</Modal.Body> 
+          <Modal.Footer>
+            <Button variant="danger" onClick={()=>{this.delete()}}>Eliminar</Button>
+            <Button onClick={this.toggle}>Cancelar</Button>
+          </Modal.Footer>
+        </Modal>
+      </>
     );
   }
 }
+
 export default EliminarProducto;

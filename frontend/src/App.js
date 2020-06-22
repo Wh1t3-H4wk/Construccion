@@ -1,22 +1,14 @@
-import React from "react";
+import React from 'react';
 import NavBar from "./components/NavBar.js";
-import Footer from "./components/footer";
+import Header from './components/Header.js';
 import Catalogo from './components/Catalogo.js';
-//import NavBarCancino from './components/navbarCancino'
+import Footer from "./components/Footer.js";
 
 function App() {
   return (
     <>
-      <h1 className="text-center text-white d-none d-lg-block site-heading">
-        <span className="text-primary site-heading-upper mb-3">
-          <strong>Cafetería</strong>
-        </span>
-        <span className="site-heading-lower">Donde José Billar</span>
-      </h1>
-      <>
-        <NavBar/>
-        {/*<NavBarCancino/>*/}
-      </>
+      <NavBar/>
+      <Header/>
       <Catalogo/>
       <Footer/>
     </>

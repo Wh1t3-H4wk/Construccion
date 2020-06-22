@@ -1,43 +1,25 @@
 import React from 'react';
+import ListaDestacados from './ListaDestacados';
 import Container from 'react-bootstrap/Container';
-import Carousel from 'react-bootstrap/Carousel';
-import Spinner from 'react-bootstrap/Spinner';
 
-class Destacados extends React.Component {
-  render() {
-    const elements = this.props.productos.map(item => {
-      if (item.destacado) {
-        return (
-          <Carousel.Item key={item.id}>
-            <img className="d-block w-100" src={item.imgUrl} alt={item.nombre} style={{maxHeight: "450px", objectFit: "contain"}}></img>
-            <Carousel.Caption>
-              <h2>{item.nombre}</h2>
-              <p>{item.descripcion}</p>
-            </Carousel.Caption>
-          </Carousel.Item>
-        );
-      }
-      return;
-    });
-
-    if (this.props.isLoaded) {
-      return (
-        <Container>
-          <Carousel>
-            {elements}
-          </Carousel>
-        </Container>
-      );
-    } else {
-      return (
-        <Container>
-          <Spinner animation="border" role="status">
-            <span className="sr-only">Loading...</span>
-          </Spinner>
-        </Container>
-      );
-    }
-  }
+function Destacados(props) {
+  return (
+    <Container className="page-section">
+      <div className="product-item">
+        <div className="d-flex product-item-title">
+          <div className="d-flex mr-auto bg-faded p-5 rounded" style={{backgroundColor: "rgba(230, 167, 86, 0.82)"}}>
+            <h2 className="section-heading mb-0">
+              <span className="section-heading-upper" style={{color: "rgb(230, 230, 230)",fontSize: "15px"}}>Déjate Impresionar</span>
+              <span className="section-heading-lower" style={{color: "rgb(239, 239, 239)",fontSize: "42px"}}>Destacados</span>
+            </h2>
+          </div>
+        </div>
+      </div>
+      <Container className="bg-faded p-5 rounded">
+        <ListaDestacados isLoaded={props.isLoaded} productos={props.productos}/>
+      </Container>
+    </Container>
+  );
 }
 
 export default Destacados;
