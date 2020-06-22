@@ -92,16 +92,34 @@ class Productos extends Component {
       });
   };
 
+  handleCambiarEstadoDisponible = (producto) => {
+    let id = producto.id;
+    let value = !producto.disponible;
+    Axios.put(`http://localhost:5000/Producto/${id}`, { disponible: value })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(() => {
+        this.fetchListaProductos();
+        this.fetchListaDestacados();
+      });
+  };
+
   render() {
     return (
       <React.Fragment>
         <Destacados
           destacados={this.state.destacados}
           onSubmitCambiarDestacado={this.handleCambiarEstadoDestacado}
+          onSubmitCambiarDisponible={this.handleCambiarEstadoDisponible}
         />
         <Catalogo
           productos={this.state.productos}
           onSubmitCambiarDestacado={this.handleCambiarEstadoDestacado}
+          onSubmitCambiarDisponible={this.handleCambiarEstadoDisponible}
         />
         <section className="page-section">
           <div className="container">

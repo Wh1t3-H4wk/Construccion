@@ -66,6 +66,9 @@ class ProductoAcciones extends Component {
             id="visibleCheck"
             value={this.props.producto.Disponible}
             label="Visible"
+            onClick={() =>
+              this.props.onSubmitCambiarDisponible(this.props.producto)
+            }
           />
         </Form>
       </React.Fragment>

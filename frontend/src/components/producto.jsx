@@ -83,6 +83,7 @@ class Producto extends Component {
             enDestacado={this.props.enDestacado}
             esAdmin={true}
             onSubmitCambiarDestacado={this.props.onSubmitCambiarDestacado}
+            onSubmitCambiarDisponible={this.props.onSubmitCambiarDisponible}
           />
         </div>
       </div>

@@ -48,6 +48,9 @@ class Destacados extends Component {
                     onSubmitCambiarDestacado={
                       this.props.onSubmitCambiarDestacado
                     }
+                    onSubmitCambiarDisponible={
+                      this.props.onSubmitCambiarDisponible
+                    }
                   ></Producto>
                 ))}
               </div>

@@ -35,6 +35,7 @@ class Catalogo extends Component {
               producto={producto}
               enDestacado={false}
               onSubmitCambiarDestacado={this.props.onSubmitCambiarDestacado}
+              onSubmitCambiarDisponible={this.props.onSubmitCambiarDisponible}
             />
           ))}
         </div>
