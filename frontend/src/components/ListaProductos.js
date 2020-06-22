@@ -14,9 +14,11 @@ function ListaProductos(props) {
     } else if (props.filtrar === 'Comidas') {
       categoria = 'Comida';
     }
+    console.log(props.productos);
   
     const productosFiltrados = [];
     props.productos.forEach((item) => {
+      console.log(item);
       if (item.nombre.toLowerCase().indexOf(props.buscar.toLowerCase()) === -1) {
         return;
       }
