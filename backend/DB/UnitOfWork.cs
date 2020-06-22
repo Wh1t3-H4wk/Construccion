@@ -3,7 +3,7 @@ using Cafeteria.Models;
 
 namespace Cafeteria.DB
 {
-    public class UnitOfWork: IDisposable
+    public class UnitOfWork: IUnitOfWork
     {
         private readonly ApplicationDbContext _context;
         public Repository<Producto, int> Productos { get;}
@@ -12,6 +12,7 @@ namespace Cafeteria.DB
         public Repository<BaseUser,string> BaseUsers { get;}
         public Repository<Usuario,string> Usuarios { get;}
         public Repository<Cliente,string> Clientes { get;}
+        
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;

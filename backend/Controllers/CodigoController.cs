@@ -11,17 +11,17 @@ namespace Cafeteria.Controllers
     public class CodigoController : ControllerBase
     {
         
-        private readonly UnitOfWork _context;
-        public CodigoController(ApplicationDbContext db) => _context = new UnitOfWork(db);
+        private readonly IUnitOfWork _context;
+        public CodigoController(IUnitOfWork unitOfWork) => _context = unitOfWork;
 
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{codigo}")]
-        public IActionResult GetCodigo(string codigo)
-            => _context.Codigos.Exists(codigo) ? (IActionResult) Ok(_context.Codigos[codigo].Descuento) : NotFound();
+        public ActionResult<Codigo> Validar(string codigo)
+            => _context.Codigos.Exists(codigo) ? (ActionResult<Codigo>) Ok(_context.Codigos[codigo]) : NotFound();
 
-        [Authorize(Roles = "Admin,Trabajador")]
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{codigo}")]
-        public IActionResult RemoveCodigo(string codigo)
+        public IActionResult Eliminar(string codigo)
         {
             if (!_context.Codigos.Exists(codigo)) return NotFound();
             _context.Codigos.Remove(_context.Codigos[codigo]);
@@ -31,7 +31,7 @@ namespace Cafeteria.Controllers
         
         [Authorize(Roles = "Admin")]
         [HttpPost()]
-        public IActionResult AddCodigo(Codigo codigo)
+        public IActionResult Crear(Codigo codigo)
         {
             if (_context.Codigos.Exists(codigo.Name)) return BadRequest();
             _context.Codigos.Add(codigo);

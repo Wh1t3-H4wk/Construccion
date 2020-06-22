@@ -14,28 +14,23 @@ namespace Cafeteria.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private UnitOfWork _context { get; }
+        private IUnitOfWork _context { get; }
         private IConfiguration _configuration { get; }
 
-        public UserController(ApplicationDbContext db, IConfiguration conf)
+        public UserController(IUnitOfWork unitOfWork, IConfiguration conf)
         {
-            _context = new UnitOfWork(db);
+            _context = unitOfWork;
             _configuration = conf;
         }
         
-        [Authorize(Roles = "Admin")]
-        [HttpGet("all")]
-        public IActionResult GetALl() =>  Ok(_context.BaseUsers.GetAll());
-
         [HttpGet]
-        public IActionResult Login(string mail, string password)
+        public ActionResult<Token> IniciarSesion(string mail, string password)
         {
-            IActionResult response = NotFound("User or password invalid");
+            ActionResult<Token> response = NotFound("User or password invalid");
             if (!_context.BaseUsers.Exists(mail)) return response;
             BaseUser user = _context.BaseUsers[mail];
             return password.ValidatePassword(user.Contraseña)? Ok(TokenManager.GenerateToken(user,_configuration["Jwt:Key"])) : response;
         }
-
         [HttpPost("cliente")]
         public IActionResult RegisterCliente(Cliente user)
         {
@@ -48,7 +43,7 @@ namespace Cafeteria.Controllers
         
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("cliente/{mail}")]
-        public IActionResult UpdateProfile(string mail, Cliente cliente)
+        public IActionResult ModificarCuenta(string mail, Cliente cliente)
         {
             if (mail != User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value) return NotFound();
             Cliente user = _context.Clientes[mail];
@@ -59,10 +54,19 @@ namespace Cafeteria.Controllers
             _context.Complete();
             return Ok();
         }
-
+        
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpDelete("cliente/{mail}")]
+        public IActionResult EliminarCuenta(string mail)
+        {
+            if (mail != User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value) return NotFound();
+            _context.Clientes.Remove(_context.Clientes[mail]);
+            _context.Complete();
+            return Ok();
+        }
         [Authorize(Roles = "Admin")]
         [HttpPost("trabajador")]
-        public IActionResult RegisterTrabajador(Usuario user)
+        public IActionResult CrearEmpleado(Usuario user)
         {
             if (_context.BaseUsers.Exists(user.Mail)) return BadRequest("User already exist");
             user.Contraseña = user.Contraseña.HashPassword();
@@ -71,6 +75,14 @@ namespace Cafeteria.Controllers
             _context.Complete();
             return Ok();
         }
-        
+
+        [Authorize(Roles = "Admin")]
+        [HttpDelete("trabajador")]
+        public IActionResult EliminarEmpleado(string mail)
+        {
+            if (!_context.BaseUsers.Exists(mail)) return BadRequest("User don't exist");
+            _context.Usuarios.Remove(_context.Usuarios[mail]);
+            return Ok();
+        }
     }
 }

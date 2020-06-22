@@ -25,6 +25,7 @@ namespace Cafeteria
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlite("Data Source=dataBaseCafeteria.db"));
             // Add CORS policy
             services.AddCors();
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddJwtBearerAuthentication(Configuration["Jwt:Key"]); //JwtConfiguration
             services.AddSwaggerDocumentation(); //Swagger
             services.AddControllers();

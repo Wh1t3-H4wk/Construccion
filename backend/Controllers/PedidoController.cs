@@ -9,8 +9,8 @@ namespace Cafeteria.Controllers
     [Route("[controller]")]
     public class PedidoController : ControllerBase
     {
-        private readonly UnitOfWork _context;
-        public PedidoController(ApplicationDbContext db) =>_context = new UnitOfWork(db);
+        private readonly IUnitOfWork _context;
+        public PedidoController(IUnitOfWork unitOfWork) =>_context = unitOfWork;
 
         [HttpGet]
         public IEnumerable<Pedido> GetAll() => _context.Pedidos.GetAll();

@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using AutoMapper;
 using Cafeteria.DB;
 using Cafeteria.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cafeteria.Controllers
@@ -9,19 +11,20 @@ namespace Cafeteria.Controllers
     [Route("[controller]")]
     public class ProductoController : ControllerBase
     {
-        private readonly UnitOfWork _context;
+        private readonly IUnitOfWork _context;
         private readonly IMapper _mapper;
-        public ProductoController(ApplicationDbContext db)
+        public ProductoController(IUnitOfWork unitOfWork)
         {
             _mapper = MapperExtetion.InitMapper();
-            _context = new UnitOfWork(db);
+            _context = unitOfWork;
         }
 
         [HttpGet]
-        public IActionResult GetAll() => Ok(_context.Productos.GetAll());
+        public ActionResult<IEnumerable<Producto>> GetAll() => Ok(_context.Productos.GetAll());
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public IActionResult Add(Producto producto)
+        public IActionResult CrearProducto(Producto producto)
         {
             _context.Productos.Add(producto);
             _context.Complete();
@@ -29,14 +32,15 @@ namespace Cafeteria.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public ActionResult<Producto> GetById(int id)
         {
             if (!_context.Productos.Exists(id)) return NotFound();
             return Ok(_context.Productos[id]);
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
-        public IActionResult Update(int id, Producto delta)
+        public IActionResult ModificarProducto(int id, Producto delta)
         {
             if (!_context.Productos.Exists(id)) return NotFound();
             _mapper.Map(delta, _context.Productos[id]);
@@ -45,13 +49,13 @@ namespace Cafeteria.Controllers
         }
 
         [HttpGet("category/{category}")]
-        public IActionResult GetByCateogry(string category)
+        public ActionResult<IEnumerable<Producto>> GetByCateogry(string category)
             => Ok(_context.Productos.Find(p => p.Categoria.ToLower() == category && !p.Eliminado));
-
+        
         [HttpGet("destacado")]
-        public IActionResult GetDestacados() => Ok(_context.Productos.Find(p => p.Destacado && !p.Eliminado));
+        public ActionResult<IEnumerable<Producto>> GetDestacados() => Ok(_context.Productos.Find(p => p.Destacado && !p.Eliminado));
 
-        private IActionResult Destacado(int id, bool destacado)
+        private IActionResult MarcarDestacado(int id, bool destacado)
         {
             if (!_context.Productos.Exists(id)) return NotFound();
             _context.Productos[id].Destacado = destacado;
@@ -60,19 +64,36 @@ namespace Cafeteria.Controllers
         }
 
         [HttpDelete("destacado/{id}")]
-        public IActionResult RemoveDestacado(int id) => Destacado(id,false);
+        public IActionResult RemoveDestacado(int id) => MarcarDestacado(id,false);
 
+        [Authorize(Roles = "Admin,Trabajador")]
         [HttpPut("destacado/{id}")]
-        public IActionResult AddDestacado(int id) => Destacado(id, true);
+        public IActionResult AddDestacado(int id) => MarcarDestacado(id, true);
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
-        public IActionResult Eliminar(int id)
+        public IActionResult MarcarEliminado(int id)
         {
             if (!_context.Productos.Exists(id)) return NotFound();
             _context.Productos[id].Eliminado = true;
             _context.Productos[id].Disponible = false;
             _context.Productos[id].Destacado = false;
 			_context.Complete();
+            return Ok();
+        }
+        
+        [HttpDelete("disponible/{id}")]
+        public IActionResult RemoveDisponible(int id) => CambiarDisponibilidad(id,false);
+
+        [Authorize(Roles = "Admin,Trabajador")]
+        [HttpPut("disponible/{id}")]
+        public IActionResult AddDisponible(int id) => CambiarDisponibilidad(id, true);
+
+        private IActionResult CambiarDisponibilidad(int id, bool disponible)
+        {
+            if (!_context.Productos.Exists(id)) return NotFound();
+            _context.Productos[id].Disponible = disponible;
+            _context.Complete();
             return Ok();
         }
         
