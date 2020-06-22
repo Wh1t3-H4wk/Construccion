@@ -49,7 +49,7 @@ class Productos extends React.Component {
             <Col>
             <Form inline className="justify-content-end">
               <Form.Control className="m-3" type="text" id="buscar" placeholder="Buscar" onChange={this.buscar}/>
-              <CrearProducto actualizarProductos={this.actualizarProductos}/>
+              <CrearProducto actualizarProductos={this.props.actualizarProductos}/>
             </Form>
             </Col>
           </Form.Row>
