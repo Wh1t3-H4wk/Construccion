@@ -10,7 +10,7 @@ WORKDIR /app
 COPY backend/*.csproj .
 RUN dotnet restore
 
-COPY . ./
+COPY backend/. ./
 RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1

@@ -42,6 +42,15 @@ namespace Cafeteria.Controllers
         }
         
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("cliente/{mail}")]
+        public ActionResult<Cliente> GetCliente(string mail)
+        {
+            if(!_context.Clientes.Exists(mail)) return NotFound();
+            //if (mail != User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value) return NotFound();
+            return Ok(_context.Clientes[mail]);
+        }
+
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("cliente/{mail}")]
         public IActionResult ModificarCuenta(string mail, Cliente cliente)
         {
