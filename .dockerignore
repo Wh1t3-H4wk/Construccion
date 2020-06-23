@@ -1,5 +1,5 @@
-bin\
-obj\
-.idea\
-.directory
-
+frontend/
+.git/
+backend/bin/
+backend/obj/
+backend/.idea/
