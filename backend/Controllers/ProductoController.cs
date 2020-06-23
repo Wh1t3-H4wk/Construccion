@@ -22,7 +22,7 @@ namespace Cafeteria.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Producto>> GetAll() => Ok(_context.Productos.GetAll());
 
-
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public IActionResult CrearProducto(Producto producto)
         {
@@ -38,7 +38,7 @@ namespace Cafeteria.Controllers
             return Ok(_context.Productos[id]);
         }
 
-
+        //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult ModificarProducto(int id, Producto delta)
         {
@@ -67,10 +67,11 @@ namespace Cafeteria.Controllers
         public IActionResult RemoveDestacado(int id) => MarcarDestacado(id, false);
 
 
+        //[Authorize(Roles = "Admin,Trabajador")]
         [HttpPut("destacado/{id}")]
         public IActionResult AddDestacado(int id) => MarcarDestacado(id, true);
 
-
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("{id}")]
         public IActionResult MarcarEliminado(int id)
         {
@@ -86,6 +87,7 @@ namespace Cafeteria.Controllers
         public IActionResult RemoveDisponible(int id) => CambiarDisponibilidad(id, false);
 
 
+        //[Authorize(Roles = "Admin,Trabajador")]
         [HttpPut("disponible/{id}")]
         public IActionResult AddDisponible(int id) => CambiarDisponibilidad(id, true);
 

@@ -41,11 +41,21 @@ namespace Cafeteria.Controllers
             return Ok();
         }
         
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("cliente/{mail}")]
+        public ActionResult<Cliente> GetCliente(string mail)
+        {
+            if(!_context.Clientes.Exists(mail)) return NotFound();
+            //if (mail != User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value) return NotFound();
+            return Ok(_context.Clientes[mail]);
+        }
+
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpPut("cliente/{mail}")]
         public IActionResult ModificarCuenta(string mail, Cliente cliente)
         {
-            if (mail != User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value) return NotFound();
+            if(!_context.Clientes.Exists(mail)) return NotFound();
+            //if (mail != User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value) return NotFound();
             Cliente user = _context.Clientes[mail];
             user.Direcion = cliente.Direcion;
             user.Telefono = cliente.Telefono;
@@ -55,16 +65,17 @@ namespace Cafeteria.Controllers
             return Ok();
         }
         
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpDelete("cliente/{mail}")]
         public IActionResult EliminarCuenta(string mail)
         {
-            if (mail != User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value) return NotFound();
+            if(!_context.Clientes.Exists(mail)) return NotFound();
+            //if (mail != User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value) return NotFound();
             _context.Clientes.Remove(_context.Clientes[mail]);
             _context.Complete();
             return Ok();
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost("trabajador")]
         public IActionResult CrearEmpleado(Usuario user)
         {
@@ -76,7 +87,7 @@ namespace Cafeteria.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpDelete("trabajador")]
         public IActionResult EliminarEmpleado(string mail)
         {
