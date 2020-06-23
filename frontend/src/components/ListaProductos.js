@@ -19,7 +19,7 @@ function ListaProductos(props) {
         return;
       if (categoria === '' || categoria === item.categoria) {
         productosFiltrados.push(
-          <Producto key={item.id} id={item.id} imgUrl={item.imgUrl} nombre={item.nombre} precio={item.precio} descripcion={item.descripcion} categoria={item.categoria} disponible={item.disponible} destacado={item.destacado} actualizarProductos={props.actualizarProductos}/>
+          <Producto isAdmin={props.isAdmin} key={item.id} producto={item} anadirACarro={props.anadirACarro} actualizarProductos={props.actualizarProductos}/>
         );
       }
     });

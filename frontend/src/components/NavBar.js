@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
+import Carro from './Carro.js';
 
 function NavBar(props) {
   return (
@@ -12,6 +13,7 @@ function NavBar(props) {
         <Nav.Link className="text-white text-uppercase" href="#productos">Productos</Nav.Link>
         <Nav.Link className="text-white text-uppercase">Conócenos</Nav.Link>
       </Navbar.Collapse>
+      <Carro carro={props.carro} eliminarDeCarro={props.eliminarDeCarro}/>
     </Navbar>
   );
 }
