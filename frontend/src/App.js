@@ -1,21 +1,35 @@
 import React from "react";
-import NavBar from "./components/navbar";
-import Footer from "./components/footer";
-import Productos from "./components/productos";
+import NavBar from "./components/NavBar.js";
+import Header from "./components/Header.js";
+import Catalogo from "./components/Catalogo.js";
+import Footer from "./components/Footer.js";
+import Registrarse from "./components/Registrarse.js";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  BrowserRouter,
+} from "react-router-dom";
 
 function App() {
   return (
-    <React.Fragment>
-      <h1 className="text-center text-white d-none d-lg-block site-heading">
-        <span className="text-primary site-heading-upper mb-3">
-          <strong>Cafetería</strong>
-        </span>
-        <span className="site-heading-lower">Donde José Billar</span>
-      </h1>
-      <NavBar />
-      <Productos />
-      <Footer />
-    </React.Fragment>
+    <>
+      <BrowserRouter>
+        <NavBar />
+        <Header />
+        <Switch>
+          <Route exact path="/" component={Catalogo} />
+          <Route exact path="/registrarse" component={Registrarse} />
+          <Route
+            render={function () {
+              return <p>Not found</p>;
+            }}
+          />
+        </Switch>
+        <Footer />
+      </BrowserRouter>
+    </>
   );
 }
 

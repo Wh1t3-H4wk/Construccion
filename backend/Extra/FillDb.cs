@@ -9,29 +9,35 @@ namespace Cafeteria.Extra
         {
             var x = new Producto();
             x.Nombre = "BTS";
-            x.Descripcion = "BTS lo más grande";
-            x.Categoria = "Lo mejor de lo mejor";
+            x.Descripcion = "We Are Bulletproof";
+            x.Precio = 777;
+            x.Categoria = "Comestible";
             x.ImgUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_BTS.png";
             x.Destacado = true;
+            x.Disponible = true;
 
             var x2 = new Producto();
             x2.Nombre = "ARMY";
             x2.Descripcion = "BTS ARMY";
-            x2.Categoria = "ARMY";
+            x2.Precio = 777;
+            x2.Categoria = "Bebestible";
             x2.ImgUrl = "https://upload.wikimedia.org/wikipedia/commons/9/93/ARMY_logo.png";
             x2.Destacado = true;
+            x2.Disponible = true;
 
             var x3 = new Producto();
-            x3.Nombre = "Bebida 3";
-            x3.Descripcion = "Descripcion generica";
-            x3.Categoria = "Catalogo";
+            x3.Nombre = "Medialuna";
+            x3.Descripcion = "No sé cómo son";
+            x3.Categoria = "Comestible";
             x3.ImgUrl = "assets/img/products-02.jpg";
 
             var x4 = new Producto();
-            x4.Nombre = "Bebida 4";
-            x4.Descripcion = "Descripcion generica";
-            x4.Categoria = "Catalogo";
-            x4.ImgUrl = "assets/img/products-02.jpg";
+            x4.Nombre = "Bebida dañina para la salud";
+            x4.Descripcion = "La weá mala";
+            x4.Categoria = "Bebestible";
+            x4.ImgUrl = "https://s3.amazonaws.com/mercadonegro/wp-content/uploads/2020/05/27091222/coca-cola-colgate-maggi-mas-elegida-por-consumidores-kantar.jpg";
+            x4.Destacado = true;
+            x4.Disponible = true;
 
             context.Add(x);
             context.Add(x2);
