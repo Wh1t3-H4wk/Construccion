@@ -1,17 +1,21 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Carousel from 'react-bootstrap/Carousel';
-import Spinner from 'react-bootstrap/Spinner';
+import React from "react";
+import Container from "react-bootstrap/Container";
+import Carousel from "react-bootstrap/Carousel";
+import Spinner from "react-bootstrap/Spinner";
 
 function ListaDestacados(props) {
   if (props.isLoaded) {
     // Create list of elements
-    const elements = props.productos.map(item => {
-      if (!item.destacado)
-        return undefined;
+    const elements = props.productos.map((item) => {
+      if (!item.destacado) return undefined;
       return (
         <Carousel.Item key={item.id}>
-          <img className="d-block w-100" src={item.imgUrl} alt={item.nombre} style={{maxHeight: "450px", objectFit: "contain"}}></img>
+          <img
+            className="d-block w-100"
+            src={item.imgUrl}
+            alt={item.nombre}
+            style={{ maxHeight: "450px", objectFit: "contain" }}
+          ></img>
           <Carousel.Caption>
             <h2>{item.nombre}</h2>
             <p>{item.descripcion}</p>
@@ -22,9 +26,7 @@ function ListaDestacados(props) {
     // Render for correct load
     return (
       <Container>
-        <Carousel>
-          {elements}
-        </Carousel>
+        <Carousel>{elements}</Carousel>
       </Container>
     );
   } else {

@@ -9,9 +9,15 @@ namespace Cafeteria.Extra
         {
             var x = new Producto();
             x.Nombre = "BTS";
+<<<<<<< HEAD:backend/Extra/FillDb.cs
             x.Descripcion = "We Are Bulletproof";
             x.Precio = 777;
             x.Categoria = "Comestible";
+=======
+            x.Descripcion = "BTS lo más grande";
+            x.Precio = 777;
+            x.Categoria = "Lo mejor de lo mejor";
+>>>>>>> ec2fbcea9be48b2cee318864c6c7adb4e2aadcc2:backend/FillDb.cs
             x.ImgUrl = "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_BTS.png";
             x.Destacado = true;
             x.Disponible = true;
@@ -20,7 +26,11 @@ namespace Cafeteria.Extra
             x2.Nombre = "ARMY";
             x2.Descripcion = "BTS ARMY";
             x2.Precio = 777;
+<<<<<<< HEAD:backend/Extra/FillDb.cs
             x2.Categoria = "Bebestible";
+=======
+            x2.Categoria = "ARMY";
+>>>>>>> ec2fbcea9be48b2cee318864c6c7adb4e2aadcc2:backend/FillDb.cs
             x2.ImgUrl = "https://upload.wikimedia.org/wikipedia/commons/9/93/ARMY_logo.png";
             x2.Destacado = true;
             x2.Disponible = true;
@@ -32,10 +42,17 @@ namespace Cafeteria.Extra
             x3.ImgUrl = "assets/img/products-02.jpg";
 
             var x4 = new Producto();
+<<<<<<< HEAD:backend/Extra/FillDb.cs
             x4.Nombre = "Bebida dañina para la salud";
             x4.Descripcion = "La weá mala";
             x4.Categoria = "Bebestible";
             x4.ImgUrl = "https://s3.amazonaws.com/mercadonegro/wp-content/uploads/2020/05/27091222/coca-cola-colgate-maggi-mas-elegida-por-consumidores-kantar.jpg";
+=======
+            x4.Nombre = "Bebida 4";
+            x4.Descripcion = "Descripcion generica";
+            x4.Categoria = "Catalogo";
+            x4.ImgUrl = "assets/img/products-02.jpg";
+>>>>>>> ec2fbcea9be48b2cee318864c6c7adb4e2aadcc2:backend/FillDb.cs
             x4.Destacado = true;
             x4.Disponible = true;
 
