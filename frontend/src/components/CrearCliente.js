@@ -4,7 +4,58 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import axios from "axios";
+import ReactDOM from "react-dom";
+
 class CrearCliente extends React.Component {
+  state = {
+    pass: "",
+    valPass: "",
+    isPasswordInvalid: true,
+  };
+
+  constructor(props) {
+    super();
+    this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  handlePassChange = (e) => {
+    let value = e.target.value;
+    this.setState({ pass: value }, () => this.handleValidatePassword());
+  };
+
+  handleValPassChange = (e) => {
+    this.setState({ valPass: e.target.value }, () =>
+      this.handleValidatePassword()
+    );
+  };
+
+  handleValidatePassword = () => {
+    let value = !(this.state.pass === this.state.valPass);
+    this.setState({ isPasswordInvalid: value });
+  };
+
+  async onSubmit(e) {
+    e.preventDefault();
+    console.log("Submited--");
+    const form = e.target;
+    await axios
+      .post("http://localhost:5001/User/cliente", {
+        telefono: form.telefono.value,
+        direcion: form.direccion.value,
+        nombres: form.nombre.value,
+        apellidos: form.apellido.value,
+        mail: form.email.value,
+        contraseña: form.contraseña.value,
+        rol: "Cliente",
+      })
+      .then((response) => {
+        if (response.status == "200")
+          //No es la mejor solución, pero a esta hora seguro lo es.
+          ReactDOM.findDOMNode(this.messageForm).reset();
+      });
+  }
+
   render() {
     return (
       <Container className="page-section">
@@ -35,7 +86,12 @@ class CrearCliente extends React.Component {
           className="bg-faded p-5 rounded"
           style={{ maxWidth: "700px" }}
         >
-          <Form onSubmit={this.onSubmit}>
+          <Form
+            id="myForm"
+            className="form"
+            ref={(form) => (this.messageForm = form)}
+            onSubmit={this.onSubmit}
+          >
             <Row>
               <Col>
                 <Form.Group controlId="nombre">
@@ -77,7 +133,12 @@ class CrearCliente extends React.Component {
             </Form.Group>
             <Form.Group controlId="contraseña">
               <Form.Label>Contraseña</Form.Label>
-              <Form.Control type="password" placeholder="Contraseña" required />
+              <Form.Control
+                type="password"
+                placeholder="Contraseña"
+                required
+                onChange={this.handlePassChange}
+              />
             </Form.Group>
             <Form.Group controlId="contraseñaValidacion">
               <Form.Label>Validación de contraseña</Form.Label>
@@ -85,10 +146,12 @@ class CrearCliente extends React.Component {
                 type="password"
                 placeholder="Validación de contraseña"
                 required
+                onChange={this.handleValPassChange}
+                isInvalid={this.state.isPasswordInvalid}
               />
             </Form.Group>
+            <Button type="submit">Crear Cuenta</Button>
           </Form>
-          <Button type="submit">Crear Cuenta</Button>
         </Container>
       </Container>
     );
