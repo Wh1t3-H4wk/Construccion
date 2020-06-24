@@ -1,9 +1,5 @@
-using System.Collections.Generic;
 namespace Cafeteria.Models
 {
-    /// <summary>
-    /// DummyModal for testing
-    /// </summary>
     public class Producto
     {
         public int Id { get; set; }
@@ -15,6 +11,5 @@ namespace Cafeteria.Models
         public bool Disponible { get; set; }
         public bool Destacado { get; set; }
         public bool Eliminado { get; set; }
-        public List<ProductoPedido> Pedidos { get; set; }
     }
 }

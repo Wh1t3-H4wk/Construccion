@@ -1,6 +1,7 @@
+using Cafeteria.DB;
 using Cafeteria.Models;
 
-namespace Cafeteria.Repository
+namespace Cafeteria.Extra
 {
     public static class FillDb
     {
@@ -55,8 +56,7 @@ namespace Cafeteria.Repository
             xpedido.Direccion = "direncion";
             xpedido.Estado = "desarrollo";
             xpedido.Valor = 9999;
-            xpedido.Codigo = xcodigo;
-            
+
             var xpedido2 = new Pedido();
             xpedido2.Direccion = "direcccion2";
             xpedido2.Estado = "estado";
