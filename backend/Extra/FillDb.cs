@@ -1,5 +1,6 @@
 using Cafeteria.DB;
 using Cafeteria.Models;
+using Cafeteria.Security;
 
 namespace Cafeteria.Extra
 {
@@ -51,7 +52,7 @@ namespace Cafeteria.Extra
             var xcodigo = new Codigo();
             xcodigo.Descuento = 10;
             xcodigo.Name = "codigo1";
-            
+
             var xpedido = new Pedido();
             xpedido.Direccion = "direncion";
             xpedido.Estado = "desarrollo";
@@ -65,6 +66,22 @@ namespace Cafeteria.Extra
             context.Codigos.Add(xcodigo);
             context.Pedidos.Add(xpedido);
             context.Pedidos.Add(xpedido2);
+            context.SaveChanges();
+        }
+
+        public static void GenerateDummyAccounts(ApplicationDbContext context)
+        {
+            var dummyAccount = new Cliente();
+            dummyAccount.Apellidos = "Martínez";
+            dummyAccount.Nombres = "Nacho";
+            dummyAccount.Contraseña = "pass1234";
+            dummyAccount.Contraseña = dummyAccount.Contraseña.HashPassword();
+            dummyAccount.Direcion = "Curico\n Calle Falsa 123";
+            dummyAccount.Mail = "nacho123@gmail.com";
+            dummyAccount.Telefono = "+56912345678";
+            dummyAccount.Rol = "Cliente";
+
+            context.Clientes.Add(dummyAccount);
             context.SaveChanges();
         }
     }

@@ -1,9 +1,12 @@
-import React from 'react';
+import React from "react";
 import NavBar from "./components/NavBar.js";
-import Header from './components/Header.js';
-import Catalogo from './components/Catalogo.js';
+import Header from "./components/Header.js";
+import Catalogo from "./components/Catalogo.js";
 import Footer from "./components/Footer.js";
 import axios from 'axios';
+import CrearCliente from "./components/CrearCliente.js";
+import EditarCuenta from "./components/EditarCliente.js";
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class App extends React.Component {
   constructor(props) {
@@ -65,14 +68,26 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <NavBar carro={this.state.carro} eliminarDeCarro={this.eliminarDeCarro}/>
-        <Header/>
-        <Catalogo isAdmin={this.state.isAdmin} productos={this.state.productos} isLoaded={this.state.isLoaded} anadirACarro={this.anadirACarro} actualizarProductos={this.actualizarProductos}/>
-        <Footer/>
+        <BrowserRouter>
+          <NavBar carro={this.state.carro} eliminarDeCarro={this.eliminarDeCarro}/>
+          <Header/>
+          <Switch>
+            <Route exact path="/">
+              <Catalogo isAdmin={this.state.isAdmin} productos={this.state.productos} isLoaded={this.state.isLoaded} anadirACarro={this.anadirACarro} actualizarProductos={this.actualizarProductos}/>
+            </Route>
+            <Route exact path="/registrarse">
+              <CrearCliente/>
+            </Route>
+            <Route exact path="/cuenta">
+              <EditarCuenta/>
+            </Route>
+            <Route render={function () {return <h1>404 Not found</h1>}}/>
+          </Switch>
+          <Footer/>
+        </BrowserRouter>
       </>
     );
   }
-
 }
 
 export default App;

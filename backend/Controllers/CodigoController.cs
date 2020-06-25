@@ -10,14 +10,15 @@ namespace Cafeteria.Controllers
     [Route("[controller]")]
     public class CodigoController : ControllerBase
     {
-        
+
         private readonly IUnitOfWork _context;
         public CodigoController(IUnitOfWork unitOfWork) => _context = unitOfWork;
 
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{codigo}")]
         public ActionResult<Codigo> Validar(string codigo)
-            => _context.Codigos.Exists(codigo) ? (ActionResult<Codigo>) Ok(_context.Codigos[codigo]) : NotFound();
+            => _context.Codigos.Exists(codigo) ? (ActionResult<Codigo>)Ok(_context.Codigos[codigo]) : NotFound();
+
 
         //[Authorize(Roles = "Admin")]
         [HttpDelete("{codigo}")]
@@ -28,17 +29,17 @@ namespace Cafeteria.Controllers
             _context.Complete();
             return Ok();
         }
-        
+
         //[Authorize(Roles = "Admin")]
         [HttpPost()]
         public IActionResult Crear(Codigo codigo)
         {
             if (_context.Codigos.Exists(codigo.Name)) return BadRequest();
             _context.Codigos.Add(codigo);
-			_context.Complete();
+            _context.Complete();
             return Ok();
         }
-        
-        
+
+
     }
 }

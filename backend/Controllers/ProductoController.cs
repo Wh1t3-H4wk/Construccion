@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cafeteria.Controllers
-{    
+{
     [ApiController]
     [Route("[controller]")]
     public class ProductoController : ControllerBase
@@ -37,7 +37,7 @@ namespace Cafeteria.Controllers
             if (!_context.Productos.Exists(id)) return NotFound();
             return Ok(_context.Productos[id]);
         }
-        
+
         //[Authorize(Roles = "Admin")]
         [HttpPut("{id}")]
         public IActionResult ModificarProducto(int id, Producto delta)
@@ -51,7 +51,7 @@ namespace Cafeteria.Controllers
         [HttpGet("category/{category}")]
         public ActionResult<IEnumerable<Producto>> GetByCateogry(string category)
             => Ok(_context.Productos.Find(p => p.Categoria.ToLower() == category && !p.Eliminado));
-        
+
         [HttpGet("destacado")]
         public ActionResult<IEnumerable<Producto>> GetDestacados() => Ok(_context.Productos.Find(p => p.Destacado && !p.Eliminado));
 
@@ -59,12 +59,13 @@ namespace Cafeteria.Controllers
         {
             if (!_context.Productos.Exists(id)) return NotFound();
             _context.Productos[id].Destacado = destacado;
-			_context.Complete();
+            _context.Complete();
             return Ok();
         }
 
         [HttpDelete("destacado/{id}")]
-        public IActionResult RemoveDestacado(int id) => MarcarDestacado(id,false);
+        public IActionResult RemoveDestacado(int id) => MarcarDestacado(id, false);
+
 
         //[Authorize(Roles = "Admin,Trabajador")]
         [HttpPut("destacado/{id}")]
@@ -78,12 +79,13 @@ namespace Cafeteria.Controllers
             _context.Productos[id].Eliminado = true;
             _context.Productos[id].Disponible = false;
             _context.Productos[id].Destacado = false;
-			_context.Complete();
+            _context.Complete();
             return Ok();
         }
-        
+
         [HttpDelete("disponible/{id}")]
-        public IActionResult RemoveDisponible(int id) => CambiarDisponibilidad(id,false);
+        public IActionResult RemoveDisponible(int id) => CambiarDisponibilidad(id, false);
+
 
         //[Authorize(Roles = "Admin,Trabajador")]
         [HttpPut("disponible/{id}")]
@@ -96,6 +98,6 @@ namespace Cafeteria.Controllers
             _context.Complete();
             return Ok();
         }
-        
+
     }
 }

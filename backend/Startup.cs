@@ -25,7 +25,7 @@ namespace Cafeteria
             services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlite("Data Source=dataBaseCafeteria.db"));
             // Add CORS policy
             services.AddCors();
-            services.AddScoped<IUnitOfWork,UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddJwtBearerAuthentication(Configuration["Jwt:Key"]); //JwtConfiguration
             services.AddSwaggerDocumentation(); //Swagger
             services.AddControllers();
@@ -34,22 +34,22 @@ namespace Cafeteria
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext context)
         {
-            if (env.IsDevelopment()) 
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                
+
                 //Dummy DbFill just for testing in development environment
                 context.Database.EnsureDeleted();
-                context.Database.EnsureCreated(); 
+                context.Database.EnsureCreated();
                 FillDb.GenerateProducotos(context);
                 FillDb.GeneratePedidosAndCodigos(context);
+                FillDb.GenerateDummyAccounts(context);
                 //--
             }
             app.UseCors(x => x
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
-            
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

@@ -9,19 +9,19 @@ class Productos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filtrar: 'Todo',
-      buscar: '',
-    }
+      filtrar: "Todo",
+      buscar: "",
+    };
     this.categoria = this.categoria.bind(this);
     this.buscar = this.buscar.bind(this);
   }
 
   categoria(e) {
-    this.setState({filtrar: e.target.value});
+    this.setState({ filtrar: e.target.value });
   }
 
   buscar(e) {
-    this.setState({buscar: e.target.value});
+    this.setState({ buscar: e.target.value });
   }
 
   render() {
@@ -29,10 +29,23 @@ class Productos extends React.Component {
       <Container id="productos" className="page-section">
         <div className="product-item">
           <div className="d-flex product-item-title">
-            <div className="d-flex ml-auto bg-faded p-5 rounded" style={{ backgroundColor: "rgba(230,167,86,0.82)" }}>
+            <div
+              className="d-flex ml-auto bg-faded p-5 rounded"
+              style={{ backgroundColor: "rgba(230,167,86,0.82)" }}
+            >
               <h2 className="section-heading mb-0">
-                <span className="section-heading-upper" style={{ color: "rgb(230,230,230)", fontSize: "15px" }}>Hechos con dedicación</span>
-                <span className="section-heading-lower" style={{color: "rgb(239,239,239)", fontSize: "42px"}}>Nuestros Productos</span>
+                <span
+                  className="section-heading-upper"
+                  style={{ color: "rgb(230,230,230)", fontSize: "15px" }}
+                >
+                  Hechos con dedicación
+                </span>
+                <span
+                  className="section-heading-lower"
+                  style={{ color: "rgb(239,239,239)", fontSize: "42px" }}
+                >
+                  Nuestros Productos
+                </span>
               </h2>
             </div>
           </div>
@@ -53,7 +66,15 @@ class Productos extends React.Component {
             </Form>
             </Col>
           </Form.Row>
-          <ListaProductos isAdmin={this.props.isAdmin} productos={this.props.productos} isLoaded={this.props.isLoaded} filtrar={this.state.filtrar} buscar={this.state.buscar} anadirACarro={this.props.anadirACarro} actualizarProductos={this.props.actualizarProductos}/>
+          <ListaProductos
+            isAdmin={this.props.isAdmin}
+            productos={this.props.productos}
+            isLoaded={this.props.isLoaded}
+            filtrar={this.state.filtrar}
+            buscar={this.state.buscar}
+            anadirACarro={this.props.anadirACarro}
+            actualizarProductos={this.props.actualizarProductos}
+          />
         </Container>
       </Container>
     );
