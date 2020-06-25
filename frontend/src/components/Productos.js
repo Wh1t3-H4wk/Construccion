@@ -55,7 +55,7 @@ class Productos extends React.Component {
           </Form.Row>
           <ListaProductos productos={this.props.productos} isLoaded={this.props.isLoaded} filtrar={this.state.filtrar} buscar={this.state.buscar} actualizarProductos={this.props.actualizarProductos}/>
         </Container>
-      </Container>
+      </Container>   
     );
   }
 }

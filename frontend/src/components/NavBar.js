@@ -19,39 +19,19 @@ function NavBar(props) {
             <Link to="/" className="text-white text-uppercase">Inicio </Link>
           </div>
           <div>
+            <Link to="/carro"  onClick={() => window.location.reload()} className="text-white text-uppercase">Carro </Link>
+          </div>
+          <div>
             <Link to="/Login" className="text-white text-uppercase">Login </Link>
           </div>
+         
           <div>
-            <Link to="/carro" className="text-white text-uppercase">Carro </Link>
-          </div>
-          <div>
-            <Link to="/about" className="text-white text-uppercase">sobre nosotros </Link>
+            <Link to="/about"  className="text-white text-uppercase">sobre nosotros </Link>
           </div>
       
         </Navbar.Collapse>
       </Navbar>
-      <Switch>
-        <Route path="/carro"exact>
-          pagina carro compras
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/about" exact>
-          sobre nosotros          
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/Login" exact>
-          Login
-          
-        </Route>
-      </Switch>
-      <Switch>
-        <Route path="/" exact>
-          estoy en catalogo
-          
-        </Route>
-      </Switch>
+      
     </Router>
   );
 }
