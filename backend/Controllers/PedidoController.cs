@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
+using Cafeteria.DB;
 using Cafeteria.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Cafeteria.Controllers
 {
@@ -10,18 +9,14 @@ namespace Cafeteria.Controllers
     [Route("[controller]")]
     public class PedidoController : ControllerBase
     {
-        private readonly UnityOfWork _context;
-        public PedidoController(ApplicationDbContext db) =>_context = new UnityOfWork(db);
+        private readonly IUnitOfWork _context;
+        public PedidoController(IUnitOfWork unitOfWork) =>_context = unitOfWork;
 
         [HttpGet]
-        public IEnumerable<Pedido> GetAll() => _context.Pedidos.GetAll().Include(p => p.Codigo);
+        public IEnumerable<Pedido> GetAll() => _context.Pedidos.GetAll();
         
         [HttpGet("{id}")]
-        public Pedido GetById(int id) => _context.Pedidos.Get(id);
-
-        [HttpGet("{id}/codigo")]
-        public Codigo GetCodigo(int id) => _context.Codigos.Get(GetById(id).CodigoName);
-
-
+        public Pedido GetById(int id) => _context.Pedidos[id];
+        
     }
 }

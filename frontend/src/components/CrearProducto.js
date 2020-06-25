@@ -69,7 +69,7 @@ class CrearProducto extends React.Component {
                 <Form.Label>Categoría</Form.Label>
                 <Form.Control as="select">
                   <option>Bebestible</option>
-                  <option>Comida</option>
+                  <option>Comestible</option>
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="imagen">

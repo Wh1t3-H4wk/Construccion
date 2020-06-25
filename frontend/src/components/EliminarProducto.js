@@ -25,7 +25,7 @@ class EliminarProducto extends React.Component {
   render() {
     return (
       <>
-        <Button  variant="danger" onClick={this.toggle}>
+        <Button variant="danger" onClick={this.toggle}>
           <FontAwesomeIcon icon={faTrash}/>
         </Button>
 
