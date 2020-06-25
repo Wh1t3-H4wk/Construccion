@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Cafeteria.DB;
 using Cafeteria.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -14,6 +16,9 @@ namespace Cafeteria.Controllers
         private readonly IUnitOfWork _context;
         public CodigoController(IUnitOfWork unitOfWork) => _context = unitOfWork;
 
+        [HttpGet] 
+        public ActionResult<IEnumerable<Codigo>> GetAll() => Ok(_context.Codigos.GetAll());
+        
         //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("{codigo}")]
         public ActionResult<Codigo> Validar(string codigo)
