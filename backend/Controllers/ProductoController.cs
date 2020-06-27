@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AutoMapper;
 using Cafeteria.DB;
 using Cafeteria.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -12,13 +11,8 @@ namespace Cafeteria.Controllers
     public class ProductoController : ControllerBase
     {
         private readonly IUnitOfWork _context;
-        private readonly IMapper _mapper;
-        public ProductoController(IUnitOfWork unitOfWork)
-        {
-            _mapper = MapperExtetion.InitMapper();
-            _context = unitOfWork;
-        }
-
+        public ProductoController(IUnitOfWork unitOfWork) => _context = unitOfWork;
+        
         [HttpGet]
         public ActionResult<IEnumerable<Producto>> GetAll() => Ok(_context.Productos.GetAll());
 
@@ -39,12 +33,10 @@ namespace Cafeteria.Controllers
         }
 
         //[Authorize(Roles = "Admin")]
-        [HttpPut("{id}")]
-        public IActionResult ModificarProducto(int id, Producto delta)
+        [HttpPut]
+        public IActionResult ModificarProducto(Producto producto)
         {
-            if (!_context.Productos.Exists(id)) return NotFound();
-            _mapper.Map(delta, _context.Productos[id]);
-            _context.Complete();
+            _context.Productos[producto.Id] = producto;
             return Ok();
         }
 
