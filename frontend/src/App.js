@@ -92,7 +92,10 @@ class App extends React.Component {
               <EditarCuenta />
             </Route>
             <Route exact path="/confirmarPedido">
-              <ConfirmarPedido carro={this.state.carro} />
+              <ConfirmarPedido
+                carro={this.state.carro}
+                eliminarDeCarro={this.eliminarDeCarro}
+              />
             </Route>
             <Route
               render={function () {
