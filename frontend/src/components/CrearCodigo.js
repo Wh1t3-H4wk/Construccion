@@ -10,7 +10,9 @@ import InputGroup from 'react-bootstrap/InputGroup';
 class CrearCodigo extends React.Component {
   constructor(props) {
     super();
-    this.state = {modal: false};
+    this.state = {
+      modal: false, isDescuentoInvalid: true ,desc:""
+    };
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -18,6 +20,16 @@ class CrearCodigo extends React.Component {
   toggle() {
     this.setState(prevState => ({modal: !prevState.modal}));
   }
+
+  handleDescuentoChange = (e) => {
+    let value = e.target.value;
+    this.setState({ desc: value }, () => this.handleValDescuento());
+  };
+
+  handleValDescuento = () => {
+    let value = !(parseInt(this.state.desc)<= 100 && parseInt(this.state.desc)> 0);
+    this.setState({ isDescuentoInvalid: value });
+  };
 
   async onSubmit(e) {
     e.preventDefault();
@@ -27,6 +39,7 @@ class CrearCodigo extends React.Component {
         "descuento":parseInt(form.descuento.value),
     });
     this.toggle();
+    this.props.actualizarCodigo();
     
   }
 
@@ -51,12 +64,17 @@ class CrearCodigo extends React.Component {
                   <InputGroup.Prepend>
                     <InputGroup.Text>%</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <Form.Control type="text" placeholder="Descuento" required/>
+                  <Form.Control 
+                  type="text" 
+                  placeholder="Descuento" 
+                  required
+                  onChange={this.handleDescuentoChange}
+                  isInvalid={this.state.isDescuentoInvalid}/>
                 </InputGroup>
               </Form.Group>
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit">Crear Codigo</Button>
+              <Button type="submit" disabled={this.state.isDescuentoInvalid}>Crear Codigo</Button>
               <Button onClick={this.toggle}>Cancelar</Button>
             </Modal.Footer>
           </Form>

@@ -27,6 +27,13 @@ function NavBar(props) {
         >
           Registrarse
         </Nav.Link>
+        <Nav.Link
+          className="text-white text-uppercase"
+          as={Link}
+          to="/codigos"
+        >Codigos
+          
+        </Nav.Link>
       </Navbar.Collapse>
       <Navbar.Collapse className="justify-content-end">
         <Nav.Link className="text-white text-uppercase" as={Link} to="/cuenta">

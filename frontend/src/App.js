@@ -7,6 +7,7 @@ import axios from 'axios';
 import CrearCliente from "./components/CrearCliente.js";
 import EditarCuenta from "./components/EditarCliente.js";
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Codigos from "./components/Codigos.js";
 
 class App extends React.Component {
   constructor(props) {
@@ -80,6 +81,9 @@ class App extends React.Component {
             </Route>
             <Route exact path="/cuenta">
               <EditarCuenta/>
+            </Route>
+            <Route exact path="/codigos">
+              <Codigos/>
             </Route>
             <Route render={function () {return <h1>404 Not found</h1>}}/>
           </Switch>

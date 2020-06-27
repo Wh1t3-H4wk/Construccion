@@ -5,8 +5,51 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import CrearCodigo from './CrearCodigo.js'
+import Table from 'react-bootstrap/Table';
+import Codigo from "./Codigo.js";
+import axios from 'axios';
+
 class Codigos extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      codigos: [],
+      buscar:""
+    }
+    this.actualizarCodigo=this.actualizarCodigo.bind(this);
+    this.buscar = this.buscar.bind(this);
+  }
+
+  buscar(e) {
+    this.setState({ buscar: e.target.value });
+    
+  }
+
+  actualizarCodigo() {
+    this.setState({isLoaded: false});
+    this.getListaCodigos();
+  }
+  async getListaCodigos() {
+    await axios.get('http://localhost:5001/Codigo').then((response) => {
+      this.setState({
+        codigos: response.data,
+        isLoaded: true
+      });
+      
+    });
+  }
+
+  componentDidMount() {
+    this.getListaCodigos();
+  }
+
     render() {
+      let itemsCodigo = this.state.codigos.map((item) => {
+        return (
+          
+          <Codigo item={item} actualizarCodigo={this.actualizarCodigo}/>
+        );
+      });
         return (
         <Container className="page-section">
             <div className="product-item">
@@ -23,15 +66,31 @@ class Codigos extends Component {
                 <Form.Row className="p-3">
                     
                     <Form.Group as={Col}>
-                    <Form.Control type="text" id="buscar" placeholder="Buscar" onChange={this.buscar}/>
+                    <Form inline className="justify-content-end">
+                      <Form.Control type="text" id="buscar" placeholder="Buscar" onChange={this.buscar}/> 
+                      </Form>
                     </Form.Group>
                     <Form.Group as={Col}>
-                      <CrearCodigo/>
+                      <CrearCodigo actualizarCodigo={this.actualizarCodigo}/>
                     </Form.Group>
                 </Form.Row>
                 
-                </Container>
+                
+                <Table responsive>
+                  <thead>
+                    <tr>
+                      <th>Nombre</th>
+                      <th>Descuento</th>
+                      <th>Eliminar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {itemsCodigo}
+                  </tbody>
+              </Table>
             </Container>
+          </Container>
+
         );
     }
 }
