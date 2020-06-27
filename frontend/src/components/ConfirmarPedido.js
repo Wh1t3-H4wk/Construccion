@@ -9,7 +9,7 @@ import TablaConfirmarPedido from "./TablaConfirmarPedido";
 class ConfirmarPedido extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { instruccionesPreparacion: "" };
   }
 
   componentDidMount() {
@@ -34,7 +34,20 @@ class ConfirmarPedido extends Component {
               <Col>Resumen de Pedido</Col>
             </Row>
             <Row>
-              <Col>Instrucciones de Preparacion</Col>
+              <Col>
+                <Form.Group controlId="instrucciones">
+                  <Form.Label className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">
+                    Instrucciones Adicionales
+                  </Form.Label>
+                  <div className="p-4">
+                    <p className="font-italic mb-4">
+                      Si tiene instrucciones adicionales sobre preparación o
+                      despacho, escribalas aquí.
+                    </p>
+                    <Form.Control as="textarea" cols="30" rows="2" />
+                  </div>
+                </Form.Group>
+              </Col>
               <Col>Cupon de Descuento</Col>
             </Row>
             <Button className="float-right">Confirmar</Button>
