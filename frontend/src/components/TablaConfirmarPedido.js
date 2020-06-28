@@ -7,12 +7,12 @@ import Button from "react-bootstrap/Button";
 class TablaConfirmarPedido extends Component {
   generateItemView = (item) => {
     return (
-      <tr key={item.producto.id}>
+      <tr key={item.producto.id} style={{ borderTop: "1px solid #dee2e6" }}>
         <td className="border-0 align-middle">
           <img
             src={item.producto.imgUrl}
             alt=""
-            width="100%"
+            style={{ width: "100%", maxWidth: "70px" }}
             className="img-fluid rounded shadow-sm"
           />
         </td>
@@ -46,7 +46,7 @@ class TablaConfirmarPedido extends Component {
 
   renderTable = () => {
     return (
-      <Table responsive="sm">
+      <Table>
         <thead>
           <th colspan="2" scope="col" className="border-0 bg-light">
             Producto
@@ -85,7 +85,7 @@ class TablaConfirmarPedido extends Component {
 
   render() {
     return (
-      <div>
+      <div className="row py-5 p-4 bg-white rounded shadow-sm mb-4 mr-1">
         {this.props.carro == 0 ? this.renderNoTable() : this.renderTable()}
       </div>
     );

@@ -1,10 +1,10 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
-import axios from 'axios';
+import React from "react";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import axios from "axios";
 
 class EditarCliente extends React.Component {
   constructor(props) {
@@ -58,6 +58,7 @@ class EditarCliente extends React.Component {
   }
 
   componentDidMount() {
+    document.title = "Cuenta - Cafetería Donde José Billar";
     this.getDatosCliente();
   }
 

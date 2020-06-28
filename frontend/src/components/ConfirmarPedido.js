@@ -4,17 +4,40 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
+import ListGroup from "react-bootstrap/ListGroup";
 import TablaConfirmarPedido from "./TablaConfirmarPedido";
 
 class ConfirmarPedido extends Component {
   constructor(props) {
     super(props);
-    this.state = { instruccionesPreparacion: "" };
+    this.state = {
+      instruccionesPreparacion: "",
+      porcentajeDescuento: 0,
+      subtotal: 0,
+    };
   }
 
   componentDidMount() {
-    console.log(this.props);
+    document.title = "Confirmar Pedido - Cafetería Donde José Billar";
   }
+
+  calcularSubtotal = () => {
+    let value = 0;
+    this.props.carro.forEach((item) => {
+      value += item.producto.precio * item.cantidad;
+    });
+    return Math.round(value);
+  };
+
+  calcularDescuento = () => {
+    return Math.round(
+      this.calcularSubtotal() * (this.state.porcentajeDescuento * 0.01)
+    );
+  };
+
+  calcularTotal = () => {
+    return this.calcularSubtotal() - this.calcularDescuento();
+  };
 
   render() {
     return (
@@ -23,24 +46,71 @@ class ConfirmarPedido extends Component {
           className="bg-faded p-5 rounded"
           style={{ maxWidth: "100%" }}
         >
-          <Form>
+          <Form className="mb-3">
             <Row>
-              <Col>
+              <Col xs={{ span: 12, order: 1 }} md={{ span: 8, order: 1 }}>
                 <TablaConfirmarPedido
                   carro={this.props.carro}
                   eliminarDeCarro={this.props.eliminarDeCarro}
                 />
               </Col>
-              <Col>Resumen de Pedido</Col>
+              <Col xs={{ span: 12, order: 2 }} md={{ span: 4, order: 2 }}>
+                <div className="row py-5 p-4 bg-white rounded shadow-sm mb-4">
+                  <Form.Label
+                    className="bg-light rounded-pill px-4 py-3 text-uppercase text-center font-weight-bold"
+                    style={{ width: "100%" }}
+                  >
+                    Resumen de Pedido
+                  </Form.Label>
+                  <ListGroup
+                    variant="flush"
+                    className="mb-4"
+                    as="ul"
+                    style={{ width: "100%" }}
+                  >
+                    <ListGroup.Item
+                      as="li"
+                      className=" d-flex justify-content-between py-3"
+                    >
+                      <strong className="text-muted">Subtotal de Pedido</strong>
+                      <strong>${this.calcularSubtotal()}</strong>
+                    </ListGroup.Item>
+                    <ListGroup.Item
+                      as="li"
+                      className=" d-flex justify-content-between py-3"
+                    >
+                      <strong className="text-muted">Descuento</strong>
+                      <strong className="align-right">
+                        ${this.calcularDescuento()}
+                      </strong>
+                    </ListGroup.Item>
+                    <ListGroup.Item
+                      as="li"
+                      className=" d-flex justify-content-between py-3"
+                    >
+                      <strong className="text-muted">Total</strong>
+                      <strong className="align-right">
+                        ${this.calcularTotal()}
+                      </strong>
+                    </ListGroup.Item>
+                  </ListGroup>
+                </div>
+              </Col>
             </Row>
             <Row>
-              <Col>
+              <Col xs={{ span: 12, order: 1 }} md={{ span: 8, order: 1 }}>
                 <Form.Group controlId="instrucciones">
-                  <Form.Label className="bg-light rounded-pill px-4 py-3 text-uppercase font-weight-bold">
-                    Instrucciones Adicionales
-                  </Form.Label>
-                  <div className="p-4">
-                    <p className="font-italic mb-4">
+                  <div className="row py-5 p-4 bg-white rounded shadow-sm mb-4 mr-1">
+                    <Form.Label
+                      className="bg-light rounded-pill px-4 py-3 text-uppercase text-center font-weight-bold"
+                      style={{ width: "100%" }}
+                    >
+                      Instrucciones Adicionales
+                    </Form.Label>
+                    <p
+                      className="font-italic mb-4 text-center"
+                      style={{ width: "100%" }}
+                    >
                       Si tiene instrucciones adicionales sobre preparación o
                       despacho, escribalas aquí.
                     </p>
@@ -48,9 +118,13 @@ class ConfirmarPedido extends Component {
                   </div>
                 </Form.Group>
               </Col>
-              <Col>Cupon de Descuento</Col>
+              <Col xs={{ span: 12, order: 2 }} md={{ span: 4, order: 2 }}>
+                Cupon de Descuento
+              </Col>
             </Row>
-            <Button className="float-right">Confirmar</Button>
+            <Button className="float-right" disabled={this.props.carro == 0}>
+              Confirmar Pedido
+            </Button>
           </Form>
         </Container>
       </Container>
