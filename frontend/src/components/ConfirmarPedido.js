@@ -5,15 +5,54 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import TablaConfirmarPedido from "./TablaConfirmarPedido";
+import axios from 'axios';
+import ConfirmarCodigo from "./ConfirmarCodigo.js"
+import Alert from 'react-bootstrap/Alert'
 
 class ConfirmarPedido extends Component {
   constructor(props) {
     super(props);
-    this.state = { instruccionesPreparacion: "" };
+    this.state = { 
+      instruccionesPreparacion: "", 
+      descuento: "0",
+      codigoAplicado:false,
+      first:false,
+      cod:"",
+      
+    };
+    this.ConfCodigo= this.ConfCodigo.bind(this);
   }
 
   componentDidMount() {
     console.log(this.props);
+  }
+  
+  async ConfCodigo(codigo) {
+    if(this.state.codigoAplicado){
+      alert('Ya se ingreso un codigo de descuento');
+      
+    }
+    else{
+      try{
+        await axios.get('http://localhost:5001/Codigo/'+ codigo).then((response) => {
+            this.setState({
+                codi: response.data.name,
+                descuento: response.data.descuento,
+              
+            });
+        });
+        
+        if(parseInt(this.state.descuento)>=1){
+          this.state.codigoAplicado= true;
+          alert('Codigo de descuento aceptado');
+        }
+        else{
+          alert('Codigo de descuento invalido');
+        }
+      }catch (err) {
+        alert('Codigo de descuento invalido');
+      } 
+    }
   }
 
   render() {
@@ -48,7 +87,14 @@ class ConfirmarPedido extends Component {
                   </div>
                 </Form.Group>
               </Col>
-              <Col>Cupon de Descuento</Col>
+              <Col>
+                Cupon de Descuento
+                <ConfirmarCodigo
+                  ConfCodigo={this.ConfCodigo}
+                  codigoAplicado={this.codigoAplicado}
+                  />
+                  
+              </Col>
             </Row>
             <Button className="float-right">Confirmar</Button>
           </Form>
