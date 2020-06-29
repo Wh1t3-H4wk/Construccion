@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import EditarProducto from './EditarProducto.js';
 import EliminarProducto from './EliminarProducto.js';
-import Button from 'react-bootstrap/Button';
+import AnadirACarro from './AnadirACarro.js';
 
 class Producto extends React.Component {
   constructor(props) {
@@ -11,8 +11,8 @@ class Producto extends React.Component {
     this.handleAnadirACarro = this.handleAnadirACarro.bind(this);
   }
 
-  handleAnadirACarro() {
-    this.props.anadirACarro(this.props.producto);
+  handleAnadirACarro(cant) {
+    this.props.anadirACarro({producto: this.props.producto, cantidad: cant});
   }
 
   render() {
@@ -24,13 +24,13 @@ class Producto extends React.Component {
           <Card.Subtitle>${this.props.producto.precio}</Card.Subtitle>
         </Card.Body>
         <Card.Footer>
-          <Button disabled={!this.props.producto.disponible} onClick={this.handleAnadirACarro}>Añadir al carro</Button>
           {
             this.props.isAdmin && <ButtonGroup className="float-right">
               <EditarProducto producto={this.props.producto} actualizarProductos={this.props.actualizarProductos}/>
               <EliminarProducto idProducto={this.props.producto.id} nombre={this.props.producto.nombre} actualizarProductos={this.props.actualizarProductos}/>
             </ButtonGroup>
           }
+          <AnadirACarro disponible={this.props.producto.disponible} anadir={this.handleAnadirACarro}/>
         </Card.Footer>
       </Card>
     );

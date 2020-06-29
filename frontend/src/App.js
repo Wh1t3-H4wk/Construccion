@@ -49,15 +49,15 @@ class App extends React.Component {
     const nuevoCarro = [];
     let exists = false;
     this.state.carro.forEach((item) => {
-      if (item.producto.id === productoAnadido.id) {
-        nuevoCarro.push({producto: item.producto, cantidad: item.cantidad + 1});
+      if (item.producto.id === productoAnadido.producto.id) {
+        nuevoCarro.push({producto: item.producto, cantidad: item.cantidad + productoAnadido.cantidad});
         exists = true;
       }
       else
         nuevoCarro.push(item);
     })
     if (!exists)
-      nuevoCarro.push({producto: productoAnadido, cantidad: 1});
+      nuevoCarro.push(productoAnadido);
     this.setState({carro: nuevoCarro});
   }
 

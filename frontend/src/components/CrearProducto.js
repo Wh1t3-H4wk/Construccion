@@ -73,7 +73,7 @@ class CrearProducto extends React.Component {
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="imagen">
-                <Form.File id="imagen" label="Imagen"></Form.File>
+                <Form.File id="imagen" label="Imagen"/>
               </Form.Group>
               <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked="true"/>
               <Form.Check type="switch" label="Destacado" id="destacado" defaultChecked={this.props.destacado}/>
