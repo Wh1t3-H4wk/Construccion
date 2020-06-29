@@ -147,7 +147,18 @@ class ConfirmarPedido extends Component {
                       Si tiene instrucciones adicionales sobre preparación o
                       despacho, escribalas aquí.
                     </p>
-                    <Form.Control as="textarea" cols="30" rows="2" />
+                    <Form.Control
+                      as="textarea"
+                      cols="30"
+                      rows="2"
+                      onChange={(e) => {
+                        e.preventDefault();
+                        let value = e.target.value;
+                        this.setState({ instruccionesPreparacion: value }, () =>
+                          console.log(this.state.instruccionesPreparacion)
+                        );
+                      }}
+                    />
                   </div>
                 </Form.Group>
               </Col>
