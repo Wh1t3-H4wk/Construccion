@@ -22,7 +22,7 @@ class EditarProducto extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    await axios.put('http://localhost:5001/Producto', {
+    await axios.put('http://localhost:5001/Producto/' + this.props.producto.id, {
       "id": this.props.producto.id,
       "nombre": form.nombre.value,
       //"imgUrl": form.imagen.files[0],
