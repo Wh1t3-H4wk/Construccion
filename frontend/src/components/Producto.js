@@ -28,7 +28,7 @@ class Producto extends React.Component {
           {
             this.props.isAdmin && <ButtonGroup className="float-right">
               <EditarProducto producto={this.props.producto} actualizarProductos={this.props.actualizarProductos}/>
-              <EliminarProducto id={this.props.producto.id} nombre={this.props.producto.nombre} actualizarProductos={this.props.actualizarProductos}/>
+              <EliminarProducto idProducto={this.props.producto.id} nombre={this.props.producto.nombre} actualizarProductos={this.props.actualizarProductos}/>
             </ButtonGroup>
           }
         </Card.Footer>

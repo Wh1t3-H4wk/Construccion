@@ -1,11 +1,11 @@
-import React from "react";
-import NavBar from "./components/NavBar.js";
-import Header from "./components/Header.js";
-import Catalogo from "./components/Catalogo.js";
-import Footer from "./components/Footer.js";
+import React from 'react';
+import NavBar from './components/NavBar.js';
+import Header from './components/Header.js';
+import Catalogo from './components/Catalogo.js';
+import Footer from './components/Footer.js';
 import axios from 'axios';
-import CrearCliente from "./components/CrearCliente.js";
-import EditarCuenta from "./components/EditarCliente.js";
+import CrearCliente from './components/CrearCliente.js';
+import EditarCuenta from './components/EditarCliente.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 class App extends React.Component {
@@ -24,8 +24,13 @@ class App extends React.Component {
 
   async getListaProductos() {
     await axios.get('http://localhost:5001/Producto').then((response) => {
+      const productosNoEliminados = [];
+      response.data.forEach((item) => {
+        if (!item.eliminado === true)
+          productosNoEliminados.push(item);
+      });
       this.setState({
-        productos: response.data,
+        productos: productosNoEliminados,
         isLoaded: true
       });
     });

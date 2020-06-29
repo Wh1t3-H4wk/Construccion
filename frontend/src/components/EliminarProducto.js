@@ -17,7 +17,7 @@ class EliminarProducto extends React.Component {
   }
 
   async delete() {
-    await axios.delete(`http://localhost:5001/Producto/${this.props.id}`);
+    await axios.delete(`http://localhost:5001/Producto/${this.props.idProducto}`);
     this.toggle();
     this.props.actualizarProductos();
   }
@@ -30,7 +30,7 @@ class EliminarProducto extends React.Component {
         </Button>
 
         <Modal show={this.state.modal} onHide={this.toggle}>
-          <Modal.Header>Eliminar producto</Modal.Header>
+          <Modal.Header>Eliminar {this.props.nombre}</Modal.Header>
           <Modal.Body>¿Está seguro de que desea eliminar {this.props.nombre}?</Modal.Body> 
           <Modal.Footer>
             <Button variant="danger" onClick={()=>{this.delete()}}>Eliminar</Button>
