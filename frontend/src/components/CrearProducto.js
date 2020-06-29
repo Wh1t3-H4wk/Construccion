@@ -50,7 +50,7 @@ class CrearProducto extends React.Component {
             <Modal.Body>
               <Form.Group controlId="nombre">
                 <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" placeholder="Nombre" required/>
+                <Form.Control type="text" placeholder="Nombre" maxLength="30" required/>
               </Form.Group>
               <Form.Group controlId="precio">
                 <Form.Label>Precio</Form.Label>
@@ -63,7 +63,7 @@ class CrearProducto extends React.Component {
               </Form.Group>
               <Form.Group controlId="descripcion">
                 <Form.Label>Descripción</Form.Label>
-                <Form.Control as="textarea" rows="2" placeholder="Descripción" required/>
+                <Form.Control as="textarea" rows="2" placeholder="Descripción" maxLength="120" required/>
               </Form.Group>
               <Form.Group controlId="categoria">
                 <Form.Label>Categoría</Form.Label>

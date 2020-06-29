@@ -51,7 +51,7 @@ class EditarProducto extends React.Component {
             <Modal.Body>
               <Form.Group controlId="nombre">
                 <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" placeholder="Nombre" defaultValue={this.props.producto.nombre} required/>
+                <Form.Control type="text" placeholder="Nombre" defaultValue={this.props.producto.nombre} maxLength="30" required/>
               </Form.Group>
               <Form.Group controlId="precio">
                 <Form.Label>Precio</Form.Label>
@@ -64,7 +64,7 @@ class EditarProducto extends React.Component {
               </Form.Group>
               <Form.Group controlId="descripcion">
                 <Form.Label>Descripción</Form.Label>
-                <Form.Control as="textarea" rows="2" placeholder="Descripción" defaultValue={this.props.producto.descripcion} required/>
+                <Form.Control as="textarea" rows="2" placeholder="Descripción" defaultValue={this.props.producto.descripcion} maxLength="120" required/>
               </Form.Group>
               <Form.Group controlId="categoria">
                 <Form.Label>Categoría</Form.Label>
