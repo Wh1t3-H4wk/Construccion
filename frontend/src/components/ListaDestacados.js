@@ -10,16 +10,18 @@ function ListaDestacados(props) {
       if (!item.destacado) return undefined;
       return (
         <Carousel.Item key={item.id}>
-          <img
-            className="d-block w-100"
-            src={item.imgUrl}
-            alt={item.nombre}
-            style={{ maxHeight: "450px", objectFit: "contain" }}
-          ></img>
+          <a href={"#producto" + item.id}>
+            <img
+              className="d-block w-100"
+              src={item.imgUrl}
+              alt={item.nombre}
+              style={{ maxHeight: "450px", objectFit: "contain"}}
+            />
           <Carousel.Caption>
             <h2>{item.nombre}</h2>
             <p>{item.descripcion}</p>
           </Carousel.Caption>
+          </a>
         </Carousel.Item>
       );
     });

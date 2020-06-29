@@ -22,10 +22,6 @@ class AnadirACarro extends React.Component {
     this.setState({cantidad: this.state.cantidad > 1 ? this.state.cantidad - 1 : 1});
   }
 
-  sendCantidad() {
-    this.props.anadir(this.state.cantidad);
-  }
-
   handleAnadirACarro() {
     this.props.anadir(this.state.cantidad);
   }
@@ -35,13 +31,13 @@ class AnadirACarro extends React.Component {
       <>
         <InputGroup>
           <InputGroup.Prepend>
-            <Button onClick={this.decrement}>
+            <Button disabled={!this.props.disponible} onClick={this.decrement}>
               <FontAwesomeIcon icon={faMinus}/>
             </Button>
           </InputGroup.Prepend>
           <FormControl value={this.state.cantidad} readOnly/>
           <InputGroup.Append>
-            <Button onClick={this.increment}>
+            <Button disabled={!this.props.disponible} onClick={this.increment}>
               <FontAwesomeIcon icon={faPlus}/>
             </Button>  
           </InputGroup.Append>

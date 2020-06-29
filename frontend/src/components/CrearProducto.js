@@ -45,7 +45,9 @@ class CrearProducto extends React.Component {
         </Button>
 
         <Modal show={this.state.modal} onHide={this.toggle}>
-          <Modal.Header>Crear Producto</Modal.Header>
+          <Modal.Header closeButton>
+            <Modal.Title>Crear Producto</Modal.Title>
+          </Modal.Header>
           <Form onSubmit={this.onSubmit}>
             <Modal.Body>
               <Form.Group controlId="nombre">

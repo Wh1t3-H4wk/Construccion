@@ -46,7 +46,9 @@ class EditarProducto extends React.Component {
         </Button>
 
         <Modal show={this.state.modal} onHide={this.toggle}>
-          <Modal.Header>Editar producto {this.props.producto.nombre}</Modal.Header>
+          <Modal.Header closeButton>
+            <Modal.Title>Editar producto {this.props.producto.nombre}</Modal.Title>
+          </Modal.Header>
           <Form onSubmit={this.onSubmit}>
             <Modal.Body>
               <Form.Group controlId="nombre">
