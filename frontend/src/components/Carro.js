@@ -10,11 +10,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 
 function Carro(props) {
-  let total = 0;
+  let i = 0, precioTotal = 0, cantTotal = 0;
   let itemsCarro = props.carro.map((item) => {
-    total += item.producto.precio * item.cantidad;
+    precioTotal += item.producto.precio * item.cantidad;
+    cantTotal += item.cantidad;
     return (
-      <ItemCarro item={item} eliminarDeCarro={props.eliminarDeCarro}/>
+      <ItemCarro key={i++} item={item} eliminarDeCarro={props.eliminarDeCarro}/>
     );
   });
   return (
@@ -35,8 +36,8 @@ function Carro(props) {
               {itemsCarro}
             </tbody>
           </Table>
-          <h3>Total: ${total}</h3>
-          <Button disabled={total === 0} className="m-2">Confirmar pedido</Button>
+          <h3>Total: ${precioTotal}</h3>
+          <Button disabled={props.carro.length === 0} className="m-2">Confirmar pedido</Button>
         </Popover.Content>
       </Popover>
       }
@@ -45,7 +46,7 @@ function Carro(props) {
         <Container>
           <Row>
             <FontAwesomeIcon icon={faShoppingBasket} className="m-1"/>
-            <h5 className="m-1">{props.carro.length}</h5>
+            <h5 className="m-1">{cantTotal}</h5>
           </Row>
         </Container>
       </Button>
