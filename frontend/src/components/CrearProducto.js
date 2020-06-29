@@ -29,7 +29,7 @@ class CrearProducto extends React.Component {
       "descripcion": form.descripcion.value,
       "precio": parseInt(form.precio.value),
       "categoria": form.categoria.value,
-      "disponible": true,
+      "disponible": form.disponible.checked,
       "destacado": form.destacado.checked,
       "eliminado": false
     });
@@ -75,6 +75,7 @@ class CrearProducto extends React.Component {
               <Form.Group controlId="imagen">
                 <Form.File id="imagen" label="Imagen"></Form.File>
               </Form.Group>
+              <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked="true"/>
               <Form.Check type="switch" label="Destacado" id="destacado" defaultChecked={this.props.destacado}/>
             </Modal.Body>
             <Modal.Footer>
