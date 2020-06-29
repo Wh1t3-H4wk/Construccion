@@ -8,7 +8,6 @@ import ListGroup from "react-bootstrap/ListGroup";
 import TablaConfirmarPedido from "./TablaConfirmarPedido";
 import axios from "axios";
 import ConfirmarCodigo from "./ConfirmarCodigo.js";
-import Alert from "react-bootstrap/Alert";
 
 class ConfirmarPedido extends Component {
   constructor(props) {
@@ -18,8 +17,7 @@ class ConfirmarPedido extends Component {
       porcentajeDescuento: 0,
       subtotal: 0,
       codigoAplicado: false,
-      first: false,
-      cod: "",
+      validezCodigo: "",
     };
     this.ConfCodigo = this.ConfCodigo.bind(this);
   }
@@ -30,26 +28,28 @@ class ConfirmarPedido extends Component {
 
   async ConfCodigo(codigo) {
     if (this.state.codigoAplicado) {
-      alert("Ya se ingreso un codigo de descuento");
+      this.setState({ validezCodigo: "Ya se ingresó un código de descuento." });
     } else {
+      let response = null;
       try {
-        await axios
-          .get("http://localhost:5001/Codigo/" + codigo)
-          .then((response) => {
-            this.setState({
-              codi: response.data.name,
-              porcentajeDescuento: response.data.descuento,
-            });
-          });
-
-        if (this.state.porcentajeDescuento >= 1) {
-          this.state.codigoAplicado = true;
-          alert("Codigo de descuento aceptado");
-        } else {
-          alert("Codigo de descuento invalido");
-        }
+        response = await axios.get("http://localhost:5001/Codigo/" + codigo);
       } catch (err) {
-        alert("Codigo de descuento invalido");
+        response = err;
+      } finally {
+        if (response.status === 200) {
+          this.setState({
+            codi: response.data.name,
+            porcentajeDescuento: response.data.descuento,
+            codigoAplicado: true,
+            validezCodigo: "Código de descuento aceptado.",
+          });
+        } else {
+          this.setState({
+            porcentajeDescuento: 0,
+            codigoAplicado: false,
+            validezCodigo: "El código ingresado es inválido.",
+          });
+        }
       }
     }
   }
@@ -152,10 +152,10 @@ class ConfirmarPedido extends Component {
                 </Form.Group>
               </Col>
               <Col xs={{ span: 12, order: 2 }} md={{ span: 4, order: 2 }}>
-                Cupon de Descuento
                 <ConfirmarCodigo
                   ConfCodigo={this.ConfCodigo}
                   codigoAplicado={this.codigoAplicado}
+                  validezCodigo={this.state.validezCodigo}
                 />
               </Col>
             </Row>
