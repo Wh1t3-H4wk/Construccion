@@ -88,7 +88,7 @@ class App extends React.Component {
             <Route exact path="/registrarse">
               <CrearCliente />
             </Route>
-            <Route exact path="/cuenta">
+            <Route exact path="/cuenta/:mail">
               <EditarCuenta />
             </Route>
             <Route exact path="/confirmarPedido">
