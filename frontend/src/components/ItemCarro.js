@@ -21,7 +21,7 @@ class ItemCarro extends React.Component {
         <td>{item.cantidad}</td>
         <td>${item.producto.precio * item.cantidad}</td>
         <td>
-          <Button variant="danger" idProducto={item.producto.id} onClick={this.handleEliminarDeCarro}>
+          <Button variant="danger" onClick={this.handleEliminarDeCarro}>
             <FontAwesomeIcon icon={faTrash}/>
           </Button>
         </td>
