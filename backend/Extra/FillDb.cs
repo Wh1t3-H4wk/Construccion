@@ -52,6 +52,10 @@ namespace Cafeteria.Extra
             var xcodigo = new Codigo();
             xcodigo.Descuento = 10;
             xcodigo.Name = "codigo1";
+            
+            var xcodigo1 = new Codigo();
+            xcodigo1.Descuento = 90;
+            xcodigo1.Name = "codigo2";
 
             var xpedido = new Pedido();
             xpedido.Direccion = "direncion";
@@ -64,6 +68,7 @@ namespace Cafeteria.Extra
             xpedido2.Valor = 1231;
 
             context.Codigos.Add(xcodigo);
+            context.Codigos.Add(xcodigo1);
             context.Pedidos.Add(xpedido);
             context.Pedidos.Add(xpedido2);
             context.SaveChanges();

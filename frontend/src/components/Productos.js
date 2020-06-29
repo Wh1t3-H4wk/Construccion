@@ -95,7 +95,7 @@ class Productos extends React.Component {
             actualizarProductos={this.props.actualizarProductos}
           />
         </Container>
-      </Container>
+      </Container>   
     );
   }
 }

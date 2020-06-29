@@ -6,8 +6,11 @@ import Footer from "./components/Footer.js";
 import axios from "axios";
 import CrearCliente from "./components/CrearCliente.js";
 import EditarCuenta from "./components/EditarCliente.js";
+
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import ConfirmarPedido from "./components/ConfirmarPedido.js";
+import Codigos from "./components/Codigos.js";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -97,11 +100,11 @@ class App extends React.Component {
                 eliminarDeCarro={this.eliminarDeCarro}
               />
             </Route>
-            <Route
-              render={function () {
-                return <h1>404 Not found</h1>;
-              }}
-            />
+            <Route exact path="/codigos">
+              <Codigos/>
+            </Route>
+            <Route render={function () {return <h1>404 Not found</h1>}}/>
+
           </Switch>
           <Footer />
         </BrowserRouter>
