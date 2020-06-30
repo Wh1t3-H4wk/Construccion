@@ -10,15 +10,9 @@ import InputGroup from 'react-bootstrap/InputGroup';
 class CrearProducto extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      modal: false,
-      isDisponible: true,
-      isDestacado: false
-    };
+    this.state = {modal: false};
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleDisponibleChange = this.handleDisponibleChange.bind(this);
-    this.handleDestacadoChange = this.handleDestacadoChange.bind(this);
   }
 
   toggle() {
@@ -48,17 +42,6 @@ class CrearProducto extends React.Component {
     });
     this.toggle();
     this.props.actualizarProductos();
-  }
-
-  handleDisponibleChange(e) {
-    this.setState({isDisponible: e.target.checked});
-    if (!e.target.checked)
-      this.setState({isDestacado: false});
-  }
-
-  handleDestacadoChange(e) {
-    if (this.state.isDisponible)
-      this.setState({isDestacado: !this.state.isDestacado});
   }
 
   render() {
@@ -101,8 +84,8 @@ class CrearProducto extends React.Component {
               <Form.Group controlId="imagen">
                 <Form.File id="imagen" label="Imagen" required/>
               </Form.Group>
-              <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked={true} onChange={this.handleDisponibleChange}/>
-              <Form.Check type="switch" label="Destacado" id="destacado" checked={this.state.isDestacado} onClick={this.handleDestacadoChange}/>
+              <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked={true}/>
+              <Form.Check type="switch" label="Destacado" id="destacado"/>
             </Modal.Body>
             <Modal.Footer>
               <Button type="submit">Crear producto</Button>

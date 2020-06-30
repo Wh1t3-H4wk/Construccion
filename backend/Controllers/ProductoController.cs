@@ -44,7 +44,7 @@ namespace Cafeteria.Controllers
             producto.Categoria = delta.Categoria;
             producto.Descripcion = delta.Descripcion;
             producto.Destacado = delta.Destacado;
-            producto.Disponible = delta.Destacado;
+            producto.Disponible = delta.Disponible;
             producto.Eliminado = delta.Eliminado;
             producto.Nombre = delta.Nombre;
             producto.Precio = delta.Precio;

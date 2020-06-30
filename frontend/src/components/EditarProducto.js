@@ -10,15 +10,9 @@ import { faEdit } from '@fortawesome/free-solid-svg-icons';
 class EditarProducto extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      modal: false,
-      isDisponible: this.props.producto.disponible,
-      isDestacado: this.props.producto.destacado
-    };
+    this.state = {modal: false};
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleDisponibleChange = this.handleDisponibleChange.bind(this);
-    this.handleDestacadoChange = this.handleDestacadoChange.bind(this);
   }
 
   toggle() {
@@ -54,20 +48,9 @@ class EditarProducto extends React.Component {
       destacado: form.destacado.checked,
       eliminado: false,
     });
+    console.log(form.disponible.checked);
     this.toggle();
     this.props.actualizarProductos();
-  }
-
-  handleDisponibleChange(e) {
-    this.setState({isDisponible: e.target.checked});
-    if (!e.target.checked)
-      this.setState({isDestacado: false});
-  }
-
-  handleDestacadoChange(e) {
-    e.preventDefault();
-    if (this.state.isDisponible)
-      this.setState({isDestacado: !this.state.isDestacado});
   }
 
   render() {
@@ -93,12 +76,7 @@ class EditarProducto extends React.Component {
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <Form.Control
-                    type="text"
-                    placeholder="Precio"
-                    defaultValue={this.props.producto.precio}
-                    required
-                  />
+                  <Form.Control type="text" placeholder="Precio" defaultValue={this.props.producto.precio} required/>
                 </InputGroup>
               </Form.Group>
               <Form.Group controlId="descripcion">
@@ -107,10 +85,7 @@ class EditarProducto extends React.Component {
               </Form.Group>
               <Form.Group controlId="categoria">
                 <Form.Label>Categoría</Form.Label>
-                <Form.Control
-                  as="select"
-                  defaultValue={this.props.producto.categoria}
-                >
+                <Form.Control as="select" defaultValue={this.props.producto.categoria}>
                   <option>Bebestible</option>
                   <option>Comestible</option>
                 </Form.Control>
@@ -118,8 +93,8 @@ class EditarProducto extends React.Component {
               <Form.Group controlId="imagen">
                 <Form.File id="imagen" label="Imagen"></Form.File>
               </Form.Group>
-              <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked={this.props.producto.disponible} onChange={this.handleDisponibleChange}/>
-              <Form.Check type="switch" label="Destacado" id="destacado" onChange={this.handleDestacadoChange}/>
+              <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked={this.props.producto.disponible}/>
+              <Form.Check type="switch" label="Destacado" id="destacado" defaultChecked={this.props.producto.destacado}/>
             </Modal.Body>
             <Modal.Footer>
               <Button type="submit">Editar producto</Button>
