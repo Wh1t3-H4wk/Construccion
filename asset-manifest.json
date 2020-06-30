@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Wh1t3-H4wk/Construccion.git/static/css/main.69eda509.chunk.css",
+    "main.js": "/Wh1t3-H4wk/Construccion.git/static/js/main.4c0eec64.chunk.js",
+    "main.js.map": "/Wh1t3-H4wk/Construccion.git/static/js/main.4c0eec64.chunk.js.map",
+    "runtime-main.js": "/Wh1t3-H4wk/Construccion.git/static/js/runtime-main.8a0b0e4e.js",
+    "runtime-main.js.map": "/Wh1t3-H4wk/Construccion.git/static/js/runtime-main.8a0b0e4e.js.map",
+    "static/css/2.af3c1da9.chunk.css": "/Wh1t3-H4wk/Construccion.git/static/css/2.af3c1da9.chunk.css",
+    "static/js/2.df3cd2ac.chunk.js": "/Wh1t3-H4wk/Construccion.git/static/js/2.df3cd2ac.chunk.js",
+    "static/js/2.df3cd2ac.chunk.js.map": "/Wh1t3-H4wk/Construccion.git/static/js/2.df3cd2ac.chunk.js.map",
+    "index.html": "/Wh1t3-H4wk/Construccion.git/index.html",
+    "precache-manifest.b917bf54f1ce7b185e9b5f61b2af01df.js": "/Wh1t3-H4wk/Construccion.git/precache-manifest.b917bf54f1ce7b185e9b5f61b2af01df.js",
+    "service-worker.js": "/Wh1t3-H4wk/Construccion.git/service-worker.js",
+    "static/css/2.af3c1da9.chunk.css.map": "/Wh1t3-H4wk/Construccion.git/static/css/2.af3c1da9.chunk.css.map",
+    "static/css/main.69eda509.chunk.css.map": "/Wh1t3-H4wk/Construccion.git/static/css/main.69eda509.chunk.css.map",
+    "static/js/2.df3cd2ac.chunk.js.LICENSE.txt": "/Wh1t3-H4wk/Construccion.git/static/js/2.df3cd2ac.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.8a0b0e4e.js",
+    "static/css/2.af3c1da9.chunk.css",
+    "static/js/2.df3cd2ac.chunk.js",
+    "static/css/main.69eda509.chunk.css",
+    "static/js/main.4c0eec64.chunk.js"
+  ]
+}
