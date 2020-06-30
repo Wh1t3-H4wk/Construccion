@@ -28,7 +28,6 @@ class EditarProducto extends React.Component {
   toBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
-      console.log(file);
       if (file !== undefined) {
         reader.readAsDataURL(file);
         reader.onload = () => resolve(reader.result);
@@ -39,13 +38,15 @@ class EditarProducto extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
     const form = e.target;
+    let img = form.imagen.files[0];
+    if (img !== undefined)
+      img = await this.toBase64(img);
+    else
+      img = "";
     await axios.put("http://localhost:5001/Producto", {
       id: this.props.producto.id,
       nombre: form.nombre.value,
-      imgUrl:
-        form.imagen.files[0] !== undefined
-          ? this.toBase64(form.imagen.files[0])
-          : "",
+      imgUrl: img,
       descripcion: form.descripcion.value,
       precio: parseInt(form.precio.value),
       categoria: form.categoria.value,
@@ -64,6 +65,7 @@ class EditarProducto extends React.Component {
   }
 
   handleDestacadoChange(e) {
+    e.preventDefault();
     if (this.state.isDisponible)
       this.setState({isDestacado: !this.state.isDestacado});
   }
@@ -117,7 +119,7 @@ class EditarProducto extends React.Component {
                 <Form.File id="imagen" label="Imagen"></Form.File>
               </Form.Group>
               <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked={this.props.producto.disponible} onChange={this.handleDisponibleChange}/>
-              <Form.Check type="switch" label="Destacado" id="destacado" checked={this.state.isDestacado} onClick={this.handleDestacadoChange}/>
+              <Form.Check type="switch" label="Destacado" id="destacado" onChange={this.handleDestacadoChange}/>
             </Modal.Body>
             <Modal.Footer>
               <Button type="submit">Editar producto</Button>
