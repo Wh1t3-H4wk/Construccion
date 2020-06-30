@@ -48,7 +48,7 @@ class Codigos extends React.Component {
         <div className="d-flex product-item-title">
           <div className="d-flex mr-auto bg-faded p-5 rounded" style={{backgroundColor: "rgba(230, 167, 86, 0.82)"}}>
             <h2 className="section-heading mb-0">
-              <span className="section-heading-lower" style={{color: "rgb(239, 239, 239)",fontSize: "42px"}}>Codigos de descuento</span>
+              <span className="section-heading-lower" style={{color: "rgb(239, 239, 239)",fontSize: "42px"}}>Códigos de descuento</span>
             </h2>
           </div>
         </div>

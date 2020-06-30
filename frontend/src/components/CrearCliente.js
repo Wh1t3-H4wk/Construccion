@@ -74,7 +74,7 @@ class CrearCliente extends React.Component {
                   className="section-heading-upper"
                   style={{ color: "rgb(230, 230, 230)", fontSize: "15px" }}
                 >
-                  Se parte de nosotros
+                  Sé parte de nosotros
                 </span>
                 <span
                   className="section-heading-lower"

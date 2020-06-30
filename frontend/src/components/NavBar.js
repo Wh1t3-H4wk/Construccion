@@ -12,7 +12,7 @@ function NavBar(props) {
       <Navbar.Collapse>
         <Nav.Link className="text-white text-uppercase" as={Link} to="/">Inicio</Nav.Link>
         <Nav.Link className="text-white text-uppercase" as={Link} to="/conocenos">Conócenos</Nav.Link>
-        <Nav.Link className="text-white text-uppercase" as={Link} to="/registrarse">Registrarse</Nav.Link>
+        <Nav.Link className="text-white text-uppercase" as={Link} to="/registrarse">Regístrarse</Nav.Link>
         <Nav.Link className="text-white text-uppercase" as={Link} to="/codigos">Códigos</Nav.Link>
       </Navbar.Collapse>
       <Navbar.Collapse className="justify-content-end">
