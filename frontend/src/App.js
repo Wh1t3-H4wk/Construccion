@@ -1,22 +1,102 @@
-import React from "react";
-import NavBar from "./components/navbar";
-import Footer from "./components/footer";
-import Productos from "./components/productos";
+import React from 'react';
+import NavBar from './components/NavBar.js';
+import Header from './components/Header.js';
+import Catalogo from './components/Catalogo.js';
+import Footer from './components/Footer.js';
+import axios from 'axios';
+import CrearCliente from './components/CrearCliente.js';
+import EditarCuenta from './components/EditarCliente.js';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Codigos from "./components/Codigos.js";
 
-function App() {
-  return (
-    <React.Fragment>
-      <h1 className="text-center text-white d-none d-lg-block site-heading">
-        <span className="text-primary site-heading-upper mb-3">
-          <strong>Cafetería</strong>
-        </span>
-        <span className="site-heading-lower">Donde José Billar</span>
-      </h1>
-      <NavBar />
-      <Productos />
-      <Footer />
-    </React.Fragment>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      productos: [],
+      isLoaded: false,
+      carro: [],
+      isAdmin: true
+    };
+    this.actualizarProductos = this.actualizarProductos.bind(this);
+    this.anadirACarro = this.anadirACarro.bind(this);
+    this.eliminarDeCarro = this.eliminarDeCarro.bind(this);
+  }
+
+  async getListaProductos() {
+    await axios.get('http://localhost:5001/Producto').then((response) => {
+      const productosNoEliminados = [];
+      response.data.forEach((item) => {
+        if (!item.eliminado === true)
+          productosNoEliminados.push(item);
+      });
+      this.setState({
+        productos: productosNoEliminados,
+        isLoaded: true
+      });
+    });
+  }
+
+  actualizarProductos() {
+    this.setState({isLoaded: false});
+    this.getListaProductos();
+  }
+
+  componentDidMount() {
+    this.getListaProductos();
+  }
+
+  anadirACarro(productoAnadido) {
+    const nuevoCarro = [];
+    let exists = false;
+    this.state.carro.forEach((item) => {
+      if (item.producto.id === productoAnadido.producto.id) {
+        nuevoCarro.push({producto: item.producto, cantidad: item.cantidad + productoAnadido.cantidad});
+        exists = true;
+      }
+      else
+        nuevoCarro.push(item);
+    })
+    if (!exists)
+      nuevoCarro.push(productoAnadido);
+    this.setState({carro: nuevoCarro});
+  }
+
+  eliminarDeCarro(idProducto) {
+    const nuevoCarro = [];
+    this.state.carro.forEach((item) => {
+      if (item.producto.id !== idProducto)
+        nuevoCarro.push({producto: item.producto, cantidad: item.cantidad});
+    });
+    this.setState({carro: nuevoCarro})
+  }
+
+  render() {
+    return (
+      <>
+        <BrowserRouter>
+          <NavBar carro={this.state.carro} eliminarDeCarro={this.eliminarDeCarro}/>
+          <Header/>
+          <Switch>
+            <Route exact path="/">
+              <Catalogo isAdmin={this.state.isAdmin} productos={this.state.productos} isLoaded={this.state.isLoaded} anadirACarro={this.anadirACarro} actualizarProductos={this.actualizarProductos}/>
+            </Route>
+            <Route exact path="/registrarse">
+              <CrearCliente/>
+            </Route>
+            <Route exact path="/cuenta">
+              <EditarCuenta/>
+            </Route>
+            <Route exact path="/codigos">
+              <Codigos/>
+            </Route>
+            <Route render={function () {return <h1>404 Not found</h1>}}/>
+          </Switch>
+          <Footer/>
+        </BrowserRouter>
+      </>
+    );
+  }
 }
 
 export default App;
