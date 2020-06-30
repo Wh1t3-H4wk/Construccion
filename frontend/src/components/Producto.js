@@ -45,18 +45,18 @@ class Producto extends React.Component {
         </Card>
 
         <Modal show={this.state.modal} onHide={this.toggle}>
-            <Modal.Header closeButton>
-              <Modal.Title>{this.props.producto.nombre}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <Image src={this.props.producto.imgUrl} thumbnail/>
-                <Container className="p-3">
-                <h5>{this.props.producto.descripcion}</h5>
-                </Container>
-            </Modal.Body>
-            <Modal.Footer>
-              <AnadirACarro disponible={this.props.producto.disponible} anadir={this.handleAnadirACarro}/>
-            </Modal.Footer>
+          <Modal.Header closeButton>
+            <Modal.Title>{this.props.producto.nombre}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Image src={this.props.producto.imgUrl} thumbnail/>
+            <Container className="p-3">
+            <h5>{this.props.producto.descripcion}</h5>
+            </Container>
+          </Modal.Body>
+          <Modal.Footer>
+            <AnadirACarro disponible={this.props.producto.disponible} anadir={this.handleAnadirACarro}/>
+          </Modal.Footer>
         </Modal>
       </>
     );

@@ -7,7 +7,9 @@ import axios from 'axios';
 import CrearCliente from './components/CrearCliente.js';
 import EditarCuenta from './components/EditarCliente.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import ConfirmarPedido from './components/ConfirmarPedido.js';
 import Codigos from "./components/Codigos.js";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -16,7 +18,7 @@ class App extends React.Component {
       productos: [],
       isLoaded: false,
       carro: [],
-      isAdmin: true
+      isAdmin: true,
     };
     this.actualizarProductos = this.actualizarProductos.bind(this);
     this.anadirACarro = this.anadirACarro.bind(this);
@@ -38,7 +40,7 @@ class App extends React.Component {
   }
 
   actualizarProductos() {
-    this.setState({isLoaded: false});
+    this.setState({ isLoaded: false });
     this.getListaProductos();
   }
 
@@ -66,33 +68,49 @@ class App extends React.Component {
     const nuevoCarro = [];
     this.state.carro.forEach((item) => {
       if (item.producto.id !== idProducto)
-        nuevoCarro.push({producto: item.producto, cantidad: item.cantidad});
+        nuevoCarro.push({ producto: item.producto, cantidad: item.cantidad });
     });
-    this.setState({carro: nuevoCarro})
+    this.setState({ carro: nuevoCarro });
   }
 
   render() {
     return (
       <>
         <BrowserRouter>
-          <NavBar carro={this.state.carro} eliminarDeCarro={this.eliminarDeCarro}/>
-          <Header/>
+          <NavBar
+            carro={this.state.carro}
+            eliminarDeCarro={this.eliminarDeCarro}
+          />
+          <Header />
           <Switch>
             <Route exact path="/">
-              <Catalogo isAdmin={this.state.isAdmin} productos={this.state.productos} isLoaded={this.state.isLoaded} anadirACarro={this.anadirACarro} actualizarProductos={this.actualizarProductos}/>
+              <Catalogo
+                isAdmin={this.state.isAdmin}
+                productos={this.state.productos}
+                isLoaded={this.state.isLoaded}
+                anadirACarro={this.anadirACarro}
+                actualizarProductos={this.actualizarProductos}
+              />
             </Route>
             <Route exact path="/registrarse">
-              <CrearCliente/>
+              <CrearCliente />
             </Route>
-            <Route exact path="/cuenta">
-              <EditarCuenta/>
+            <Route exact path="/cuenta/:mail">
+              <EditarCuenta />
+            </Route>
+            <Route exact path="/confirmarPedido">
+              <ConfirmarPedido
+                carro={this.state.carro}
+                eliminarDeCarro={this.eliminarDeCarro}
+              />
             </Route>
             <Route exact path="/codigos">
               <Codigos/>
             </Route>
             <Route render={function () {return <h1>404 Not found</h1>}}/>
+
           </Switch>
-          <Footer/>
+          <Footer />
         </BrowserRouter>
       </>
     );
