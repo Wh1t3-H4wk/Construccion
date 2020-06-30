@@ -4,13 +4,13 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 class CrearProducto extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {modal: false};
+    this.state = {modal: false, clicked: false};
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -29,6 +29,7 @@ class CrearProducto extends React.Component {
 
   async onSubmit(e) {
     e.preventDefault();
+    this.setState({clicked: true});
     const form = e.target;
     await axios.post("http://localhost:5001/Producto", {
       nombre: form.nombre.value,
@@ -88,7 +89,7 @@ class CrearProducto extends React.Component {
               <Form.Check type="switch" label="Destacado" id="destacado"/>
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit">Crear producto</Button>
+              <Button type="submit" onClick={this.handleOnClick}>{this.state.clicked ? <FontAwesomeIcon icon={faSpinner}/> : "Crear producto"}</Button>
               <Button onClick={this.toggle}>Cancelar</Button>
             </Modal.Footer>
           </Form>

@@ -5,12 +5,12 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 class EditarProducto extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {modal: false};
+    this.state = {modal: false, clicked: false};
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -31,6 +31,7 @@ class EditarProducto extends React.Component {
 
   async onSubmit(e) {
     e.preventDefault();
+    this.setState({clicked: true});
     const form = e.target;
     let img = form.imagen.files[0];
     if (img !== undefined)
@@ -96,7 +97,7 @@ class EditarProducto extends React.Component {
               <Form.Check type="switch" label="Destacado" id="destacado" defaultChecked={this.props.producto.destacado}/>
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit">Editar producto</Button>
+              <Button type="submit">{this.state.clicked ? <FontAwesomeIcon icon={faSpinner}/> : "Editar producto"}</Button>
               <Button onClick={this.toggle}>Cancelar</Button>
             </Modal.Footer>
           </Form>
