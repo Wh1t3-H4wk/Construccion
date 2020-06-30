@@ -12,6 +12,7 @@ namespace Cafeteria.DB
         public Repository<BaseUser, string> BaseUsers { get; }
         public Repository<Usuario, string> Usuarios { get; }
         public Repository<Cliente, string> Clientes { get; }
+        public Repository<ProductoPedido, int> ProductoPedidos { get; set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -22,6 +23,7 @@ namespace Cafeteria.DB
             BaseUsers = new Repository<BaseUser, string>(context);
             Usuarios = new Repository<Usuario, string>(context);
             Clientes = new Repository<Cliente, string>(context);
+            ProductoPedidos = new Repository<ProductoPedido, int>(context);
         }
         /// <summary>
         /// Save changes to the DB

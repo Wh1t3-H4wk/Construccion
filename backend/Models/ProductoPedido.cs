@@ -5,5 +5,6 @@ namespace Cafeteria.Models
         public int Id { get; set; }
         public Pedido Pedido { get; set; }
         public Producto Producto { get; set; }
+        public uint Cantidad { get; set; } = 1;
     }
 }

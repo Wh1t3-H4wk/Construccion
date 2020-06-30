@@ -11,6 +11,7 @@ namespace Cafeteria.DB
         public Repository<BaseUser, string> BaseUsers { get; }
         public Repository<Usuario, string> Usuarios { get; }
         public Repository<Cliente, string> Clientes { get; }
+        public Repository<ProductoPedido, int> ProductoPedidos { get; }
         public int Complete();
     }
 }

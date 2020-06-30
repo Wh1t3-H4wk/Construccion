@@ -13,5 +13,6 @@ namespace Cafeteria.DB
         public DbSet<BaseUser> BaseUsers { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Cliente> Clientes { get; set; }
+        public DbSet<ProductoPedido> ProductoPedidos { get; set; }
     }
 }
