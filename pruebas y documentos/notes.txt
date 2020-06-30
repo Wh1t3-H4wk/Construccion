@@ -1,0 +1,10 @@
+- Analizar comportamiento con tamaños de imágenes (dejar esto para el final, todavía no podemos testearlo bien hasta que Nacho y Seba hagan sus commits)
+- Qué pasa si no hay ningún producto marcado como Destacados
+- ID en Eliminar del carro (esto ya lo arreglé)
+- Usar Form.Control.Feedback para error de código (esto tengo que hacerlo, no sé cómo habrá hecho el Piña)
+- Limitar caracteres (Se limitaron a 30 para títulos y 120 para descripciones)
+- favicon
+(? letras y comportamiento de caracter 'e' (elevado a) in input del precio. Also negative values
+- En edición de cuentas, cuando aún no se cargan los datos dice "No existe la cuenta" (Cancino dijo que lo arregló, aún así hay que probar)
+- Poner descripción en una sola palabra super larga desordena el layout
+- Necesario asignar imagen para editar (Cosa que están arreglando ahora los cabros)

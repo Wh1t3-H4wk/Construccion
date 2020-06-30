@@ -1,0 +1,17 @@
+- Can't create a product without an image [fixed]
+- The products where created as disponible even when it wasn't checked [fixed]
+- A product can be created or setted as Destacado without being Disponible {ignored}	
+- Productos unnecesary in navbar [fixed]
+- "Codigos" bad spelled [fixed]
+- No se puede eliminar una cuenta si tiene pedidos [fixed by Nacho]
+- Change title color [fixed]
+- Some sites doesn't change their title on browser tab [fixed]
+- Set max length for Codigo and many other things
+- Setting Disponible to true doesn't work, but setting it to false does [fixed]
+- A text without spaces can be displayed out of the layout
+- The password doesn't change (from backend)
+- Address on Confirmar Pedido is missing [fixed]
+- Able to go to Confirmar Pedido even with no products on Cart [fixed]
+- Add a product to a cart and then modify that product doesn't update the cart product
+- If the custom direction is empty it will be empty [fixed, now it'll be the default value]
+- Instrucciones adicionales didn't send [fixed]
