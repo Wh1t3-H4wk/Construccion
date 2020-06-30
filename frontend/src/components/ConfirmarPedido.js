@@ -9,6 +9,9 @@ import TablaConfirmarPedido from "./TablaConfirmarPedido";
 import axios from "axios";
 import ConfirmarCodigo from "./ConfirmarCodigo.js";
 import { withRouter } from "react-router-dom";
+import Spinner from "react-bootstrap/Spinner";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 class ConfirmarPedido extends Component {
   constructor(props) {
@@ -22,9 +25,13 @@ class ConfirmarPedido extends Component {
       mailCliente: "",
       clienteExiste: false,
       cliente: null,
+      procesando: false,
+      pedidoRealizado: false,
+      pedidoExito: false,
     };
     this.ConfCodigo = this.ConfCodigo.bind(this);
     this.getDatosCliente = this.getDatosCliente.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   async getDatosCliente() {
@@ -80,15 +87,78 @@ class ConfirmarPedido extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    const form = e.target;
-    let direccion = this.state.cliente.direccion;
-    let productos = [];
+    let direccionValue = this.state.cliente.direcion;
+    let productosValue = [];
     this.props.carro.forEach((item) => {
-      productos.push({ productoId: item.producto.id, cantidad: item.cantidad });
+      productosValue.push({
+        productoId: item.producto.id,
+        cantidad: item.cantidad,
+      });
     });
-    let preparacion = this.state.instruccionesPreparacion;
-    let valor = this.calcularTotal();
+    let preparacionValue = this.state.instruccionesPreparacion;
+    let valorValue = this.calcularTotal();
+
+    this.setState({ procesando: true });
+    let response = null;
+    try {
+      response = await axios.post(`http://localhost:5001/Pedido`, {
+        clienteMail: this.state.mailCliente,
+        productos: productosValue,
+        direccion: direccionValue,
+        preparacion: preparacionValue,
+        valor: valorValue,
+      });
+    } catch (err) {
+      response = err;
+    } finally {
+      if (response.status === 200) {
+        this.setState({
+          procesando: false,
+          pedidoRealizado: true,
+          pedidoExito: true,
+        });
+      } else {
+        this.setState({
+          procesando: false,
+          pedidoRealizado: true,
+          pedidoExito: false,
+        });
+      }
+    }
   }
+
+  renderButtonContent = () => {
+    if (!this.state.clienteExiste) {
+      return "No hay Cuenta!";
+    } else {
+      if (this.state.procesando) {
+        return (
+          <Spinner animation="border" role="status">
+            <span className="sr-only">Procesando...</span>
+          </Spinner>
+        );
+      } else {
+        if (!this.state.pedidoRealizado) {
+          return "Confirmar Pedido";
+        } else {
+          return (
+            <FontAwesomeIcon
+              icon={this.state.pedidoExito ? faCheck : faTimes}
+            />
+          );
+        }
+      }
+    }
+  };
+
+  controlDisableButton = () => {
+    return (
+      !this.state.clienteExiste ||
+      this.props.carro == 0 ||
+      this.state.pedidoRealizado ||
+      this.state.procesando
+    );
+  };
 
   calcularSubtotal = () => {
     let value = 0;
@@ -195,19 +265,12 @@ class ConfirmarPedido extends Component {
                 />
               </Col>
             </Row>
-            <div style={{ width: "100%" }}>
-              <p className="font-italic mb-3 text-center">
-                {this.state.clienteExiste
-                  ? ""
-                  : "No se ha encontrado la cuenta que intenta hacer este pedido."}
-              </p>
-            </div>
             <Button
               className="float-right"
               type="submit"
-              disabled={this.props.carro == 0 && !this.state.clienteExiste}
+              disabled={this.controlDisableButton()}
             >
-              Confirmar Pedido
+              {this.renderButtonContent()}
             </Button>
           </Form>
         </Container>
