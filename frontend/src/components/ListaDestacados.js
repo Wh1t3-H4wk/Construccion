@@ -34,10 +34,16 @@ function ListaDestacados(props) {
   } else {
     // Render when its not loaded
     return (
-      <Container>
-        <Spinner animation="border" role="status">
-          <span className="sr-only">Loading...</span>
-        </Spinner>
+      <Container className="page-section cta">
+        <div className="row">
+          <div className="col-xl-p mx-auto">
+            <div className="cta-inner rounded">
+              <Spinner animation="border" role="status">
+                <span className="sr-only">Cargando...</span>
+              </Spinner>
+            </div>
+          </div>
+        </div>
       </Container>
     );
   }
