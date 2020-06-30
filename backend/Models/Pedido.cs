@@ -10,7 +10,9 @@ namespace Cafeteria.Models
         public uint Valor { get; set; }
         public string Direccion { get; set; }
         public string Estado { get; set; } = "Preparación";
+        public Cliente Cliente { get; set; }
         [NotMapped]
-        public List<Pedido> Pedidos { get; set; } = new List<Pedido>();
+        public List<Producto> Pedidos { get; set; } = new List<Producto>();
+        
     }
 }

@@ -44,11 +44,55 @@ namespace Cafeteria.Extra
             x4.Destacado = true;
             x4.Disponible = true;
 
+            var x5 = new Producto();
+            x5.Nombre = "Bebida 5";
+            x5.Descripcion = "Descripcion generica";
+            x5.Categoria = "Catalogo";
+            x5.ImgUrl = "assets/img/products-02.jpg";
+
+            var x6 = new Producto();
+            x6.Nombre = "Bebida 6";
+            x6.Descripcion = "Descripcion generica";
+            x6.Categoria = "Catalogo";
+            x6.ImgUrl = "assets/img/products-02.jpg";
+            
+            var cliente= new Cliente();
+            cliente.Nombres = "test cliente";
+            cliente.Mail= "nacho@nacho.cl";
+            cliente.Direcion = "testing";
+            cliente.Rol = "Cliente";
+            
+            
+            var pedido = new Pedido();
+            pedido.Direccion = "direcicon";
+            pedido.Estado = "testing";
+            pedido.Valor = 9999;
+            pedido.Preparacion = "pasa la prueba";
+            List<ProductoPedido> xProductos = new List<ProductoPedido>();
+            xProductos.AddRange(new []
+            {
+                new ProductoPedido { Pedido = pedido, Producto = x},
+                new ProductoPedido { Pedido = pedido, Producto = x2},
+                new ProductoPedido { Pedido = pedido, Producto = x3},
+                new ProductoPedido { Pedido = pedido, Producto = x4, Cantidad = 2},
+                new ProductoPedido { Pedido = pedido, Producto = x5},
+                new ProductoPedido { Pedido = pedido, Producto = x6}
+            });
+            pedido.Cliente = cliente;
+            //cliente.Pedidos = xProductos;
+            
+            
             context.Add(x);
             context.Add(x2);
             context.Add(x3);
             context.Add(x4);
+            context.Add(x5);
+            context.Add(x6);
+            context.Add(pedido);
+            context.Add(cliente);
+            context.AddRange(xProductos);
             context.SaveChanges();
+            
         }
 
         public static void GeneratePedidosAndCodigos(ApplicationDbContext context)
