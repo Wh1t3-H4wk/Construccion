@@ -40,7 +40,7 @@ class ConfirmarPedido extends React.Component {
     this.setState({ mailCliente: mail });
     let response = null;
     try {
-      response = await axios.get(`http://localhost:5001/User/cliente/${mail}`);
+      response = await axios.get(`https://cafeteriaapi.herokuapp.com/User/cliente/${mail}`);
     } catch (err) {
       response = err;
     } finally {
@@ -65,7 +65,7 @@ class ConfirmarPedido extends React.Component {
     } else {
       let response = null;
       try {
-        response = await axios.get("http://localhost:5001/Codigo/" + codigo);
+        response = await axios.get("https://cafeteriaapi.herokuapp.com/Codigo/" + codigo);
       } catch (err) {
         response = err;
       } finally {
@@ -111,7 +111,7 @@ class ConfirmarPedido extends React.Component {
     this.setState({ procesando: true });
     let response = null;
     try {
-      response = await axios.post(`http://localhost:5001/Pedido`, {
+      response = await axios.post(`https://cafeteriaapi.herokuapp.com/Pedido`, {
         clienteMail: this.state.mailCliente,
         productos: productosValue,
         direccion: direccionValue,

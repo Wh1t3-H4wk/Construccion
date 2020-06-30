@@ -74,7 +74,7 @@ class CrearCliente extends React.Component {
     this.setState({status: "waiting"});
     let response = null;
     try {
-      response = await axios.post("http://localhost:5001/User/cliente", {
+      response = await axios.post("https://cafeteriaapi.herokuapp.com/User/cliente", {
         telefono: form.telefono.value,
         direcion: form.direccion.value,
         nombres: form.nombre.value,

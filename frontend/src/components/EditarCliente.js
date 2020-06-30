@@ -35,7 +35,7 @@ class EditarCliente extends React.Component {
     let response = null;
     try {
       response = await axios.get(
-        `http://localhost:5001/User/cliente/${cuentaMail}`
+        `https://cafeteriaapi.herokuapp.com/User/cliente/${cuentaMail}`
       );
     } catch (err) {
       response = err;
