@@ -1,9 +1,9 @@
-import React from 'react';
-import ListaProductos from './ListaProductos.js';
-import CrearProducto from './CrearProducto.js';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
+import React from "react";
+import ListaProductos from "./ListaProductos.js";
+import CrearProducto from "./CrearProducto.js";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
 
 class Productos extends React.Component {
   constructor(props) {
@@ -53,17 +53,32 @@ class Productos extends React.Component {
         <Container className="bg-faded p-5 rounded">
           <Form.Row>
             <Form.Group as={Col}>
-              <Form.Control className="m-3" as="select" id="categoria" onChange={this.categoria}>
+              <Form.Control
+                className="m-3"
+                as="select"
+                id="categoria"
+                onChange={this.categoria}
+              >
                 <option>Todo</option>
                 <option>Bebestibles</option>
                 <option>Comestibles</option>
               </Form.Control>
             </Form.Group>
             <Col>
-            <Form inline className="justify-content-end">
-              <Form.Control className="m-3" type="text" id="buscar" placeholder="Buscar" onChange={this.buscar}/>
-              {this.props.isAdmin &&  <CrearProducto actualizarProductos={this.props.actualizarProductos}/>}
-            </Form>
+              <Form inline className="justify-content-end">
+                <Form.Control
+                  className="m-3"
+                  type="text"
+                  id="buscar"
+                  placeholder="Buscar"
+                  onChange={this.buscar}
+                />
+                {this.props.isAdmin && (
+                  <CrearProducto
+                    actualizarProductos={this.props.actualizarProductos}
+                  />
+                )}
+              </Form>
             </Col>
           </Form.Row>
           <ListaProductos

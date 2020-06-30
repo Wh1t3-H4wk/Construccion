@@ -11,7 +11,9 @@ class CrearCodigo extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      modal: false, isDescuentoInvalid: true ,desc:""
+      modal: false,
+      isDescuentoInvalid: true,
+      desc: ""
     };
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -46,7 +48,7 @@ class CrearCodigo extends React.Component {
   render() {
     return (
       <>
-        <Button variant="info" onClick={this.toggle}>
+        <Button className="pull-right" variant="info" onClick={this.toggle}>
           <FontAwesomeIcon icon={faPlus}/>
         </Button>
 
@@ -56,7 +58,7 @@ class CrearCodigo extends React.Component {
             <Modal.Body>
               <Form.Group controlId="nombre">
                 <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" placeholder="Nombre" required/>
+                <Form.Control type="text" placeholder="Nombre" maxLength="15" required/>
               </Form.Group>
               <Form.Group controlId="descuento">
                 <Form.Label>Descuento</Form.Label>
@@ -64,12 +66,7 @@ class CrearCodigo extends React.Component {
                   <InputGroup.Prepend>
                     <InputGroup.Text>%</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <Form.Control 
-                  type="text" 
-                  placeholder="Descuento" 
-                  required
-                  onChange={this.handleDescuentoChange}
-                  isInvalid={this.state.isDescuentoInvalid}/>
+                  <Form.Control type="text" placeholder="Descuento" required onChange={this.handleDescuentoChange} isInvalid={this.state.isDescuentoInvalid}/>
                 </InputGroup>
               </Form.Group>
             </Modal.Body>

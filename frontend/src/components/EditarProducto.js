@@ -5,34 +5,49 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 class EditarProducto extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {modal: false};
+    this.state = {modal: false, clicked: false};
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   toggle() {
-    this.setState(prevState => ({modal: !prevState.modal}));
+    this.setState((prevState) => ({ modal: !prevState.modal }));
   }
+
+  toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      if (file !== undefined) {
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      }
+    });
 
   async onSubmit(e) {
     e.preventDefault();
+    this.setState({clicked: true});
     const form = e.target;
-    await axios.put('https://cafeteriaapi.herokuapp.com/Producto/' + this.props.producto.id, {
-      "id": this.props.producto.id,
-      "nombre": form.nombre.value,
-      //"imgUrl": form.imagen.files[0],
-      "imgURL": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_BTS.png",
-      "descripcion": form.descripcion.value,
-      "precio": parseInt(form.precio.value),
-      "categoria": form.categoria.value,
-      "disponible": form.disponible.checked,
-      "destacado": form.destacado.checked,
-      "eliminado": false
+    let img = form.imagen.files[0];
+    if (img !== undefined)
+      img = await this.toBase64(img);
+    else
+      img = "";
+    await axios.put("https://cafeteriaapi.herokuapp.com/Producto/", {
+      id: this.props.producto.id,
+      nombre: form.nombre.value,
+      imgUrl: img,
+      descripcion: form.descripcion.value,
+      precio: parseInt(form.precio.value),
+      categoria: form.categoria.value,
+      disponible: form.disponible.checked,
+      destacado: form.destacado.checked,
+      eliminado: false,
     });
     this.toggle();
     this.props.actualizarProductos();
@@ -42,7 +57,7 @@ class EditarProducto extends React.Component {
     return (
       <>
         <Button onClick={this.toggle}>
-          <FontAwesomeIcon icon={faEdit}/>
+          <FontAwesomeIcon icon={faEdit} />
         </Button>
 
         <Modal show={this.state.modal} onHide={this.toggle}>
@@ -82,7 +97,7 @@ class EditarProducto extends React.Component {
               <Form.Check type="switch" label="Destacado" id="destacado" defaultChecked={this.props.producto.destacado}/>
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit">Editar producto</Button>
+              <Button type="submit">{this.state.clicked ? <FontAwesomeIcon icon={faSpinner}/> : "Editar producto"}</Button>
               <Button onClick={this.toggle}>Cancelar</Button>
             </Modal.Footer>
           </Form>

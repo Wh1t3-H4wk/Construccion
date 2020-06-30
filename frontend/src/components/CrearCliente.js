@@ -6,17 +6,30 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import Spinner from 'react-bootstrap/Spinner';
 
 class CrearCliente extends React.Component {
-  state = {
-    pass: "",
-    valPass: "",
-    isPasswordInvalid: true,
-  };
-
   constructor(props) {
-    super();
+    super(props);
+    this.state = {
+      pass: "",
+      valPass: "",
+      isPasswordInvalid: true,
+      isValidMail: false,
+      isValidPhone: false,
+      status: ""
+    };
     this.onSubmit = this.onSubmit.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
+    this.validateTelefono = this.validateTelefono.bind(this);
+    this.renderButtonContent = this.renderButtonContent.bind(this);
+  }
+
+
+  componentDidMount() {
+    document.title = "Registrarse - Cafetería José Billar";
   }
 
   handlePassChange = (e) => {
@@ -35,12 +48,33 @@ class CrearCliente extends React.Component {
     this.setState({ isPasswordInvalid: value });
   };
 
+  validateEmail(e) {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let email = e.target.value;
+    if (re.test(email)) 
+      this.setState({isValidMail: true});
+    else
+      this.setState({isValidMail: false});
+  }
+
+  validateTelefono(e) {
+    const re = /(\+56)?\d{9}/gm;
+    let phone = e.target.value;
+    if (re.test(phone))
+      this.setState({isValidPhone: true});
+    else
+      this.setState({isValidPhone: false});
+  }
+
   async onSubmit(e) {
     e.preventDefault();
-    console.log("Submited--");
+    if (this.state.isPasswordInvalid || !this.state.isValidMail)
+      return;
     const form = e.target;
-    await axios
-      .post("https://cafeteriaapi.herokuapp.com/User/cliente", {
+    this.setState({status: "waiting"});
+    let response = null;
+    try {
+      response = await axios.post("http://localhost:5001/User/cliente", {
         telefono: form.telefono.value,
         direcion: form.direccion.value,
         nombres: form.nombre.value,
@@ -48,12 +82,34 @@ class CrearCliente extends React.Component {
         mail: form.email.value,
         contraseña: form.contraseña.value,
         rol: "Cliente",
-      })
-      .then((response) => {
-        if (response.status === "200")
-          //No es la mejor solución, pero a esta hora seguro lo es.
-          ReactDOM.findDOMNode(this.messageForm).reset();
       });
+    } catch (err) {
+      response = err;
+    } finally {
+      if (response.status === 200)
+        this.setState({status: "ok"});
+      else
+        this.setState({status: "error"});
+    }
+  }
+
+  renderButtonContent() { 
+    if (this.state.status === "") {
+      return "Crear cuenta";
+    } else if (this.state.status === "waiting") {
+      return (
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Procesando...</span>
+        </Spinner>
+      );
+    } else {
+      return (
+        <>
+          <FontAwesomeIcon className="mr-2" icon={this.state.status === "ok" ? faCheck : faTimes}/>
+          {this.state.status === "ok" ? "Listo!" : "Error"}
+        </>
+      );
+    }
   }
 
   render() {
@@ -70,7 +126,7 @@ class CrearCliente extends React.Component {
                   className="section-heading-upper"
                   style={{ color: "rgb(230, 230, 230)", fontSize: "15px" }}
                 >
-                  Se parte de nosotros
+                  Sé parte de nosotros
                 </span>
                 <span
                   className="section-heading-lower"
@@ -96,13 +152,13 @@ class CrearCliente extends React.Component {
               <Col>
                 <Form.Group controlId="nombre">
                   <Form.Label>Nombre</Form.Label>
-                  <Form.Control type="text" placeholder="Nombre" required />
+                  <Form.Control type="text" placeholder="Nombre" maxLength="20" required />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="apellido">
                   <Form.Label>Apellido</Form.Label>
-                  <Form.Control type="text" placeholder="Apellido" required />
+                  <Form.Control type="text" placeholder="Apellido" maxLength="20" required />
                 </Form.Group>
               </Col>
             </Row>
@@ -111,13 +167,13 @@ class CrearCliente extends React.Component {
               <Col>
                 <Form.Group controlId="email">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control type="text" placeholder="Email" required />
+                  <Form.Control type="text" placeholder="Email" isInvalid={!this.state.isValidMail} onChange={this.validateEmail} required />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="telefono">
                   <Form.Label>Teléfono </Form.Label>
-                  <Form.Control type="text" placeholder="Telefono" required />
+                  <Form.Control type="text" placeholder="Telefono" isInvalid={!this.state.isValidPhone} onChange={this.validateTelefono} maxLength="12" required />
                 </Form.Group>
               </Col>
             </Row>
@@ -128,6 +184,7 @@ class CrearCliente extends React.Component {
                 as="textarea"
                 rows="2"
                 placeholder="Dirección"
+                maxLength="120"
                 required
               />
             </Form.Group>
@@ -150,7 +207,7 @@ class CrearCliente extends React.Component {
                 isInvalid={this.state.isPasswordInvalid}
               />
             </Form.Group>
-            <Button type="submit">Crear Cuenta</Button>
+            <Button className="float-right" type="submit" disabled={(this.state.isPasswordInvalid || !this.state.isValidPhone || !this.state.isValidMail) || (this.state.status === "ok")}>{this.renderButtonContent()}</Button>
           </Form>
         </Container>
       </Container>

@@ -4,34 +4,42 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import InputGroup from 'react-bootstrap/InputGroup';
 
 class CrearProducto extends React.Component {
   constructor(props) {
-    super();
-    this.state = {modal: false};
+    super(props);
+    this.state = {modal: false, clicked: false};
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
 
   toggle() {
-    this.setState(prevState => ({modal: !prevState.modal}));
+    this.setState((prevState) => ({ modal: !prevState.modal }));
   }
+
+  toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
   async onSubmit(e) {
     e.preventDefault();
+    this.setState({clicked: true});
     const form = e.target;
-    await axios.post('https://cafeteriaapi.herokuapp.com/Producto', {
-      "nombre": form.nombre.value,
-      //"imgUrl": form.imagen.files[0],
-      "imgURL": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_BTS.png",
-      "descripcion": form.descripcion.value,
-      "precio": parseInt(form.precio.value),
-      "categoria": form.categoria.value,
-      "disponible": form.disponible.checked,
-      "destacado": form.destacado.checked,
-      "eliminado": false
+    await axios.post("https://cafeteriaapi.herokuapp.com/Producto", {
+      nombre: form.nombre.value,
+      imgUrl: await this.toBase64(form.imagen.files[0]),
+      descripcion: form.descripcion.value,
+      precio: parseInt(form.precio.value),
+      categoria: form.categoria.value,
+      disponible: form.disponible.checked,
+      destacado: form.destacado.checked,
+      eliminado: false,
     });
     this.toggle();
     this.props.actualizarProductos();
@@ -41,7 +49,7 @@ class CrearProducto extends React.Component {
     return (
       <>
         <Button variant="info" onClick={this.toggle}>
-          <FontAwesomeIcon icon={faPlus}/>
+          <FontAwesomeIcon icon={faPlus} />
         </Button>
 
         <Modal show={this.state.modal} onHide={this.toggle}>
@@ -60,7 +68,7 @@ class CrearProducto extends React.Component {
                   <InputGroup.Prepend>
                     <InputGroup.Text>$</InputGroup.Text>
                   </InputGroup.Prepend>
-                  <Form.Control type="text" placeholder="Precio" required/>
+                  <Form.Control type="text" placeholder="Precio" required />
                 </InputGroup>
               </Form.Group>
               <Form.Group controlId="descripcion">
@@ -75,13 +83,13 @@ class CrearProducto extends React.Component {
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="imagen">
-                <Form.File id="imagen" label="Imagen"/>
+                <Form.File id="imagen" label="Imagen" required/>
               </Form.Group>
-              <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked="true"/>
-              <Form.Check type="switch" label="Destacado" id="destacado" defaultChecked={this.props.destacado}/>
+              <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked={true}/>
+              <Form.Check type="switch" label="Destacado" id="destacado"/>
             </Modal.Body>
             <Modal.Footer>
-              <Button type="submit">Crear producto</Button>
+              <Button type="submit" onClick={this.handleOnClick}>{this.state.clicked ? <FontAwesomeIcon icon={faSpinner}/> : "Crear producto"}</Button>
               <Button onClick={this.toggle}>Cancelar</Button>
             </Modal.Footer>
           </Form>

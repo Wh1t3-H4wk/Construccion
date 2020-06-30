@@ -13,10 +13,38 @@ namespace Cafeteria.Controllers
         public PedidoController(IUnitOfWork unitOfWork) =>_context = unitOfWork;
 
         [HttpGet]
-        public IEnumerable<Pedido> GetAll() => _context.Pedidos.GetAll();
-        
+        public ActionResult<IEnumerable<Pedido>> GetAll() => Ok(_context.Pedidos.GetAll());
+
         [HttpGet("{id}")]
-        public Pedido GetById(int id) => _context.Pedidos[id];
-        
+        public ActionResult<Pedido> GetById(int id)
+        {
+            var producto = _context.Pedidos[id];
+            if (producto == null) return NotFound();
+            return Ok(producto);
+        }
+
+        [HttpPost]
+        public IActionResult AddPedido(PedidoViewModel pedidoViewModel)
+        {
+            var pedido = new Pedido();
+            pedido.Direccion = pedidoViewModel.Direccion;
+            pedido.Preparacion = pedidoViewModel.Preparacion;
+            pedido.Valor = pedidoViewModel.Valor;
+            pedido.Cliente = _context.Clientes[pedidoViewModel.ClienteMail];
+       
+            var productoPedido = new List<ProductoPedido>();
+            foreach (var xProductoViewModel in pedidoViewModel.Productos)
+            {
+                productoPedido.Add( new ProductoPedido
+                {
+                    Pedido = pedido, Cantidad = xProductoViewModel.Cantidad, 
+                    Producto = _context.Productos[xProductoViewModel.ProductoId]
+                });
+            }
+            _context.Pedidos.Add(pedido);
+            _context.ProductoPedidos.AddRange(productoPedido);
+            _context.Complete();
+            return Ok();
+        }
     }
 }
