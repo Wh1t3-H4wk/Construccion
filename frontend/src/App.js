@@ -9,6 +9,7 @@ import EditarCuenta from './components/EditarCliente.js';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ConfirmarPedido from './components/ConfirmarPedido.js';
 import Codigos from "./components/Codigos.js";
+import Conocenos from './components/Conocenos.js';
 
 
 class App extends React.Component {
@@ -92,6 +93,9 @@ class App extends React.Component {
                 actualizarProductos={this.actualizarProductos}
               />
             </Route>
+            <Route exact path="/conocenos">
+              <Conocenos/>
+            </Route>
             <Route exact path="/registrarse">
               <CrearCliente />
             </Route>
@@ -108,7 +112,6 @@ class App extends React.Component {
               <Codigos/>
             </Route>
             <Route render={function () {return <h1>404 Not found</h1>}}/>
-
           </Switch>
           <Footer />
         </BrowserRouter>

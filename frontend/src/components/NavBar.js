@@ -27,7 +27,7 @@ function NavBar(props) {
         >
           Productos
         </Nav.Link>
-        <Nav.Link className="text-white text-uppercase">Conócenos</Nav.Link>
+        <Nav.Link className="text-white text-uppercase" as={Link} to="/conocenos">Conócenos</Nav.Link>
         <Nav.Link
           className="text-white text-uppercase"
           as={Link}
