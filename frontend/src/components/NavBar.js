@@ -20,13 +20,6 @@ function NavBar(props) {
         <Nav.Link className="text-white text-uppercase" as={Link} to="/">
           Inicio
         </Nav.Link>
-        <Nav.Link
-          className="text-white text-uppercase"
-          as={Link}
-          to="/#productos"
-        >
-          Productos
-        </Nav.Link>
         <Nav.Link className="text-white text-uppercase" as={Link} to="/conocenos">Conócenos</Nav.Link>
         <Nav.Link
           className="text-white text-uppercase"
@@ -39,7 +32,7 @@ function NavBar(props) {
           className="text-white text-uppercase"
           as={Link}
           to="/codigos"
-        >Codigos
+        >Códigos
           
         </Nav.Link>
       </Navbar.Collapse>

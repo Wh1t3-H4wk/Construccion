@@ -1,18 +1,24 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import InputGroup from "react-bootstrap/InputGroup";
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
+import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 class CrearProducto extends React.Component {
   constructor(props) {
-    super();
-    this.state = { modal: false };
+    super(props);
+    this.state = {
+      modal: false,
+      isDisponible: true,
+      isDestacado: false
+    };
     this.toggle = this.toggle.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.handleDisponibleChange = this.handleDisponibleChange.bind(this);
+    this.handleDestacadoChange = this.handleDestacadoChange.bind(this);
   }
 
   toggle() {
@@ -36,12 +42,23 @@ class CrearProducto extends React.Component {
       descripcion: form.descripcion.value,
       precio: parseInt(form.precio.value),
       categoria: form.categoria.value,
-      disponible: true,
+      disponible: form.disponible.checked,
       destacado: form.destacado.checked,
       eliminado: false,
     });
     this.toggle();
     this.props.actualizarProductos();
+  }
+
+  handleDisponibleChange(e) {
+    this.setState({isDisponible: e.target.checked});
+    if (!e.target.checked)
+      this.setState({isDestacado: false});
+  }
+
+  handleDestacadoChange(e) {
+    if (this.state.isDisponible)
+      this.setState({isDestacado: !this.state.isDestacado});
   }
 
   render() {
@@ -82,10 +99,10 @@ class CrearProducto extends React.Component {
                 </Form.Control>
               </Form.Group>
               <Form.Group controlId="imagen">
-                <Form.File id="imagen" label="Imagen"/>
+                <Form.File id="imagen" label="Imagen" required/>
               </Form.Group>
-              <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked="true"/>
-              <Form.Check type="switch" label="Destacado" id="destacado" defaultChecked={this.props.destacado}/>
+              <Form.Check type="switch" label="Disponible" id="disponible" defaultChecked={true} onChange={this.handleDisponibleChange}/>
+              <Form.Check type="switch" label="Destacado" id="destacado" checked={this.state.isDestacado} onClick={this.handleDestacadoChange}/>
             </Modal.Body>
             <Modal.Footer>
               <Button type="submit">Crear producto</Button>
