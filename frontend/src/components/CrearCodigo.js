@@ -46,7 +46,7 @@ class CrearCodigo extends React.Component {
   render() {
     return (
       <>
-        <Button variant="info" onClick={this.toggle}>
+        <Button className="pull-right" variant="info" onClick={this.toggle}>
           <FontAwesomeIcon icon={faPlus}/>
         </Button>
 

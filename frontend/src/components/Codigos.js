@@ -64,12 +64,6 @@ class Codigos extends Component {
             </div>
             <Container className="bg-faded p-5 rounded">
                 <Form.Row className="p-3">
-                    
-                    <Form.Group as={Col}>
-                    <Form inline className="justify-content-end">
-                      <Form.Control type="text" id="buscar" placeholder="Buscar" onChange={this.buscar}/> 
-                      </Form>
-                    </Form.Group>
                     <Form.Group as={Col}>
                       <CrearCodigo actualizarCodigo={this.actualizarCodigo}/>
                     </Form.Group>
