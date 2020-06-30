@@ -8,6 +8,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import TablaConfirmarPedido from "./TablaConfirmarPedido";
 import axios from "axios";
 import ConfirmarCodigo from "./ConfirmarCodigo.js";
+import { withRouter } from "react-router-dom";
 
 class ConfirmarPedido extends Component {
   constructor(props) {
@@ -18,12 +19,35 @@ class ConfirmarPedido extends Component {
       subtotal: 0,
       codigoAplicado: false,
       validezCodigo: "",
+      mailCliente: "",
+      clienteExiste: false,
+      cliente: null,
     };
     this.ConfCodigo = this.ConfCodigo.bind(this);
+    this.getDatosCliente = this.getDatosCliente.bind(this);
+  }
+
+  async getDatosCliente() {
+    let mail = this.props.match.params.mail;
+    this.setState({ mailCliente: mail });
+    let response = null;
+    try {
+      response = await axios.get(`http://localhost:5001/User/cliente/${mail}`);
+    } catch (err) {
+      response = err;
+    } finally {
+      if (response.status === 200) {
+        this.setState({
+          cliente: response.data,
+          clienteExiste: true,
+        });
+      }
+    }
   }
 
   componentDidMount() {
     document.title = "Confirmar Pedido - Cafetería Donde José Billar";
+    this.getDatosCliente();
   }
 
   async ConfCodigo(codigo) {
@@ -54,6 +78,18 @@ class ConfirmarPedido extends Component {
     }
   }
 
+  async onSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    let direccion = this.state.cliente.direccion;
+    let productos = [];
+    this.props.carro.forEach((item) => {
+      productos.push({ productoId: item.producto.id, cantidad: item.cantidad });
+    });
+    let preparacion = this.state.instruccionesPreparacion;
+    let valor = this.calcularTotal();
+  }
+
   calcularSubtotal = () => {
     let value = 0;
     this.props.carro.forEach((item) => {
@@ -79,7 +115,7 @@ class ConfirmarPedido extends Component {
           className="bg-faded p-5 rounded"
           style={{ maxWidth: "100%" }}
         >
-          <Form className="mb-3">
+          <Form className="mb-3" onSubmit={this.onSubmit}>
             <Row>
               <Col xs={{ span: 12, order: 1 }} md={{ span: 8, order: 1 }}>
                 <TablaConfirmarPedido
@@ -159,7 +195,18 @@ class ConfirmarPedido extends Component {
                 />
               </Col>
             </Row>
-            <Button className="float-right" disabled={this.props.carro == 0}>
+            <div style={{ width: "100%" }}>
+              <p className="font-italic mb-3 text-center">
+                {this.state.clienteExiste
+                  ? ""
+                  : "No se ha encontrado la cuenta que intenta hacer este pedido."}
+              </p>
+            </div>
+            <Button
+              className="float-right"
+              type="submit"
+              disabled={this.props.carro == 0 && !this.state.clienteExiste}
+            >
               Confirmar Pedido
             </Button>
           </Form>
@@ -169,4 +216,4 @@ class ConfirmarPedido extends Component {
   }
 }
 
-export default ConfirmarPedido;
+export default withRouter(ConfirmarPedido);

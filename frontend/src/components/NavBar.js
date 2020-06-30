@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 function NavBar(props) {
   return (
-
     <Navbar variant="dark" bg="dark" expand="lg" id="mainNav" sticky="top">
       <Navbar.Brand
         className="text-uppercase d-lg-none text-expanded"
@@ -35,12 +34,8 @@ function NavBar(props) {
         >
           Registrarse
         </Nav.Link>
-        <Nav.Link
-          className="text-white text-uppercase"
-          as={Link}
-          to="/codigos"
-        >Codigos
-          
+        <Nav.Link className="text-white text-uppercase" as={Link} to="/codigos">
+          Codigos
         </Nav.Link>
       </Navbar.Collapse>
       <Navbar.Collapse className="justify-content-end">

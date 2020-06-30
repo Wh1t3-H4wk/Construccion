@@ -50,7 +50,7 @@ function Carro(props) {
               disabled={total === 0}
               className="m-2"
               as={Link}
-              to="/confirmarPedido"
+              to="/confirmarPedido/nacho123@gmail.com"
             >
               Confirmar pedido
             </Button>
