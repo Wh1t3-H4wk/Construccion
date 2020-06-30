@@ -1,14 +1,13 @@
-import React from "react";
-import Button from "react-bootstrap/Button";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Popover from "react-bootstrap/Popover";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Table from "react-bootstrap/Table";
-import ItemCarro from "./ItemCarro.js";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBasket } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Popover from 'react-bootstrap/Popover';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Table from 'react-bootstrap/Table';
+import ItemCarro from './ItemCarro.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
 
 function Carro(props) {
   let i = 0, precioTotal = 0, cantTotal = 0;

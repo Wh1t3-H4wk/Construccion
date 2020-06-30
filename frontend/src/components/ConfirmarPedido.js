@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import ListGroup from "react-bootstrap/ListGroup";
-import TablaConfirmarPedido from "./TablaConfirmarPedido";
-import axios from "axios";
-import ConfirmarCodigo from "./ConfirmarCodigo.js";
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import ListGroup from 'react-bootstrap/ListGroup';
+import TablaConfirmarPedido from './TablaConfirmarPedido';
+import axios from 'axios';
+import ConfirmarCodigo from './ConfirmarCodigo.js';
 
-class ConfirmarPedido extends Component {
+class ConfirmarPedido extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -170,7 +170,7 @@ class ConfirmarPedido extends Component {
                 />
               </Col>
             </Row>
-            <Button className="float-right" disabled={this.props.carro == 0}>
+            <Button className="float-right" disabled={this.props.carro === 0}>
               Confirmar Pedido
             </Button>
           </Form>

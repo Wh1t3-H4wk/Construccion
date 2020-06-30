@@ -1,12 +1,12 @@
-import React from "react";
-import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import axios from "axios";
-import Spinner from "react-bootstrap/Spinner";
-import { withRouter } from "react-router-dom";
+import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Form from 'react-bootstrap/Form';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+import Spinner from 'react-bootstrap/Spinner';
+import { withRouter } from 'react-router-dom';
 
 class EditarCliente extends React.Component {
   constructor(props) {

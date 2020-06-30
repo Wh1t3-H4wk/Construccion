@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import Table from "react-bootstrap/Table";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import Button from "react-bootstrap/Button";
+import React from 'react';
+import Table from 'react-bootstrap/Table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import Button from 'react-bootstrap/Button';
 
-class TablaConfirmarPedido extends Component {
+class TablaConfirmarPedido extends React.Component {
   generateItemView = (item) => {
     return (
       <tr key={item.producto.id} style={{ borderTop: "1px solid #dee2e6" }}>
@@ -86,7 +86,7 @@ class TablaConfirmarPedido extends Component {
   render() {
     return (
       <div className="row py-5 p-4 bg-white rounded shadow-sm mb-4 mr-1">
-        {this.props.carro == 0 ? this.renderNoTable() : this.renderTable()}
+        {this.props.carro === 0 ? this.renderNoTable() : this.renderTable()}
       </div>
     );
   }

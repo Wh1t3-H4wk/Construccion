@@ -1,8 +1,8 @@
-import Form from "react-bootstrap/Form";
-import React, { Component } from "react";
-import Button from "react-bootstrap/Button";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGift } from "@fortawesome/free-solid-svg-icons";
+import Form from 'react-bootstrap/Form';
+import React from 'react';
+import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGift } from '@fortawesome/free-solid-svg-icons';
 
 class ConfirmarCodigo extends React.Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class ConfirmarCodigo extends React.Component {
     };
     this.handleConf = this.handleConf.bind(this);
   }
+
   handleCodigo = (e) => {
     let value = e.target.value;
     this.setState({ cod: value });
@@ -41,7 +42,7 @@ class ConfirmarCodigo extends React.Component {
             type="text"
             className="mb-4"
             onChange={this.handleCodigo}
-          ></Form.Control>
+          />
           <div style={{ width: "100%" }}>
             <p className="font-italic mb-3 text-center">
               {this.state.validezCodigo}
