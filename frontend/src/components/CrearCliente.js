@@ -100,13 +100,13 @@ class CrearCliente extends React.Component {
               <Col>
                 <Form.Group controlId="nombre">
                   <Form.Label>Nombre</Form.Label>
-                  <Form.Control type="text" placeholder="Nombre" required />
+                  <Form.Control type="text" placeholder="Nombre" maxLength="20" required />
                 </Form.Group>
               </Col>
               <Col>
                 <Form.Group controlId="apellido">
                   <Form.Label>Apellido</Form.Label>
-                  <Form.Control type="text" placeholder="Apellido" required />
+                  <Form.Control type="text" placeholder="Apellido" maxLength="20" required />
                 </Form.Group>
               </Col>
             </Row>
@@ -121,7 +121,7 @@ class CrearCliente extends React.Component {
               <Col>
                 <Form.Group controlId="telefono">
                   <Form.Label>Teléfono </Form.Label>
-                  <Form.Control type="text" placeholder="Telefono" required />
+                  <Form.Control type="text" placeholder="Telefono" maxLength="12" required />
                 </Form.Group>
               </Col>
             </Row>
@@ -132,6 +132,7 @@ class CrearCliente extends React.Component {
                 as="textarea"
                 rows="2"
                 placeholder="Dirección"
+                maxLength="120"
                 required
               />
             </Form.Group>
