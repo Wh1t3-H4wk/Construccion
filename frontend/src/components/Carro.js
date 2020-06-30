@@ -38,7 +38,11 @@ function Carro(props) {
             </tbody>
           </Table>
           <h3>Total: ${precioTotal}</h3>
-          <Button disabled={props.carro.length === 0} className="m-2" as={Link} to="/confirmarPedido/nacho123@gmail.com">Confirmar pedido</Button>
+          {
+            cantTotal > 0 ?
+            <Button className="m-2" as={Link} to="/confirmarPedido/nacho123@gmail.com">Confirmar pedido</Button> :
+            <Button disabled={true} className="m-2">Confirmar pedido</Button>
+          }
         </Popover.Content>
       </Popover>
       }
