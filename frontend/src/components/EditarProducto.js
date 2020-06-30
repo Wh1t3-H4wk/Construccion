@@ -28,9 +28,12 @@ class EditarProducto extends React.Component {
   toBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
+      console.log(file);
+      if (file !== undefined) {
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      }
     });
 
   async onSubmit(e) {
@@ -39,7 +42,10 @@ class EditarProducto extends React.Component {
     await axios.put("http://localhost:5001/Producto", {
       id: this.props.producto.id,
       nombre: form.nombre.value,
-      imgUrl: this.toBase64(form.imagen.files[0]),
+      imgUrl:
+        form.imagen.files[0] !== undefined
+          ? this.toBase64(form.imagen.files[0])
+          : "",
       descripcion: form.descripcion.value,
       precio: parseInt(form.precio.value),
       categoria: form.categoria.value,

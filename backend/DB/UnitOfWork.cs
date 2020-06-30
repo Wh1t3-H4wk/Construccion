@@ -9,11 +9,11 @@ namespace Cafeteria.DB
         public Repository<Producto, int> Productos { get; }
         public Repository<Pedido, int> Pedidos { get; }
         public Repository<Codigo, string> Codigos { get; }
-        public Repository<BaseUser,string> BaseUsers { get;}
-        public Repository<Usuario,string> Usuarios { get;}
-        public Repository<Cliente,string> Clientes { get;}
+        public Repository<BaseUser, string> BaseUsers { get; }
+        public Repository<Usuario, string> Usuarios { get; }
+        public Repository<Cliente, string> Clientes { get; }
         public Repository<ProductoPedido, int> ProductoPedidos { get; set; }
-        
+
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;

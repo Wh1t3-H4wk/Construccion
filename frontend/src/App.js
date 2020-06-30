@@ -11,7 +11,6 @@ import ConfirmarPedido from './components/ConfirmarPedido.js';
 import Codigos from "./components/Codigos.js";
 import Conocenos from './components/Conocenos.js';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -102,16 +101,20 @@ class App extends React.Component {
             <Route exact path="/cuenta/:mail">
               <EditarCuenta />
             </Route>
-            <Route exact path="/confirmarPedido">
+            <Route exact path="/confirmarPedido/:mail">
               <ConfirmarPedido
                 carro={this.state.carro}
                 eliminarDeCarro={this.eliminarDeCarro}
               />
             </Route>
             <Route exact path="/codigos">
-              <Codigos/>
+              <Codigos />
             </Route>
-            <Route render={function () {return <h1>404 Not found</h1>}}/>
+            <Route
+              render={function () {
+                return <h1>404 Not found</h1>;
+              }}
+            />
           </Switch>
           <Footer />
         </BrowserRouter>
