@@ -12,7 +12,7 @@ function ListaDestacados(props) {
         <Carousel.Item key={item.id}>
           <img
             className="d-block w-100"
-            src={`data:image;base64,${item.imgUrl}`}
+            src={item.imgUrl}
             alt={item.nombre}
             style={{ maxHeight: "450px", objectFit: "contain" }}
           ></img>

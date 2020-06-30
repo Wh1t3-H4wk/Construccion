@@ -19,13 +19,21 @@ class EditarProducto extends React.Component {
     this.setState((prevState) => ({ modal: !prevState.modal }));
   }
 
+  toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
   async onSubmit(e) {
     e.preventDefault();
     const form = e.target;
     await axios.put("http://localhost:5001/Producto", {
       id: this.props.producto.id,
       nombre: form.nombre.value,
-      imgUrl: btoa(form.imagen.files[0]),
+      imgUrl: this.toBase64(form.imagen.files[0]),
       descripcion: form.descripcion.value,
       precio: parseInt(form.precio.value),
       categoria: form.categoria.value,

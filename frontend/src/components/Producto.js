@@ -15,10 +15,6 @@ class Producto extends React.Component {
     this.props.anadirACarro(this.props.producto);
   }
 
-  b64toImgUrl = (data) => {
-    return `data:image;base64,${data}`;
-  };
-
   render() {
     return (
       <Card
@@ -31,7 +27,7 @@ class Producto extends React.Component {
       >
         <Card.Img
           variant="top"
-          src={this.b64toImgUrl(this.props.producto.imgUrl)}
+          src={this.props.producto.imgUrl}
           style={{ maxHeight: "250px", objectFit: "contain" }}
         />
         <Card.Body>
