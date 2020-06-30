@@ -18,7 +18,7 @@ class EliminarCodigo extends React.Component {
 
   async delete() {
 
-    await axios.delete(`http://localhost:5001/Codigo/${this.props.nameEliminar}`);
+    await axios.delete(`https://cafeteriaapi.herokuapp.com/Codigo/${this.props.nameEliminar}`);
     this.toggle();
     this.props.actualizarCodigo();
     

@@ -17,7 +17,7 @@ class EliminarProducto extends React.Component {
   }
 
   async delete() {
-    await axios.delete(`http://localhost:5001/Producto/${this.props.idProducto}`);
+    await axios.delete(`https://cafeteriaapi.herokuapp.com/Producto/${this.props.idProducto}`);
     this.toggle();
     this.props.actualizarProductos();
   }

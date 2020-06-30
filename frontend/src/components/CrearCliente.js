@@ -40,7 +40,7 @@ class CrearCliente extends React.Component {
     console.log("Submited--");
     const form = e.target;
     await axios
-      .post("http://localhost:5001/User/cliente", {
+      .post("https://cafeteriaapi.herokuapp.com/User/cliente", {
         telefono: form.telefono.value,
         direcion: form.direccion.value,
         nombres: form.nombre.value,

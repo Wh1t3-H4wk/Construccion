@@ -30,7 +30,7 @@ class Codigos extends Component {
     this.getListaCodigos();
   }
   async getListaCodigos() {
-    await axios.get('http://localhost:5001/Codigo').then((response) => {
+    await axios.get('https://cafeteriaapi.herokuapp.com/Codigo').then((response) => {
       this.setState({
         codigos: response.data,
         isLoaded: true

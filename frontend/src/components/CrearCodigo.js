@@ -34,7 +34,7 @@ class CrearCodigo extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    await axios.post('http://localhost:5001/Codigo', {
+    await axios.post('https://cafeteriaapi.herokuapp.com/Codigo', {
         "name": form.nombre.value,
         "descuento":parseInt(form.descuento.value),
     });

@@ -22,7 +22,7 @@ class CrearProducto extends React.Component {
   async onSubmit(e) {
     e.preventDefault();
     const form = e.target;
-    await axios.post('http://localhost:5001/Producto', {
+    await axios.post('https://cafeteriaapi.herokuapp.com/Producto', {
       "nombre": form.nombre.value,
       //"imgUrl": form.imagen.files[0],
       "imgURL": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Logo_of_BTS.png",

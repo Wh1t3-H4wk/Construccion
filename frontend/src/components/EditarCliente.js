@@ -27,7 +27,7 @@ class EditarCliente extends React.Component {
     this.setState({ isLoaded: false });
     let cuentaMail = "nacho123@gmail.com";
     await axios
-      .get(`http://localhost:5001/User/cliente/${cuentaMail}`)
+      .get(`https://cafeteriaapi.herokuapp.com/User/cliente/${cuentaMail}`)
       .then((response) => {
         this.setState({
           cliente: response.data,
@@ -41,7 +41,7 @@ class EditarCliente extends React.Component {
     e.preventDefault();
     const form = e.target;
     let cuentaMail = "nacho123@gmail.com";
-    await axios.put(`http://localhost:5001/User/cliente/${cuentaMail}`, {
+    await axios.put(`https://cafeteriaapi.herokuapp.com/User/cliente/${cuentaMail}`, {
       nombres: form.nombre.value,
       apellidos: form.apellido.value,
       telefono: form.telefono.value,
@@ -53,7 +53,7 @@ class EditarCliente extends React.Component {
 
   async handleEliminacionCuenta() {
     let cuentaMail = "nacho123@gmail.com";
-    await axios.delete(`http://localhost:5001/User/cliente/${cuentaMail}`);
+    await axios.delete(`https://cafeteriaapi.herokuapp.com/User/cliente/${cuentaMail}`);
     this.getDatosCliente();
   }
 

@@ -24,7 +24,7 @@ class App extends React.Component {
   }
 
   async getListaProductos() {
-    await axios.get('http://localhost:5001/Producto').then((response) => {
+    await axios.get('https://cafeteriaapi.herokuapp.com/Producto').then((response) => {
       const productosNoEliminados = [];
       response.data.forEach((item) => {
         if (!item.eliminado === true)
