@@ -38,6 +38,9 @@ namespace Cafeteria.Controllers
         {
             var producto = _context.Productos[delta.Id];
             if (producto == null) return NotFound();
+            if (!string.IsNullOrEmpty(delta.ImgUrl)) 
+                producto.ImgUrl = delta.ImgUrl;
+            
             producto.Categoria = delta.Categoria;
             producto.Descripcion = delta.Descripcion;
             producto.Destacado = delta.Destacado;
