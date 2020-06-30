@@ -35,9 +35,10 @@ class Codigos extends React.Component {
   }
 
   render() {
+    let i = 0;
     let itemsCodigo = this.state.codigos.map((item) => {
       return (
-        <Codigo item={item} actualizarCodigo={this.actualizarCodigo}/>
+        <Codigo key={i++} item={item} actualizarCodigo={this.actualizarCodigo}/>
       );
     });
     return (
