@@ -158,7 +158,7 @@ class ConfirmarPedido extends React.Component {
   controlDisableButton = () => {
     return (
       !this.state.clienteExiste ||
-      this.props.carro == 0 ||
+      this.props.carro === 0 ||
       this.state.pedidoRealizado ||
       this.state.procesando
     );

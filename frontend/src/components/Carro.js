@@ -8,6 +8,7 @@ import Table from 'react-bootstrap/Table';
 import ItemCarro from './ItemCarro.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingBasket } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 
 function Carro(props) {
   let i = 0, precioTotal = 0, cantTotal = 0;
