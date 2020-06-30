@@ -142,9 +142,13 @@ class ConfirmarPedido extends Component {
           return "Confirmar Pedido";
         } else {
           return (
-            <FontAwesomeIcon
-              icon={this.state.pedidoExito ? faCheck : faTimes}
-            />
+            <React.Fragment>
+              <FontAwesomeIcon
+                className="mr-2"
+                icon={this.state.pedidoExito ? faCheck : faTimes}
+              />
+              {this.state.pedidoExito ? "Listo!" : "Error"}
+            </React.Fragment>
           );
         }
       }
