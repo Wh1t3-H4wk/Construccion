@@ -76,7 +76,7 @@ class EditarCliente extends React.Component {
   };
 
   componentDidMount() {
-    document.title = "Cuenta - Cafetería Donde José Billar";
+    document.title = "Mi cuenta - Cafetería Donde José Billar";
     this.getDatosCliente();
   }
 

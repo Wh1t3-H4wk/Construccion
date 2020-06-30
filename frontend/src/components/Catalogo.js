@@ -2,13 +2,19 @@ import React from 'react';
 import Destacados from './Destacados.js';
 import Productos from './Productos.js';
 
-function Catalogo(props) {
-  return (
-    <>
-      <Destacados productos={props.productos} isLoaded={props.isLoaded}/>
-      <Productos isAdmin={props.isAdmin} productos={props.productos} isLoaded={props.isLoaded} anadirACarro={props.anadirACarro} actualizarProductos={props.actualizarProductos}/>
-    </>
-  );
+class Catalogo extends React.Component {
+  componentDidMount() {
+    document.title = "Cafetería Donde José Billar - Productos";
+  }
+
+  render() {
+    return (
+      <>
+        <Destacados productos={this.props.productos} isLoaded={this.props.isLoaded}/>
+        <Productos isAdmin={this.props.isAdmin} productos={this.props.productos} isLoaded={this.props.isLoaded} anadirACarro={this.props.anadirACarro} actualizarProductos={this.props.actualizarProductos}/>
+      </>
+    );
+  }
 }
 
 export default Catalogo;

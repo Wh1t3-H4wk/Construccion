@@ -16,10 +16,6 @@ class Productos extends React.Component {
     this.buscar = this.buscar.bind(this);
   }
 
-  componentDidMount() {
-    document.title = "Productos - Cafetería Donde José Billar";
-  }
-
   categoria(e) {
     this.setState({ filtrar: e.target.value });
   }

@@ -48,7 +48,6 @@ class EditarProducto extends React.Component {
       destacado: form.destacado.checked,
       eliminado: false,
     });
-    console.log(form.disponible.checked);
     this.toggle();
     this.props.actualizarProductos();
   }

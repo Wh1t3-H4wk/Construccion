@@ -31,6 +31,7 @@ class Codigos extends React.Component {
   }
 
   componentDidMount() {
+    document.title = "Códigos - Cafetería José Billar";
     this.getListaCodigos();
   }
 
