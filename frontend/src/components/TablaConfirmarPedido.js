@@ -10,7 +10,7 @@ class TablaConfirmarPedido extends Component {
       <tr key={item.producto.id} style={{ borderTop: "1px solid #dee2e6" }}>
         <td className="border-0 align-middle">
           <img
-            src={item.producto.imgUrl}
+            src={`data:image;base64,${item.imgUrl}`}
             alt=""
             style={{ width: "100%", maxWidth: "70px" }}
             className="img-fluid rounded shadow-sm"
