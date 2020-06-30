@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Cafeteria.Models
@@ -18,5 +19,6 @@ namespace Cafeteria.Models
     {
         public string Telefono { get; set; }
         public string Direcion { get; set; }
+        public List<ProductoPedido> Pedidos { get; set; } = new List<ProductoPedido>();
     }
 }

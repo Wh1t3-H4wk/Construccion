@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Cafeteria.Models
 {
     public class Pedido
@@ -7,5 +10,7 @@ namespace Cafeteria.Models
         public uint Valor { get; set; }
         public string Direccion { get; set; }
         public string Estado { get; set; }
+        [NotMapped]
+        public List<Pedido> Pedidos { get; set; } = new List<Pedido>();
     }
 }

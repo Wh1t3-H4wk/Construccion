@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Cafeteria.DB;
 using Cafeteria.Models;
 
@@ -119,7 +120,32 @@ namespace Cafeteria.Extra
             x18.Descripcion = "Descripcion generica";
             x18.Categoria = "Catalogo";
             x18.ImgUrl = "assets/img/products-02.jpg";
-
+            
+            var cliente= new Cliente();
+            cliente.Nombres = "test cliente";
+            cliente.Mail= "nacho@nacho.cl";
+            cliente.Direcion = "testing";
+            cliente.Rol = "Cliente";
+            
+            
+            var pedido = new Pedido();
+            pedido.Direccion = "direcicon";
+            pedido.Estado = "testing";
+            pedido.Valor = 9999;
+            pedido.Preparacion = "pasa la prueba";
+            List<ProductoPedido> xProductos = new List<ProductoPedido>();
+            xProductos.AddRange(new []
+            {
+                new ProductoPedido { Pedido = pedido, Producto = x},
+                new ProductoPedido { Pedido = pedido, Producto = x2},
+                new ProductoPedido { Pedido = pedido, Producto = x3},
+                new ProductoPedido { Pedido = pedido, Producto = x4, Cantidad = 2},
+                new ProductoPedido { Pedido = pedido, Producto = x5},
+                new ProductoPedido { Pedido = pedido, Producto = x6}
+            });
+            cliente.Pedidos = xProductos;
+            
+            
             context.Add(x);
             context.Add(x2);
             context.Add(x3);
@@ -138,6 +164,8 @@ namespace Cafeteria.Extra
             context.Add(x16);
             context.Add(x17);
             context.Add(x18);
+            context.Add(pedido);
+            context.Add(cliente);
             context.SaveChanges();
         }
 
