@@ -8,16 +8,18 @@ import axios from 'axios';
 import ReactDOM from 'react-dom';
 
 class CrearCliente extends React.Component {
-  state = {
-    pass: "",
-    valPass: "",
-    isPasswordInvalid: true,
-  };
-
   constructor(props) {
-    super();
+    super(props);
+    this.state = {
+      pass: "",
+      valPass: "",
+      isPasswordInvalid: true,
+      isValidMail: false
+    };
     this.onSubmit = this.onSubmit.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
   }
+
 
   componentDidMount() {
     document.title = "Registrarse - Cafetería José Billar";
@@ -39,9 +41,20 @@ class CrearCliente extends React.Component {
     this.setState({ isPasswordInvalid: value });
   };
 
+  validateEmail(e) {
+    const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let email = e.target.value;
+    if (re.test(email)) 
+      this.setState({isValidMail: true});
+    else
+      this.setState({isValidMail: false});
+  }
+
   async onSubmit(e) {
     e.preventDefault();
-    console.log("Submited--");
+    if (this.state.isPasswordInvalid || !this.state.isValidMail)
+      return;
+    console.log("submitted");
     const form = e.target;
     await axios
       .post("http://localhost:5001/User/cliente", {
@@ -115,7 +128,7 @@ class CrearCliente extends React.Component {
               <Col>
                 <Form.Group controlId="email">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control type="text" placeholder="Email" required />
+                  <Form.Control type="text" placeholder="Email" isInvalid={!this.state.isValidMail} onChange={this.validateEmail} required />
                 </Form.Group>
               </Col>
               <Col>
