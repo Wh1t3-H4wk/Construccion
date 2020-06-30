@@ -35,12 +35,11 @@ class ConfirmarCodigo extends React.Component {
             Cupón de Descuento
           </Form.Label>
           <p className="font-italic mb-4 text-center" style={{ width: "100%" }}>
-            Si posee un cupón de descuento, porfavor ingréselo en el siguiente
-            campo.
+            Si tienes un cupón de descuento, ingrésalo a continuación
           </p>
           <Form.Control
             type="text"
-            className="mb-4"
+            className="mb-1"
             onChange={this.handleCodigo}
           />
           <div style={{ width: "100%" }}>

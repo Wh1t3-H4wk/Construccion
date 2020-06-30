@@ -17,6 +17,7 @@ class ConfirmarPedido extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loaded: false,
       instruccionesPreparacion: "",
       porcentajeDescuento: 0,
       subtotal: 0,
@@ -47,6 +48,7 @@ class ConfirmarPedido extends React.Component {
         this.setState({
           cliente: response.data,
           clienteExiste: true,
+          loaded: true
         });
       }
     }
@@ -87,7 +89,15 @@ class ConfirmarPedido extends React.Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    let direccionValue = this.state.cliente.direcion;
+    let direccionValue = "";
+    if (e.target.direccionPorDefecto.checked)
+      direccionValue = this.state.cliente.direcion;
+    else {
+      if (e.target.direccionCustomText.value === "")
+        direccionValue = this.state.cliente.direcion;
+      else
+        direccionValue = e.target.direccionCustomText.value;
+    }
     let productosValue = [];
     this.props.carro.forEach((item) => {
       productosValue.push({
@@ -95,7 +105,7 @@ class ConfirmarPedido extends React.Component {
         cantidad: item.cantidad,
       });
     });
-    let preparacionValue = this.state.instruccionesPreparacion;
+    let preparacionValue = e.target.instrucciones.value;
     let valorValue = this.calcularTotal();
 
     this.setState({ procesando: true });
@@ -183,58 +193,44 @@ class ConfirmarPedido extends React.Component {
   };
 
   render() {
+    if (!this.state.loaded) {
+      return (
+        <Container className="page-section cta">
+          <div className="row">
+            <div className="col-xl-p mx-auto">
+              <div className="cta-inner rounded">
+                <Spinner animation="border" role="status">
+                  <span className="sr-only">Cargando...</span>
+                </Spinner>
+              </div>
+            </div>
+          </div>
+        </Container>
+      );
+    }
     return (
       <Container className="page-selection">
-        <Container
-          className="bg-faded p-5 rounded"
-          style={{ maxWidth: "100%" }}
-        >
+        <Container className="bg-faded p-5 rounded" style={{ maxWidth: "100%" }}>
           <Form className="mb-3" onSubmit={this.onSubmit}>
             <Row>
               <Col xs={{ span: 12, order: 1 }} md={{ span: 8, order: 1 }}>
-                <TablaConfirmarPedido
-                  carro={this.props.carro}
-                  eliminarDeCarro={this.props.eliminarDeCarro}
-                />
+                <TablaConfirmarPedido carro={this.props.carro} eliminarDeCarro={this.props.eliminarDeCarro}/>
               </Col>
               <Col xs={{ span: 12, order: 2 }} md={{ span: 4, order: 2 }}>
                 <div className="row py-5 p-4 bg-white rounded shadow-sm mb-4">
-                  <Form.Label
-                    className="bg-light rounded-pill px-4 py-3 text-uppercase text-center font-weight-bold"
-                    style={{ width: "100%" }}
-                  >
-                    Resumen de Pedido
-                  </Form.Label>
-                  <ListGroup
-                    variant="flush"
-                    className="mb-4"
-                    as="ul"
-                    style={{ width: "100%" }}
-                  >
-                    <ListGroup.Item
-                      as="li"
-                      className=" d-flex justify-content-between py-3"
-                    >
-                      <strong className="text-muted">Subtotal de Pedido</strong>
+                  <Form.Label className="bg-light rounded-pill px-4 py-3 text-uppercase text-center font-weight-bold" style={{ width: "100%" }}>Resumen de Pedido</Form.Label>
+                  <ListGroup variant="flush" as="ul" style={{ width: "100%" }}>
+                    <ListGroup.Item as="li" className=" d-flex justify-content-between py-3">
+                      <strong className="text-muted">Subtotal</strong>
                       <strong>${this.calcularSubtotal()}</strong>
                     </ListGroup.Item>
-                    <ListGroup.Item
-                      as="li"
-                      className=" d-flex justify-content-between py-3"
-                    >
+                    <ListGroup.Item as="li" className=" d-flex justify-content-between py-3">
                       <strong className="text-muted">Descuento</strong>
-                      <strong className="align-right">
-                        ${this.calcularDescuento()}
-                      </strong>
+                      <strong className="align-right">${this.calcularDescuento()}</strong>
                     </ListGroup.Item>
-                    <ListGroup.Item
-                      as="li"
-                      className=" d-flex justify-content-between py-3"
-                    >
+                    <ListGroup.Item as="li" className=" d-flex justify-content-between py-3">
                       <strong className="text-muted">Total</strong>
-                      <strong className="align-right">
-                        ${this.calcularTotal()}
-                      </strong>
+                      <strong className="align-right">${this.calcularTotal()}</strong>
                     </ListGroup.Item>
                   </ListGroup>
                 </div>
@@ -242,40 +238,31 @@ class ConfirmarPedido extends React.Component {
             </Row>
             <Row>
               <Col xs={{ span: 12, order: 1 }} md={{ span: 8, order: 1 }}>
+                <Form.Group>
+                  <div className="row py-1 p-4 bg-white rounded shadow-sm mb-4 mr-1">
+                    <Form.Label className="bg-light rounded-pill px-4 py-3 text-uppercase text-center font-weight-bold" style={{ width: "100%" }}>Dirección de despacho</Form.Label>
+                    <Col>
+                        <Form.Check type="radio" id="direccionPorDefecto" name="direccion" value="defecto" label={this.state.cliente.direcion} defaultChecked={true}/>
+                        <Form.Check type="radio" id="direccionCustom" name="direccion" value="custom" label="Ingresar una dirección:"/>
+                        <Form.Control as="textarea" id="direccionCustomText" rows="2"/>
+                    </Col>
+                  </div>
+                </Form.Group>
                 <Form.Group controlId="instrucciones">
-                  <div className="row py-5 p-4 bg-white rounded shadow-sm mb-4 mr-1">
-                    <Form.Label
-                      className="bg-light rounded-pill px-4 py-3 text-uppercase text-center font-weight-bold"
-                      style={{ width: "100%" }}
-                    >
-                      Instrucciones Adicionales
-                    </Form.Label>
-                    <p
-                      className="font-italic mb-4 text-center"
-                      style={{ width: "100%" }}
-                    >
-                      Si tiene instrucciones adicionales sobre preparación o
-                      despacho, escribalas aquí.
+                  <div className="row py-1 p-4 bg-white rounded shadow-sm mb-4 mr-1">
+                    <Form.Label className="bg-light rounded-pill px-4 py-3 text-uppercase text-center font-weight-bold" style={{ width: "100%" }}>Instrucciones Adicionales</Form.Label>
+                    <p className="font-italic mb-4 text-center" style={{ width: "100%" }}>
+                      Si tienes instrucciones adicionales sobre preparación o despacho, escríbelas aquí
                     </p>
                     <Form.Control as="textarea" cols="30" rows="2" />
                   </div>
                 </Form.Group>
               </Col>
               <Col xs={{ span: 12, order: 2 }} md={{ span: 4, order: 2 }}>
-                <ConfirmarCodigo
-                  ConfCodigo={this.ConfCodigo}
-                  codigoAplicado={this.codigoAplicado}
-                  validezCodigo={this.state.validezCodigo}
-                />
+                <ConfirmarCodigo ConfCodigo={this.ConfCodigo} codigoAplicado={this.codigoAplicado} validezCodigo={this.state.validezCodigo}/>
               </Col>
             </Row>
-            <Button
-              className="float-right"
-              type="submit"
-              disabled={this.controlDisableButton()}
-            >
-              {this.renderButtonContent()}
-            </Button>
+            <Button className="float-right" type="submit" disabled={this.controlDisableButton()}>{this.renderButtonContent()}</Button>
           </Form>
         </Container>
       </Container>
