@@ -58,7 +58,7 @@ class CrearCodigo extends React.Component {
             <Modal.Body>
               <Form.Group controlId="nombre">
                 <Form.Label>Nombre</Form.Label>
-                <Form.Control type="text" placeholder="Nombre" required/>
+                <Form.Control type="text" placeholder="Nombre" maxLength="15" required/>
               </Form.Group>
               <Form.Group controlId="descuento">
                 <Form.Label>Descuento</Form.Label>
