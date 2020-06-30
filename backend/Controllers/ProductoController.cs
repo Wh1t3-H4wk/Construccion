@@ -34,9 +34,22 @@ namespace Cafeteria.Controllers
 
         //[Authorize(Roles = "Admin")]
         [HttpPut]
-        public IActionResult ModificarProducto(Producto producto)
+        public IActionResult ModificarProducto(Producto delta)
         {
-            _context.Productos[producto.Id] = producto;
+            var producto = _context.Productos[delta.Id];
+            if (producto == null) return NotFound();
+            if (!string.IsNullOrEmpty(delta.ImgUrl)) 
+                producto.ImgUrl = delta.ImgUrl;
+            
+            producto.Categoria = delta.Categoria;
+            producto.Descripcion = delta.Descripcion;
+            producto.Destacado = delta.Destacado;
+            producto.Disponible = delta.Destacado;
+            producto.Eliminado = delta.Eliminado;
+            producto.Nombre = delta.Nombre;
+            producto.Precio = delta.Precio;
+            _context.Productos.Update(producto);
+            _context.Complete();
             return Ok();
         }
 
