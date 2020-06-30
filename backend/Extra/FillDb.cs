@@ -143,7 +143,8 @@ namespace Cafeteria.Extra
                 new ProductoPedido { Pedido = pedido, Producto = x5},
                 new ProductoPedido { Pedido = pedido, Producto = x6}
             });
-            cliente.Pedidos = xProductos;
+            pedido.Cliente = cliente;
+            //cliente.Pedidos = xProductos;
             
             
             context.Add(x);
@@ -166,7 +167,9 @@ namespace Cafeteria.Extra
             context.Add(x18);
             context.Add(pedido);
             context.Add(cliente);
+            context.AddRange(xProductos);
             context.SaveChanges();
+            
         }
 
         public static void GeneratePedidosAndCodigos(ApplicationDbContext context)

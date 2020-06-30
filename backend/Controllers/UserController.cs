@@ -6,6 +6,7 @@ using Cafeteria.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Cafeteria.Controllers
@@ -69,12 +70,18 @@ namespace Cafeteria.Controllers
         [HttpDelete("cliente/{mail}")]
         public IActionResult EliminarCuenta(string mail)
         {
-            if(!_context.Clientes.Exists(mail)) return NotFound();
             //if (mail != User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value) return NotFound();
-            _context.Clientes.Remove(_context.Clientes[mail]);
+            var cliente = _context.Clientes[mail];
+            if (cliente == null) return NotFound();
+            var pedidos = _context.Pedidos.Find(x => x.Cliente.Mail == mail);
+            foreach (var xPedido in pedidos)
+                xPedido.Cliente = null;
+            
+            _context.Clientes.Remove(cliente);
             _context.Complete();
             return Ok();
         }
+
         //[Authorize(Roles = "Admin")]
         [HttpPost("trabajador")]
         public IActionResult CrearEmpleado(Usuario user)

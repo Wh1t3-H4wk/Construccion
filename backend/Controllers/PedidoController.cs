@@ -30,9 +30,8 @@ namespace Cafeteria.Controllers
             pedido.Direccion = pedidoViewModel.Direccion;
             pedido.Preparacion = pedidoViewModel.Preparacion;
             pedido.Valor = pedidoViewModel.Valor;
-            var cliente = _context.Clientes[pedidoViewModel.ClienteMail];
-            _context.Pedidos.Add(pedido);
-            
+            pedido.Cliente = _context.Clientes[pedidoViewModel.ClienteMail];
+       
             var productoPedido = new List<ProductoPedido>();
             foreach (var xProductoViewModel in pedidoViewModel.Productos)
             {
@@ -42,7 +41,8 @@ namespace Cafeteria.Controllers
                     Producto = _context.Productos[xProductoViewModel.ProductoId]
                 });
             }
-            cliente.Pedidos.AddRange(productoPedido);
+            _context.Pedidos.Add(pedido);
+            _context.ProductoPedidos.AddRange(productoPedido);
             _context.Complete();
             return Ok();
         }
