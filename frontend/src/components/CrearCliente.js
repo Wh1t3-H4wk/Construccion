@@ -6,6 +6,9 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import ReactDOM from 'react-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import Spinner from 'react-bootstrap/Spinner';
 
 class CrearCliente extends React.Component {
   constructor(props) {
@@ -14,10 +17,14 @@ class CrearCliente extends React.Component {
       pass: "",
       valPass: "",
       isPasswordInvalid: true,
-      isValidMail: false
+      isValidMail: false,
+      isValidPhone: false,
+      status: ""
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
+    this.validateTelefono = this.validateTelefono.bind(this);
+    this.renderButtonContent = this.renderButtonContent.bind(this);
   }
 
 
@@ -50,14 +57,24 @@ class CrearCliente extends React.Component {
       this.setState({isValidMail: false});
   }
 
+  validateTelefono(e) {
+    const re = /(\+56)?\d{9}/gm;
+    let phone = e.target.value;
+    if (re.test(phone))
+      this.setState({isValidPhone: true});
+    else
+      this.setState({isValidPhone: false});
+  }
+
   async onSubmit(e) {
     e.preventDefault();
     if (this.state.isPasswordInvalid || !this.state.isValidMail)
       return;
-    console.log("submitted");
     const form = e.target;
-    await axios
-      .post("http://localhost:5001/User/cliente", {
+    this.setState({status: "waiting"});
+    let response = null;
+    try {
+      response = await axios.post("http://localhost:5001/User/cliente", {
         telefono: form.telefono.value,
         direcion: form.direccion.value,
         nombres: form.nombre.value,
@@ -65,12 +82,34 @@ class CrearCliente extends React.Component {
         mail: form.email.value,
         contraseña: form.contraseña.value,
         rol: "Cliente",
-      })
-      .then((response) => {
-        if (response.status === "200")
-          //No es la mejor solución, pero a esta hora seguro lo es.
-          ReactDOM.findDOMNode(this.messageForm).reset();
       });
+    } catch (err) {
+      response = err;
+    } finally {
+      if (response.status === 200)
+        this.setState({status: "ok"});
+      else
+        this.setState({status: "error"});
+    }
+  }
+
+  renderButtonContent() { 
+    if (this.state.status === "") {
+      return "Crear cuenta";
+    } else if (this.state.status === "waiting") {
+      return (
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Procesando...</span>
+        </Spinner>
+      );
+    } else {
+      return (
+        <>
+          <FontAwesomeIcon className="mr-2" icon={this.state.status === "ok" ? faCheck : faTimes}/>
+          {this.state.status === "ok" ? "Listo!" : "Error"}
+        </>
+      );
+    }
   }
 
   render() {
@@ -134,7 +173,7 @@ class CrearCliente extends React.Component {
               <Col>
                 <Form.Group controlId="telefono">
                   <Form.Label>Teléfono </Form.Label>
-                  <Form.Control type="text" placeholder="Telefono" maxLength="12" required />
+                  <Form.Control type="text" placeholder="Telefono" isInvalid={!this.state.isValidPhone} onChange={this.validateTelefono} maxLength="12" required />
                 </Form.Group>
               </Col>
             </Row>
@@ -168,7 +207,7 @@ class CrearCliente extends React.Component {
                 isInvalid={this.state.isPasswordInvalid}
               />
             </Form.Group>
-            <Button type="submit">Crear Cuenta</Button>
+            <Button className="float-right" type="submit" disabled={(this.state.isPasswordInvalid || !this.state.isValidPhone || !this.state.isValidMail) || (this.state.status === "ok")}>{this.renderButtonContent()}</Button>
           </Form>
         </Container>
       </Container>
