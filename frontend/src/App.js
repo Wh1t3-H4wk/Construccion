@@ -32,8 +32,14 @@ class App extends React.Component {
         if (!item.eliminado === true)
           productosNoEliminados.push(item);
       });
+      const cart = [];
+      this.state.carro.forEach((item) => {
+        if (item.producto.disponible)
+          cart.push(item);
+      });
       this.setState({
         productos: productosNoEliminados,
+        carro: cart,
         isLoaded: true
       });
     });
@@ -52,13 +58,13 @@ class App extends React.Component {
     const nuevoCarro = [];
     let exists = false;
     this.state.carro.forEach((item) => {
-      if (item.producto.id === productoAnadido.producto.id) {
+      if (item.producto.disponible && item.producto.id === productoAnadido.producto.id) {
         nuevoCarro.push({producto: item.producto, cantidad: item.cantidad + productoAnadido.cantidad});
         exists = true;
       }
-      else
+      else if (item.producto.disponible)
         nuevoCarro.push(item);
-    })
+    });
     if (!exists)
       nuevoCarro.push(productoAnadido);
     this.setState({carro: nuevoCarro});
